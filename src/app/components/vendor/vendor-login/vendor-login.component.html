@@ -1,1 +1,65 @@
-<p>vendor-login works!</p>
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col bg-cover items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+        style="background-image: url('../../../../assets/bg2.jpg');">
+        <div class="w-full bg-blend-saturation rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+            style="backdrop-filter: blur(8px);">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1
+                    class="text-xl font-bold leading-tight tracking-tight text-white md:text-2xl dark:text-white text-center">
+                    Login
+                </h1>
+                <form [formGroup]="form" (submit)="onSubmit()" class="space-y-4 md:space-y-6" action="#">
+                   
+
+                    <div class="relative h-11 w-full min-w-[200px]">
+                        <input type="email" formControlName="email" id="email" placeholder="Email"
+                           class="peer h-full w-full border-none bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100" />
+                        <label
+                            class="after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-white transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-white peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-white peer-focus:after:scale-x-100 peer-focus:after:border-yellow-200 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                            Email
+                        </label>
+                    </div>
+
+                    
+
+                     
+
+                    <div class="relative h-11 w-full min-w-[200px]">
+                        <input type="password"  formControlName="password" id="password" placeholder="••••••••"
+                            class="peer h-full w-full border-none bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-white outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 placeholder:opacity-0 focus:placeholder:opacity-100" />
+                        <label
+                            class="after:content[''] pointer-events-none absolute left-0  -top-1.5 flex h-full w-full select-none !overflow-visible truncate text-[11px] font-normal leading-tight text-white transition-all after:absolute after:-bottom-1.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300 peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.25] peer-placeholder-shown:text-white peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-white peer-focus:after:scale-x-100 peer-focus:after:border-yellow-200 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                            Password
+                        </label>
+                    </div>
+
+
+                    <div class="flex items-start">
+                        <!-- <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                <input id="remember" type="checkbox" value=""
+                                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                                    required>
+                            </div>
+                            <label for="remember"
+                                class="ms-2 text-sm font-medium text-cyan-100 dark:text-cyan-100 ">Remember me</label>
+                        </div> -->
+
+                        <a href="#" class="ms-auto text-sm font-medium text-cyan-400 hover:underline dark:text-blue-500">Forgot
+                            Password?</a>
+                    </div>
+
+
+                    <button type="submit"
+                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Login</button>
+                    <p class="text-sm font-light text-white dark:text-gray-400">
+                        Don't have an account? <a routerLink="/user/register"
+                            class="font-medium text-primary-600 hover:underline dark:text-primary-500">Create
+                            account</a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
