@@ -8,6 +8,13 @@ const routes: Routes = [
     redirectTo: 'user',
     pathMatch: 'full'
   },
+  {
+    path :'vendor', title : 'Vendor', loadChildren: ()=> import('./components/vendor/vendor.module').then(m=>m.VendorModule) },
+    // {
+    //   path: '',
+    //   redirectTo: 'vendor',
+    //   pathMatch:'full'
+    // }
 ];
 
 @NgModule({
