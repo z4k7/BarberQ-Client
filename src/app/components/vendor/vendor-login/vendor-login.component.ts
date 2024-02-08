@@ -38,8 +38,8 @@ export class VendorLoginComponent implements OnInit {
     } else {
       const vendor = this.form.getRawValue()
       this.http.post(`${this.backendURL}/vendor/login`, vendor).subscribe({
-        next: (res) => {
-          localStorage.setItem('isVendorLoggedIn', 'true');
+        next: (res:any) => {
+          localStorage.setItem('vendorJwt', res.data.token);
           this.router.navigate(['/vendor/home'])
         },
         error: (err) => {

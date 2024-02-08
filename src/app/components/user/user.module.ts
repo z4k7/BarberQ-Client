@@ -11,18 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 @NgModule({
-  declarations: [
-    UserLoginComponent,
-           UserRegisterComponent,
-           UserHomeComponent
-  ],
+  declarations: [UserLoginComponent, UserRegisterComponent, UserHomeComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-  
-  ]
+  ],
 })
-export class UserModule { }
+export class UserModule {}

@@ -5,29 +5,26 @@ import { VendorRegisterComponent } from './vendor-register/vendor-register.compo
 import { VendorLoginComponent } from './vendor-login/vendor-login.component';
 import { VendorHomeComponent } from './vendor-home/vendor-home.component';
 
-
 const routes: Routes = [
   {
     path: 'login',
     title: 'Vendor | Login',
-    component: VendorLoginComponent
+    component: VendorLoginComponent,
   },
   {
     path: 'register',
     title: ' Vendor | Register',
-    component: VendorRegisterComponent
+    component: VendorRegisterComponent,
   },
   {
     path: 'home',
     title: 'Vendor | Home',
-    component: VendorHomeComponent
+    component: VendorHomeComponent,
   },
- 
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class VendorRoutingModule { }
+export class VendorRoutingModule {}

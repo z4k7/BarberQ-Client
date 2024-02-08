@@ -37,8 +37,9 @@ export class UserLoginComponent implements OnInit {
     } else {
       const user = this.form.getRawValue();
       this.http.post(`${this.backendURL}/user/login`, user).subscribe({
-        next: (res) => {
-          localStorage.setItem('isUserLoggedIn', 'true');
+        next: (res: any) => {
+          console.log(`res:`,res);
+          localStorage.setItem('userJwt', res.data.token);
           this.router.navigate(['/']);
         },
         error: (err) => {
