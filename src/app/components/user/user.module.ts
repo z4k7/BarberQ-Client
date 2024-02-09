@@ -10,19 +10,17 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
-  declarations: [
-    UserLoginComponent,
-           UserRegisterComponent,
-           UserHomeComponent
-  ],
+  declarations: [UserLoginComponent, UserRegisterComponent, UserHomeComponent],
   imports: [
     CommonModule,
     UserRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-  
-  ]
+    MatIconModule
+  ],
 })
-export class UserModule { }
+export class UserModule {}

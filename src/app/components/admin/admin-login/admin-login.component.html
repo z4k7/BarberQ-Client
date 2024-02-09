@@ -1,1 +1,29 @@
-<p>admin-login works!</p>
+<body>
+    <div class="wrapper">
+        <div class="form-box login">
+            <h2>Admin Login</h2>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="input-box">
+                    <span class="icon"><mat-icon>mail</mat-icon></span>
+                    <input formControlName="email" type="email" required>
+                    <label>Email</label>
+                    <div class="form-text text-danger pt-2" *ngIf="email.errors?.['required'] && (email.touched || email.dirty || invalid)">
+                        Email is required
+                    </div>
+                    <div class="form-text text-danger pt-2" *ngIf="email.errors?.['email'] && (email.touched || email.dirty)">
+                        Email is Invalid
+                    </div>
+                </div>
+                <div class="input-box">
+                    <span class="icon" (click)="hide = !hide"><mat-icon>{{hide?'visibility':'visibility_off'}}</mat-icon></span>
+                    <input formControlName="password" [type]=" hide?'password' :'text' " required>
+                    <label>Password</label>
+                   <div class="form-text text-danger pt-2" *ngIf="password.errors?.['required'] && (password.touched || password.dirty || invalid)">
+                        Password is required
+                    </div>
+                </div>
+                <button type="submit" class="bttn">Login</button>
+            </form>
+        </div>
+    </div>
+  </body>
