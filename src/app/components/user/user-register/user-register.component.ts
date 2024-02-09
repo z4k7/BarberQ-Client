@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
@@ -15,11 +20,11 @@ export class UserRegisterComponent implements OnInit {
   form!: FormGroup;
   isSubmitted = false;
   showOtpField = false;
-  remainingTime = 0;
-  formattedTime: string = '03:00';
-  otpResendCount: number = 0;
-  showOtpResend: boolean = true;
+  invalid: boolean = false;
   backendURL = environment.baseURL;
+  oHide = true;
+  pHide = true;
+  cHide = true;
 
   constructor(
     private readonly http: HttpClient,
@@ -30,12 +35,76 @@ export class UserRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern('[a-zA-Z].*'),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      otp: [{ value: '', disabled: false }],
+      mobile: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern('[0-9]*'),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(10),
+        ],
+      ],
+      confirmPassword: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(10),
+        ],
+      ],
+      otp: [
+        { value: '', disabled: true },
+        [Validators.required, Validators.minLength(6), Validators.maxLength(6)],
+      ],
     });
+  }
+
+  get name(): FormControl {
+    return this.form.get('name') as FormControl;
+  }
+
+  get email(): FormControl {
+    return this.form.get('email') as FormControl;
+  }
+
+  get mobile(): FormControl {
+    return this.form.get('mobile') as FormControl;
+  }
+
+  get password(): FormControl {
+    return this.form.get('password') as FormControl;
+  }
+
+  get confirmPassword(): FormControl {
+    return this.form.get('confirmPassword') as FormControl;
+  }
+
+  get otp(): FormControl {
+    return this.form.get('otp') as FormControl;
+  }
+
+  passwordsMatch(): boolean {
+    const password = this.form.get('password')?.value;
+    const confirmPassword = this.form.get('confirmPassword')?.value;
+
+    return password === confirmPassword;
   }
 
   handleError(err: any): string {
@@ -51,15 +120,16 @@ export class UserRegisterComponent implements OnInit {
     }
 
     if (this.form.invalid) {
+      this.invalid = true;
       this.toastr.error('Please check the provided input');
     } else {
       const user = this.form.getRawValue();
 
       if (!this.showOtpField) {
-        // Submit user details
         this.http.post(`${this.backendURL}/user/register`, user).subscribe({
           next: () => {
             this.showOtpField = true;
+            this.form.get('otp')?.enable();
             this.toastr.success(
               'User details submitted successfully. Enter OTP.'
             );
@@ -82,8 +152,8 @@ export class UserRegisterComponent implements OnInit {
               // After successful OTP verification, redirect to login page
               this.toastr.success(
                 'OTP verification successful. Redirecting to login page.'
-                );
-                this.router.navigate(['/user/login']);
+              );
+              this.router.navigate(['/user/login']);
             },
             error: (err) => {
               this.toastr.error('Error', this.handleError(err));

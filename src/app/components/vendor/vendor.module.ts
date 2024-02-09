@@ -9,6 +9,8 @@ import { VendorHomeComponent } from './vendor-home/vendor-home.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -22,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     VendorRoutingModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ]
 })
 export class VendorModule { }

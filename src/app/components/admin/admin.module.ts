@@ -13,6 +13,8 @@ import { SidebarComponent } from './adminCommon/sidebar/sidebar.component';
 import { NavbarComponent } from './adminCommon/navbar/navbar.component';
 import { MainBodyComponent } from './adminCommon/main-body/main-body.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -25,6 +27,8 @@ import { AdminUsersComponent } from './admin-users/admin-users.component';
     HttpClientModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+    MatSlideToggleModule,
+    MatIconModule
   ],
 })
 export class AdminModule {}

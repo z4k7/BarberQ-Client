@@ -1,9 +1,10 @@
 
     
-<main class="p-4 md:ml-64 h-auto pt-20">
+<main class="p-4 bg-gray-800 md:ml-64 h-auto pt-20">
 
+  
 
-    <nav class="bg-cyan-600 border-gray-200 dark:bg-gray-900">
+    <nav class="bg-cyan-600  border-gray-200 dark:bg-gray-900 sm:rounded-lg">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a class="flex items-center space-x-3 rtl:space-x-reverse">
                 <span class="self-center text-2xl font-semibold font-serif whitespace-nowrap text-white dark:text-white">Users List</span>
@@ -56,10 +57,10 @@
             </div>
         </div>
     
-     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+     <table class="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
+                <tr >
                     <th scope="col" class="p-4">
                         <div class="flex items-center">
                             <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -81,7 +82,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr *ngFor="let user of Users; let i = index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="w-4 p-4">
                         <div class="flex items-center">
                             <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -91,64 +92,33 @@
                     <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                         <img class="w-10 h-10 rounded-full" src="../../../../assets/final logo.jpg" alt="Jese image">
                         <div class="ps-3">
-                            <div class="text-base font-semibold">Neil Sims</div>
-                            <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
+                            <div class="text-base font-semibold">  {{user?.name}}  </div>
+                            <div class="font-normal text-gray-500">{{user.email}}</div>
                         </div>  
                     </th>
                     <td class="px-6 py-4">
-                        9400821522
+                        {{user.mobile}}
                     </td>
                     <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Active
+                        <div  class="flex items-center">
+                            <div  [ngClass]=" user.is_blocked? 'h-2.5 w-2.5 rounded-full bg-red-500 me-2' :  'h-2.5 w-2.5 rounded-full bg-green-500 me-2'"></div>
+                            
+                            {{user.is_blocked?'Blocked':'Active'}}
                         </div>
+
+                       
                     </td>
                     <td class="px-6 py-4">
                         <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a> -->
-                        <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-500 to-red-600 group-hover:from-red-500 group-hover:to-red-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-500 dark:focus:ring-blue-800">
-                            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            Block
+                        <button (click)="onAction(user.is_blocked,i,user._id)" [ngClass]="user.is_blocked? 'relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-500 to-green-600 group-hover:from-blue-600 group-hover:to-green-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-500 dark:focus:ring-blue-800 ':' relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-500 to-red-600 group-hover:from-red-500 group-hover:to-red-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-red-500 dark:focus:ring-blue-800'">
+                            <span  class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                {{user.is_blocked?'Unblock':'Block'}}
                             </span>
+                           
                             </button>
                     </td>
                 </tr>
-    
-    
-    
-               
-                
-                
-                <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td class="w-4 p-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-table-search-3" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
-                        </div>
-                    </td>
-                    <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <img class="w-10 h-10 rounded-full" src="../../../../assets/final logo.jpg" alt="Jese image">
-                        <div class="ps-3">
-                            <div class="text-base font-semibold">Leslie Livingston</div>
-                            <div class="font-normal text-gray-500">leslie@flowbite.com</div>
-                        </div>
-                    </th>
-                    <td class="px-6 py-4">
-                        9395934354
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="flex items-center">
-                            <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Blocked
-                        </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <!-- <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a> -->
-                        <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-500 to-green-600 group-hover:from-blue-600 group-hover:to-green-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-red-600 dark:focus:ring-blue-800">
-                            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            Unblock
-                            </span>
-                            </button>
-                    </td>
-                </tr>
+            
             </tbody>
         </table>
     </div>
@@ -157,8 +127,9 @@
     
     
     
-        
+    
       </main>
+
 
 
 

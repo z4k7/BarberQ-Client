@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
@@ -14,6 +19,8 @@ export class UserLoginComponent implements OnInit {
   form!: FormGroup;
   isSubmitted = false;
   backendURL = environment.baseURL;
+  hide: boolean = true;
+  invalid: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,16 +36,25 @@ export class UserLoginComponent implements OnInit {
     });
   }
 
+  get email(): FormControl {
+    return this.form.get('email') as FormControl;
+  }
+
+  get password(): FormControl {
+    return this.form.get('password') as FormControl;
+  }
+
   onSubmit(): void {
     this.isSubmitted = true;
     if (this.form.invalid) {
+      this.invalid = true;
       this.toastr.error('Please check the provided inputs.');
       return;
     } else {
       const user = this.form.getRawValue();
       this.http.post(`${this.backendURL}/user/login`, user).subscribe({
         next: (res: any) => {
-          console.log(`res:`,res);
+          console.log(`res:`, res);
           localStorage.setItem('userJwt', res.data.token);
           this.router.navigate(['/']);
         },

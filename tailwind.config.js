@@ -1,23 +1,15 @@
-
-
-import withMT from "@material-tailwind/html/utils/withMT";
- 
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
-// eslint-disable-next-line no-undef
-module.exports = withMT({
+module.exports = {
   content: [
-    
     "./src/**/*.{html,ts}",
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js" // add this line
   ],
-  darkMode: 'class',
   theme: {
-    
+    extend: {},
   },
   plugins: [
-    // eslint-disable-next-line no-undef
     require('flowbite/plugin'),
-    // eslint-disable-next-line no-undef
-    require("daisyui")
+    require('daisyui')
   ],
-});  
+}
