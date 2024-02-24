@@ -5,7 +5,7 @@
             <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <div class="input-box">
                     <span class="icon"><mat-icon>mail</mat-icon></span>
-                    <input formControlName="email" type="email" required>
+                    <input formControlName="email" type="email"  required>
                     <label>Email</label>
                     <div class="form-text text-danger pt-2" *ngIf="email.errors?.['required'] && (email.touched || email.dirty || invalid)">
                         Email is required

@@ -1,26 +1,46 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {  RouterModule, Routes } from '@angular/router';
 
 import { VendorRegisterComponent } from './vendor-register/vendor-register.component';
 import { VendorLoginComponent } from './vendor-login/vendor-login.component';
 import { VendorHomeComponent } from './vendor-home/vendor-home.component';
+import { loginGuard } from 'src/app/guards/login.guard';
+import { authGuard } from 'src/app/guards/auth.guard';
+import { VendorAddSalonComponent } from './vendor-add-salon/vendor-add-salon.component';
+import { MapBoxComponent } from '../common/map-box/map-box.component';
 
 const routes: Routes = [
+  {path:'map', component:MapBoxComponent},
   {
     path: 'login',
     title: 'Vendor | Login',
     component: VendorLoginComponent,
+    canActivate: [loginGuard],
+  
   },
   {
     path: 'register',
     title: ' Vendor | Register',
     component: VendorRegisterComponent,
+    canActivate: [loginGuard],
+    
   },
   {
-    path: 'home',
+    path: '',
     title: 'Vendor | Home',
     component: VendorHomeComponent,
+    canActivate:[authGuard],
+    children: [
+      {
+        path: 'add-salon',
+        title: 'Vendor | Add Salon',
+        component: VendorAddSalonComponent,
+      
+      }
+    ]
+    
   },
+  
 ];
 
 @NgModule({

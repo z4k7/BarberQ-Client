@@ -26,15 +26,36 @@ export class AdminUsersComponent implements OnInit {
 
   onAction(blocked: boolean, index: number, id: string) {
     if (blocked) {
-      this.Users[index].is_blocked = false;
+      this.Users[index].isBlocked = false;
       this.adminService.blockUnblockUser(id).subscribe((data) => {
-        this.toastr.info(`${this.Users[index].name} is Unblocked`);
+        this.toastr.warning(`${this.Users[index].name} is Unblocked`);
+        this.closeBlockModal(this.Users[index])
       });
     } else {
-      this.Users[index].is_blocked = true;
+      this.Users[index].isBlocked = true;
       this.adminService.blockUnblockUser(id).subscribe((data) => {
-        this.toastr.info(`${this.Users[index].name} is Blocked`);
+        this.toastr.warning(`${this.Users[index].name} is Blocked`);
+        this.closeBlockModal(this.Users[index])
       });
     }
   }
+
+  openBlockModal(user: any) {
+    const modal = document.getElementById(`hide-modal-${user._id}`) as HTMLDivElement
+    if (modal) {
+      modal.classList.remove('hidden')
+      modal.setAttribute('aria-hidden','false')
+    }
+  }
+  
+  closeBlockModal(user: any) {
+    const modal = document.getElementById(
+      `hide-modal-${user._id}`
+    ) as HTMLDivElement
+    if (modal) {
+      modal.classList.add('hidden')
+      modal.setAttribute('aria-hidden','true')
+    }
+  }
+
 }

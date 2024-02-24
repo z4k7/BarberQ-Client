@@ -72,7 +72,7 @@
                     </div>
                     <div class="form-text text-danger pt-2" *ngIf="confirmPassword.errors?.['maxlength'] && (confirmPassword.touched || confirmPassword.dirty)"> 
                         Confirm password is too Long.
-                    </div><div class="form-text text-danger pt-2" *ngIf=" !passwordsMatch() && (confirmPassword.touched || confirmPassword.dirty)"> 
+                    </div><div class="form-text text-danger pt-2" *ngIf="form.hasError('passwordMismatch') && (confirmPassword.touched || confirmPassword.dirty)"> 
                         Passwords don't match.
                     </div>
                     

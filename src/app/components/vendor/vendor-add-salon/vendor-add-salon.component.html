@@ -1,0 +1,171 @@
+<main class="p-4 md:ml-64 h-screen pt-20">
+   <section class="bg-white dark:bg-gray-900">
+      <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+         <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new salon</h2>
+         <form [formGroup]="salonForm" (ngSubmit)="onSubmit()" >
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+
+               <div class="sm:col-span-2">
+                  <label for="salonName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salon
+                     Name</label>
+                  <input type="text" formControlName="salonName" id="salonName"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                     placeholder="Type salon name" required="">
+               </div>
+
+
+               <div class="w-full">
+                  <label for="landmark"
+                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Landmark</label>
+                  <input type="text" formControlName="landmark" id="landmark"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                     placeholder="Enter landmark" required="">
+               </div>
+
+
+               <div class="w-full">
+                  <label for="locality"
+                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Locality</label>
+                  <input type="text" formControlName="locality" id="locality"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                     placeholder="Enter your locality" required="">
+               </div>
+
+
+               <div class="w-full">
+                  <label for="district"
+                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">District</label>
+                  <input type="text" formControlName="district" id="district"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                     placeholder="Enter your district " required="">
+               </div>
+
+
+               <div class="w-full">
+                  <label for="contactNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+                     Number</label>
+                  <input type="text" formControlName="contactNumber" id="contactNumber"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                     placeholder="Enter your contact number" required="">
+               </div>
+
+
+               <div class="w-full">
+                  <label for="openTime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opening
+                     Time</label>
+                  <input type="time" formControlName="openTime" id="openTime"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                     required="">
+               </div>
+
+
+               <div class="w-full">
+                  <label for="closeTime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Closing
+                     Time</label>
+                  <input type="time" formControlName="closeTime" id="closeTime"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      required="">
+               </div>
+
+
+               <div class="w-full">
+                  <label for="chairCount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chair
+                     Count</label>
+                  <div class="relative flex items-center mb-2">
+                      <button type="button" id="decrement-button" data-input-counter-decrement="chairCount" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                          <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                          </svg>
+                      </button>
+                      <input type="text" formControlName="chairCount" id="chairCount" data-input-counter  data-input-counter-min="1" data-input-counter-max="10" class="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  value="2" required />
+
+                      <button type="button" id="increment-button" data-input-counter-increment="chairCount" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                          <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                          </svg>
+                      </button>
+                  </div>
+               </div>
+
+
+               <div class="w-full">
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                     for="banner">Upload Banners</label>
+                  <input  #fileInput
+                  (change)="onFileChange($event)"
+                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                     id="banner" type="file" multiple>
+
+               </div>
+            </div>
+
+            <div>
+               <label  class="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">Facilities
+                  </label>
+               <ul
+               class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  
+               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                     <div class="flex items-center ps-3">
+                        <input formControlName="wifi" id="wifi-checkbox-list" type="checkbox" value=""
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="wifi-checkbox-list"
+                           class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Wifi</label>
+                     </div>
+                  </li>
+
+
+                  <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                     <div class="flex items-center ps-3">
+                        <input formControlName="parking" id="parking-checkbox-list" type="checkbox" value=""
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="parking-checkbox-list"
+                           class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Parking</label>
+                     </div>
+                  </li>
+
+                  
+                  <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                     <div class="flex items-center ps-3">
+                        <input formControlName="ac" id="ac-checkbox-list" type="checkbox" value=""
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="ac-checkbox-list"
+                           class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">A/C</label>
+                     </div>
+                  </li>
+
+
+                  <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                     <div class="flex items-center ps-3">
+                        <input formControlName="cards" id="cards-checkbox-list" type="checkbox" value=""
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="cards-checkbox-list"
+                           class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Cards</label>
+                     </div>
+                  </li>
+
+
+                  <li class="w-full dark:border-gray-600">
+                     <div class="flex items-center ps-3">
+                        <input formControlName="tv" id="tv-checkbox-list" type="checkbox" value=""
+                           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                        <label for="tv-checkbox-list"
+                           class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Television</label>
+                     </div>
+                  </li>
+
+
+               </ul>
+            </div>
+
+            <button type="submit"
+               class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+               Add Salon
+            </button>
+         </form>
+      </div>
+   </section>
+</main>
+
+
+

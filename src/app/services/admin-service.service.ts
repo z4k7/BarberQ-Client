@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { IService } from '../models/service';
+import { IApiResponse } from '../models/common';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -12,27 +13,58 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root',
 })
-
-  
 export class AdminService {
 
+  constructor(private http: HttpClient) {}
 
-baseURL : string = environment.baseURL
-
-  constructor(private http:HttpClient) {}
-
-
-  getUsers(): Observable<any>{
-    
-    return this.http.get(`${this.baseURL}/admin/users`, httpOptions)
+  getUsers(): Observable<any> {
+    return this.http.get(`/admin/users`, httpOptions);
   }
 
-  blockUnblockUser(id:string):Observable<any>{
-    console.log(id,'id')
-    return this.http.patch(`${this.baseURL}/admin/users/block/${id}`,httpOptions)
+  getVendors(): Observable<any> {
+    return this.http.get(`/admin/vendors`, httpOptions);
   }
 
- 
+  getServices(): Observable<any> {
+    return this.http.get(`/admin/services`, httpOptions);
+  }
 
+  addService(service: IService): Observable<any> {
+    return this.http.post<any>(
+      `/admin/services/addService`,
+      service,
+      httpOptions
+    );
+  }
 
+  editService(service: IService): Observable<IApiResponse<IService>> {
+    return this.http.put<IApiResponse<IService>>(
+      `/admin/services/editService`,
+      service,
+      httpOptions
+    );
+  }
+
+  hideService(id: string): Observable<any> {
+    return this.http.patch(
+      `/admin/services/hide/${id}`,
+      httpOptions
+    );
+  }
+
+  blockUnblockUser(id: string): Observable<any> {
+    console.log(id, 'id');
+    return this.http.patch(
+      `/admin/users/block/${id}`,
+      httpOptions
+    );
+  }
+
+  blockUnblockVendor(id: string): Observable<any> {
+    console.log(id, 'id');
+    return this.http.patch(
+      `/admin/vendors/block/${id}`,
+      httpOptions
+    );
+  }
 }

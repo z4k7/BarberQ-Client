@@ -4,6 +4,14 @@ export interface IUser extends Document{
     email:string;
     mobile:string;
     password: string;
-    is_blocked: boolean;
-    token: string;
+    isBlocked: boolean;
+    accessToken: string;
+    refreshToken: string;
+}
+
+
+export interface IApiTokenRes{
+    status: number;
+    message:string;
+    accessToken: string;
 }
