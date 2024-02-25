@@ -2,11 +2,6 @@
 /* styles.css */
 @import '../node_modules/ngx-toastr/toastr.css';
 
-
-
-
-
-
 /* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
@@ -14,10 +9,12 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 
 
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 

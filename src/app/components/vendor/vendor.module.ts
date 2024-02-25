@@ -10,6 +10,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { VendorNavbarComponent } from './vendorCommon/vendor-navbar/vendor-navbar.component';
+import { VendorSidebarComponent } from './vendorCommon/vendor-sidebar/vendor-sidebar.component';
+import { VendorAddSalonComponent } from './vendor-add-salon/vendor-add-salon.component';
 
 
 
@@ -17,7 +20,10 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [
     VendorLoginComponent,
     VendorRegisterComponent,
-    VendorHomeComponent
+    VendorHomeComponent,
+    VendorNavbarComponent,
+    VendorSidebarComponent,
+    VendorAddSalonComponent,
   ],
   imports: [
     CommonModule,
@@ -25,7 +31,8 @@ import { MatIconModule } from '@angular/material/icon';
     ToastrModule.forRoot(),
     HttpClientModule,
     ReactiveFormsModule,
-    MatIconModule
-  ]
+    MatIconModule,
+  ],
+  
 })
 export class VendorModule { }

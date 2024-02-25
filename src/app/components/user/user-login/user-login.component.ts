@@ -8,7 +8,6 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-login',
@@ -18,7 +17,6 @@ import { environment } from 'src/environments/environment';
 export class UserLoginComponent implements OnInit {
   form!: FormGroup;
   isSubmitted = false;
-  backendURL = environment.baseURL;
   hide: boolean = true;
   invalid: boolean = false;
 
@@ -52,19 +50,17 @@ export class UserLoginComponent implements OnInit {
       return;
     } else {
       const user = this.form.getRawValue();
-      this.http.post(`${this.backendURL}/user/login`, user).subscribe({
+      this.http.post(`/user/login`, user, { withCredentials: true }).subscribe({
         next: (res: any) => {
           console.log(`res:`, res);
-          localStorage.setItem('userJwt', res.data.token);
-          this.router.navigate(['/']);
-        },
-        error: (err) => {
-          console.error('Error during login:', err);
-          let errorMessage = 'An error occurred during login.';
-          if (err.error && err.error.data && err.error.data.message) {
-            errorMessage = err.error.data.message;
+          if (res.data && res.data.accessToken && res.data.refreshToken) {
+            localStorage.setItem('userJwtAccess', res.data.accessToken);
+            localStorage.setItem('userJwtRefresh', res.data.refreshToken);
+            this.router.navigate(['/']);
+          } else {
+            console.error('Invalid response format:', res);
+            this.toastr.error('Invalid response format');
           }
-          this.toastr.error(errorMessage);
         },
       });
     }

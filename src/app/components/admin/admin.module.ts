@@ -15,12 +15,22 @@ import { MainBodyComponent } from './adminCommon/main-body/main-body.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
-
-
-
+import { AdminVendorsComponent } from './admin-vendors/admin-vendors.component';
+import { AdminServicesComponent } from './admin-services/admin-services.component';
+import { AdminOverviewComponent } from './admin-overview/admin-overview.component';
 
 @NgModule({
-  declarations: [AdminLoginComponent, AdminHomeComponent, SidebarComponent, NavbarComponent, MainBodyComponent, AdminUsersComponent],
+  declarations: [
+    AdminLoginComponent,
+    AdminHomeComponent,
+    SidebarComponent,
+    NavbarComponent,
+    MainBodyComponent,
+    AdminUsersComponent,
+    AdminVendorsComponent,
+    AdminServicesComponent,
+    AdminOverviewComponent,
+  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -28,7 +38,8 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     MatSlideToggleModule,
-    MatIconModule
+    MatIconModule,
   ],
+  
 })
 export class AdminModule {}

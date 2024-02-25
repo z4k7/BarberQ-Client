@@ -37,36 +37,52 @@
     padding: 40px;
   }
   
-  .form-box h2{
+  .form-box h2 {
     font-size: 2em;
     color: white;
     text-align: center;
     font-family: Georgia, 'Times New Roman', Times, serif;
-  }
+    transition: color 0.3s ease; 
+}
+
+.form-box h2:hover {
+    color: gold; 
+}
   
   .input-box{
     position: relative;
     width: 100%;
     height: 50px;
-    border-bottom: 2px solid #162938;
+    border-bottom: 2px solid #1b538c;
     margin: 30px 0;
+    transition: border-bottom-color 1.5s ease;
   }
-  
-  .input-box label{
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    font-size: 1em;
-    color: #e0f7b6; 
-    font-weight: 500;
-    pointer-events: none;
-    transition: .5s;
+
+  .input-box:focus-within{
+    border-bottom-color:gold
   }
+
+  .input-box input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
   
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: #e0f7b6;
+  font-weight: 500;
+  pointer-events: none;
+  transition: color 0.3s ease; 
+}
 
-
-
+.input-box:hover label {
+  color: gold; 
+}
+  
 
   .input-box input:focus~label,
   .input-box input:valid~label{
@@ -85,13 +101,19 @@
     padding: 0 35px 0 5px;
   }
   
-  .input-box .icon{
+  .input-box .icon {
     position: absolute;
     right: 8px;
     font-size: 1.2em;
     color: #e0f7b6;
     line-height: 57px;
-  }
+    transition: color 0.3s ease, font-size 0.3s ease; 
+}
+
+.input-box .icon:hover {
+    color: gold; 
+    font-size: 1.5em; 
+}
   
   .remember-forgot a{
     color: #dee2e4;
@@ -102,10 +124,10 @@
     text-decoration: underline;
   }
   
-  .bttn{
+  .bttn {
     width: 100%;
     height: 45px;
-    background: #162938;
+    background: #123456;
     outline: none;
     border: none;
     border-radius: 6px;
@@ -114,7 +136,14 @@
     color: #fff;
     font-weight: 500;
     margin-top: 30px;
-  }
+    transition: background-color 1.5s ease; 
+}
+
+.bttn:hover {
+    background-color:#f1ee98 ;
+    color:#123456;
+    font-weight: 600; 
+}
   
   .login-register{
     font-size: .9rem;

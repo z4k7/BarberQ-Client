@@ -1,0 +1,119 @@
+<!-- Navbar Start -->
+<div class="navbar bg-white">
+    <div class="navbar-start">
+        <div class="dropdown transition-transform hover:scale-105">
+            <div tabindex="0" role="button" class="btn btn-ghost text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="black" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                </svg>
+            </div>
+            <ul tabindex="0"
+                class="menu text-white menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <li><a>Bookings</a></li>
+                <li><a>Calender</a></li>
+                <li><a>Salons Nearby</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="navbar-center">
+        <a routerLink="/user/salons" class=" btn btn-ghost transition-transform hover:scale-105 text-black text-xl">BarberQ</a>
+    </div>
+    <div class="navbar-end">
+        <button class="btn btn-ghost text-black btn-circle transition-transform hover:scale-105">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </button>
+        <button class="btn btn-ghost transition-transform hover:scale-105 text-black btn-circle">
+            <div class="indicator">
+                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <circle cx="12" cy="6" r="4" fill="#1C274C"></circle>
+                        <path
+                            d="M20 17.5C20 19.9853 20 22 12 22C4 22 4 19.9853 4 17.5C4 15.0147 7.58172 13 12 13C16.4183 13 20 15.0147 20 17.5Z"
+                            fill="#1C274C"></path>
+                    </g>
+                </svg>
+
+                <span class="badge badge-xs badge-success indicator-item"></span>
+            </div>
+        </button>
+    </div>
+</div>
+<!-- Navbar End -->
+
+<!-- Content Start -->
+<div class="container mx-auto">
+    <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
+        <div>
+            <!-- Card start -->
+            <div class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-purple-700">
+                <figure><img src="../../../../assets/bg15.jpg" class="card-image" alt="Movie" /></figure>
+                <div class="card-body">
+                    <h1 class="card-title">Salon Name</h1>
+                    <p>Details</p>
+                    <div class="card-actions justify-end">
+                        <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Card end -->
+
+            <!-- Accordion Start -->
+           
+            <div class="accordion gap-4 py-10 transition-transform hover:scale-105">
+                <div (click)="openAccord($event, 'serviceAccord')" class="collapse collapse-plus bg-base-200 ">
+                    <input type="radio" id="serviceAccord"  name="serviceAccordion"  value="serviceAccord" />
+                    <div class="collapse-title text-xl font-medium" for="serviceAccord">
+                        Services
+                    </div>
+                    <div class="collapse-content">
+                        <p>hello</p>
+                    </div>
+                </div>
+
+                <div (click)="openAccord($event, 'aboutAccord')" class=" collapse collapse-plus bg-base-200">
+                    <input type="radio" id="aboutAccord" name="aboutAccordion"  value="aboutAccord" />
+                    <div class="collapse-title text-xl font-medium" for="aboutAccord">
+                        About
+                    </div>
+                    <div class="collapse-content">
+                        <p>hello</p>
+                    </div>
+                </div>
+
+                <div (click)="openAccord($event, 'ratingAccord')" class="collapse collapse-plus bg-base-200">
+                    <input type="radio" id="ratingAccord" name="ratingAccordion"  value="ratingAccord" />
+                    <div class="collapse-title text-xl font-medium" for="ratingAccord">
+                        Reviews & Ratings
+                    </div>
+                    <div class="collapse-content">
+                        <p>hello</p>
+                    </div>
+                </div>
+                <div (click)="openAccord($event, 'contactAccord')" class="collapse collapse-plus bg-base-200">
+                    <input type="radio" id="contactAccord" name="contactAccordion"  value="contactAccord" />
+                    <div class="collapse-title text-xl font-medium" for="contactAccord">
+                        Contact
+                    </div>
+                    <div class="collapse-content">
+                        <p>hello</p>
+                    </div>
+                </div>
+            </div>
+
+                
+            
+            <!-- Accordion End -->
+        </div>
+    </div>
+</div>
+
+  
+  
+  <!-- Content End -->
