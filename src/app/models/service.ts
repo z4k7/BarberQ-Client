@@ -1,4 +1,4 @@
-export interface IService extends Document{
+export interface IService {
     _id: string;
     serviceName: string;
     duration: string;

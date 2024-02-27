@@ -7,7 +7,7 @@ import { IApiResponse } from '../models/common';
 const httpOptions = {
   headers: new HttpHeaders({
     'content-Type': 'application/json',
-  }),
+      }),
 };
 
 @Injectable({
@@ -17,16 +17,16 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<any> {
-    return this.http.get(`/admin/users`, httpOptions);
+  getUsers(page:number, limit:number, searchQuery?:string): Observable<any> {
+    return this.http.get(`/admin/users?page=${page}&limit=${limit}&searchQuery=${searchQuery}`, httpOptions);
   }
 
-  getVendors(): Observable<any> {
-    return this.http.get(`/admin/vendors`, httpOptions);
+  getVendors(page:number,limit:number,searchQuery?:string): Observable<any> {
+    return this.http.get(`/admin/vendors/?page=${page}&limit=${limit}&searchQuery=${searchQuery}`, httpOptions);
   }
 
-  getServices(): Observable<any> {
-    return this.http.get(`/admin/services`, httpOptions);
+  getServices(page:number,limit:number,searchQuery?:string): Observable<any> {
+    return this.http.get(`/admin/services/?page=${page}&limit=${limit}&searchQuery=${searchQuery}`, httpOptions);
   }
 
   addService(service: IService): Observable<any> {

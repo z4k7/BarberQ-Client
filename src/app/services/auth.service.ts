@@ -21,6 +21,6 @@ export class AuthService {
     };
     console.log(refreshToken, `Refresh token from get access token service.`);
 
-    return this.http.get<IApiTokenRes>(`${baseURL}token`, httpOptions);
+    return this.http.get<IApiTokenRes>(`${baseURL}/token`, httpOptions);
   }
 }

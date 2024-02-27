@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Compressor from 'compressorjs';
@@ -39,7 +39,7 @@ export class VendorAddSalonComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.pattern('^[a-zA-Z]*$'),
+          Validators.pattern('^[^\d\s]+(?:[^\d\s]+|\s)*$'),
         ],
       ],
       locality: [
@@ -69,7 +69,7 @@ export class VendorAddSalonComponent implements OnInit {
       ],
       openTime: ['', [Validators.required]],
       closeTime: ['', [Validators.required]],
-      chairCount: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+      chairCount: ['', [Validators.required, Validators.pattern('^[1-9]$')]],
       banner: [null, [Validators.required]],
       wifi: [false],
       parking: [false],
@@ -77,6 +77,43 @@ export class VendorAddSalonComponent implements OnInit {
       cards: [false],
       tv: [false],
     });
+  }
+
+
+  get salonName(): FormControl{
+    return this.salonForm.get('salonName') as FormControl
+  }
+
+  get landmark(): FormControl{
+    return this.salonForm.get('landmark') as FormControl
+  }
+
+  get locality(): FormControl{
+    return this.salonForm.get('locality') as FormControl
+  }
+
+  get contactNumber(): FormControl{
+    return this.salonForm.get('contactNumber') as FormControl
+  }
+
+  get district(): FormControl{
+    return this.salonForm.get('district') as FormControl
+  }
+
+  get openTime(): FormControl{
+    return this.salonForm.get('openTime') as FormControl
+  }
+
+  get closeTime(): FormControl{
+    return this.salonForm.get('closeTime') as FormControl
+  }
+  
+
+  get chairCount(): FormControl{
+    return this.salonForm.get('chairCount') as FormControl
+  }
+  get banner(): FormControl{
+    return this.salonForm.get('banner') as FormControl
   }
 
   onFileChange(event: any): void {
@@ -113,6 +150,16 @@ console.log(`file size:`,file.size);
 
   onSubmit(): void {
     this.isSubmitted = true;
+
+    console.log(this.salonForm.controls, 'contols');
+    
+
+    if (this.salonForm.invalid) {
+      this.invalid = true;
+      this.toastr.error('Please check the provided input');
+      return;
+    }
+
     console.log('submitted');
     const formData = new FormData();
     const formValue = this.salonForm.getRawValue();
@@ -162,5 +209,5 @@ console.log(`file size:`,file.size);
         this.toastr.error('Error adding salon');
       },
     });
-  }
+  } 
 }

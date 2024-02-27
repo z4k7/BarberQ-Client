@@ -7,7 +7,7 @@
                     <span class="icon"><mat-icon>person</mat-icon></span>
                     <input type="text" formControlName="name" required>
                     <label>Name</label>
-                    <div class="form-text text-danger pt-2" *ngIf="name.errors?.['required'] && (name.touched || name.dirty || invalid)"> 
+                    <div class="form-text text-danger pt-2" *ngIf="name.errors?.['required'] && (name.touched || name.dirty )"> 
                         Name is required.
                     </div>
                     <div class="form-text text-danger pt-2" *ngIf="name.errors?.['minlength'] && (name.touched || name.dirty)"> 
@@ -21,7 +21,7 @@
                     <span class="icon"><mat-icon>mail</mat-icon></span>
                     <input type="email" formControlName="email" required>
                     <label>Email</label>
-                    <div class="form-text text-danger pt-2" *ngIf="email.errors?.['required'] && (email.touched || email.dirty || invalid)"> 
+                    <div class="form-text text-danger pt-2" *ngIf="email.errors?.['required'] && (email.touched || email.dirty )"> 
                         Email is required.
                     </div>
                     <div class="form-text text-danger pt-2" *ngIf="email.errors?.['email'] && (email.touched || email.dirty)"> 
@@ -32,7 +32,7 @@
                     <span class="icon"><mat-icon>call</mat-icon></span>
                     <input type="text" formControlName="mobile" required>
                     <label>Mobile</label>
-                    <div class="form-text text-danger pt-2" *ngIf="mobile.errors?.['required'] && (mobile.touched || mobile.dirty || invalid)"> 
+                    <div class="form-text text-danger pt-2" *ngIf="mobile.errors?.['required'] && (mobile.touched || mobile.dirty )"> 
                         Mobile is required.
                     </div>
                     <div class="form-text text-danger pt-2" *ngIf="mobile.errors?.['minlength'] && (mobile.touched || mobile.dirty) && !mobile.errors?.['pattern']"> 
@@ -49,7 +49,7 @@
                     <span (click)="pHide = !pHide" class="icon" style="cursor: pointer;"><mat-icon>{{ pHide?"visibility":"visibility_off" }}</mat-icon></span>
                     <input [type]="pHide? 'password' : 'text' " formControlName="password" required>
                     <label>Password</label>
-                    <div class="form-text text-danger pt-2" *ngIf="password.errors?.['required'] && (password.touched || password.dirty || invalid)"> 
+                    <div class="form-text text-danger pt-2" *ngIf="password.errors?.['required'] && (password.touched || password.dirty )"> 
                         Password is required.
                     </div>
                     <div class="form-text text-danger pt-2" *ngIf="password.errors?.['minlength'] && (password.touched || password.dirty)"> 
@@ -64,7 +64,7 @@
                     <span (click)="cHide = !cHide" class="icon" style="cursor: pointer;"><mat-icon>{{ cHide?"visibility":"visibility_off" }}</mat-icon></span>
                     <input [type]="cHide? 'password' : 'text' " formControlName="confirmPassword" required>
                     <label>Confirm Password</label>
-                    <div class="form-text text-danger pt-2" *ngIf="confirmPassword.errors?.['required'] && (confirmPassword.touched || confirmPassword.dirty || invalid)"> 
+                    <div class="form-text text-danger pt-2" *ngIf="confirmPassword.errors?.['required'] && (confirmPassword.touched || confirmPassword.dirty )"> 
                         Confirm password is required.
                     </div>
                     <div class="form-text text-danger pt-2" *ngIf="confirmPassword.errors?.['minlength'] && (confirmPassword.touched || confirmPassword.dirty)"> 
@@ -82,7 +82,7 @@
                     <span (click)="oHide = !oHide" class="icon" style="cursor: pointer;"><mat-icon>{{ oHide?"visibility":"visibility_off" }}</mat-icon></span>
                     <input [type]="oHide? 'password' : 'text' " formControlName="otp" required>
                     <label>Enter Otp</label>
-                    <div class="form-text text-danger pt-2" *ngIf="otp.errors?.['required'] && (otp.touched || otp.dirty || invalid)"> 
+                    <div class="form-text text-danger pt-2" *ngIf="otp.errors?.['required'] && (otp.touched || otp.dirty )"> 
                         otp is required.
                     </div>
                     <div class="form-text text-danger pt-2" *ngIf="otp.errors?.['minlength'] && (otp.touched || otp.dirty)"> 
@@ -91,9 +91,16 @@
                     <div class="form-text text-danger pt-2" *ngIf="otp.errors?.['maxlength'] && (otp.touched || otp.dirty)"> 
                         otp is too Long.
                     </div>
+                    <div class="form-text text-danger pt-2" > 
+                        Time remaining {{ formattedTime}}
+                    </div>
                 </div>
 
-                <button type="submit" class="bttn" >Register</button>
+                <button type="button" *ngIf="showOtpField && remainingTime == 0 " (click)="resendOtp()" class="bttn" >Resend Otp</button>
+                
+                <button  *ngIf=" showOtpField && !otp.errors && otpResendCount <3" type="submit" class="bttn" >Verify</button>
+
+                <button  *ngIf="!showOtpField" type="submit" class="bttn" >Register</button>
                 <div class="login-register">
                     <p>Don't have an account? <a routerLink="/vendor/login" class="register-link">Login</a></p>
                 </div>

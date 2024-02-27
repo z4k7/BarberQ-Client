@@ -74,149 +74,46 @@
 <!-- Content start -->
 
 <div class="h-56 flex flex-wrap justify-center  gap-4 py-5 pb-9 content-start  ">
-    <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
+    
+    
+    
+    <div  *ngFor="let salon of Salons" routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
         <div  class="card card-compact w-96 bg-black shadow-lg hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg6.jpg" alt="Shoes" class="card-image" /></figure>
+            <figure><img loading="lazy" src={{salon.banners[0]}} alt="Salon Image" class="card-image" /></figure>
             <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
+                <h2 class="card-title">{{salon.salonName}}</h2>
+                <p>{{salon.locality}}</p>
                 <div class="card-actions justify-end">
                     <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
                 </div>
             </div>
         </div>
     </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg10.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg3.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg7.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg5.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg8.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg9.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg2.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg10.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg15.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg16.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
-   <div routerLink="/user/salons/salon-details" class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="card card-compact w-96 bg-black shadow-lg  hover:shadow-purple-700 ">
-            <figure><img src="../../../../assets/bg12.jpg" alt="Shoes" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">Salon</h2>
-                <p>Love is in the hair!</p>
-                <div class="card-actions justify-end">
-                    <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
+
+
+    
+
+
+
+
+   
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- content end -->

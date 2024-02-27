@@ -6,7 +6,6 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 import { isTokenExpired } from '../helpers/jwtToken';
 import { AuthService } from '../services/auth.service';
 
@@ -16,7 +15,6 @@ import { AuthService } from '../services/auth.service';
 export class JwtInterceptor implements HttpInterceptor {
 
   constructor( 
-    private router: Router,
     private authService:AuthService
   ) {}
 
