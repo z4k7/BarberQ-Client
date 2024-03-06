@@ -7,25 +7,29 @@
                     <span class="icon"><mat-icon>mail</mat-icon></span>
                     <input formControlName="email" type="email" required>
                     <label>Email</label>
-                    <div class="form-text text-danger pt-2" *ngIf="email.errors?.['required'] && (email.touched || email.dirty || invalid)">
+                    <div class="form-text text-danger pt-2"
+                        *ngIf="email.errors?.['required'] && (email.touched || email.dirty || invalid)">
                         Email is required
                     </div>
-                    <div class="form-text text-danger pt-2" *ngIf="email.errors?.['email'] && (email.touched || email.dirty)">
+                    <div class="form-text text-danger pt-2"
+                        *ngIf="email.errors?.['email'] && (email.touched || email.dirty)">
                         Email is Invalid
                     </div>
                 </div>
 
                 <div class="input-box">
-                    <span class="icon" (click)="hide = !hide" style="cursor: pointer;"><mat-icon>{{hide?"visibility":"visibility_off"}}</mat-icon></span>
+                    <span class="icon" (click)="hide = !hide"
+                        style="cursor: pointer;"><mat-icon>{{hide?"visibility":"visibility_off"}}</mat-icon></span>
                     <input formControlName="password" [type]="hide? 'password' : 'text' " required>
                     <label>Password</label>
-                    <div class="form-text text-danger pt-2" *ngIf="password.errors?.['required'] && (password.touched || password.dirty || invalid)">
+                    <div class="form-text text-danger pt-2"
+                        *ngIf="password.errors?.['required'] && (password.touched || password.dirty || invalid)">
                         Password is required
                     </div>
                 </div>
-                <div class="remember-forgot forgot">
+                <!-- <div class="remember-forgot forgot">
                     <a routerLink="/forgotpassword">Forgot Password</a>
-                </div>
+                </div> -->
                 <button type="submit" class="bttn">Login</button>
                 <div class="login-register">
                     <p>Don't have an account? <a routerLink="/vendor/register" class="register-link">Register</a></p>
@@ -33,4 +37,4 @@
             </form>
         </div>
     </div>
-  </body>
+</body>

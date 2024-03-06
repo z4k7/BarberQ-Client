@@ -2,23 +2,36 @@
    <section class="bg-white dark:bg-gray-900">
       <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
          <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new salon</h2>
-         <form [formGroup]="salonForm" (ngSubmit)="onSubmit()" >
+         <form [formGroup]="salonForm" (ngSubmit)="onSubmit()">
             <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
-               <div class="sm:col-span-2">
+               <div class="w-full">
                   <label for="salonName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salon
                      Name</label>
-                     <input type="text" formControlName="salonName" id="salonName"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Type salon name" required="">
+                  <input type="text" formControlName="salonName" id="salonName"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                     placeholder="Type salon name" required="">
 
-                     <div  *ngIf="salonName.invalid && (salonName.touched || salonName.dirty || invalid)">
-      <div  class="form-text text-red-700 pt-2" *ngIf="salonName.errors?.['required']"  >Salon name is required.</div>
-      <div  class="form-text text-red-700 pt-2" *ngIf="salonName.errors?.['minlength']" >Salon name is too short.</div>
-      <div class="form-text text-red-700 pt-2" *ngIf="salonName.errors?.['pattern'] && !salonName.errors?.['minlength']"  >Salon name should be in Alphabet.</div>
-    </div>
+                  <div *ngIf="salonName.invalid && (salonName.touched || salonName.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="salonName.errors?.['required']">Salon name is
+                        required.</div>
+                     <div class="form-text text-red-700 pt-2" *ngIf="salonName.errors?.['minlength']">Salon name is too
+                        short.</div>
+                     <div class="form-text text-red-700 pt-2"
+                        *ngIf="salonName.errors?.['pattern'] && !salonName.errors?.['minlength']">Salon name should be
+                        in Alphabet.</div>
+                  </div>
                </div>
 
+
+               <div class="w-full">
+                  <label for="location"
+                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                  <button type="button" class="btn btn-accent " (click)="openMap()"> Choose Location</button>
+               </div>
+
+               <app-map-box class="sm:col-span-2" *ngIf="showMap"
+                  (chooseLocation)="onLocationChosen($event)"></app-map-box>
 
                <div class="w-full">
                   <label for="landmark"
@@ -26,11 +39,15 @@
                   <input type="text" formControlName="landmark" id="landmark"
                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                      placeholder="Enter landmark" required="">
-                     <div  *ngIf="landmark.invalid && (landmark.touched || landmark.dirty || invalid)">
-                        <div  class="form-text text-red-700 pt-2" *ngIf="landmark.errors?.['required']">Landmark is required.</div>
-                        <div class="form-text text-red-700 pt-2" *ngIf="landmark.errors?.['minlength']">Landmark is too short.</div>
-                        <div class="form-text text-red-700 pt-2" *ngIf="landmark.errors?.['pattern'] && !landmark.errors?.['minlength']">Landmark should be in Alphabet.</div>
-                      </div>
+                  <div *ngIf="landmark.invalid && (landmark.touched || landmark.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="landmark.errors?.['required']">Landmark is
+                        required.</div>
+                     <div class="form-text text-red-700 pt-2" *ngIf="landmark.errors?.['minlength']">Landmark is too
+                        short.</div>
+                     <div class="form-text text-red-700 pt-2"
+                        *ngIf="landmark.errors?.['pattern'] && !landmark.errors?.['minlength']">Landmark should be in
+                        Alphabet.</div>
+                  </div>
                </div>
 
 
@@ -40,11 +57,15 @@
                   <input type="text" formControlName="locality" id="locality"
                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                      placeholder="Enter your locality" required="">
-                     <div  *ngIf="locality.invalid && (locality.touched || locality.dirty || invalid)">
-                        <div class="form-text text-red-700 pt-2" *ngIf="locality.errors?.['required']">Locality is required.</div>
-                        <div class="form-text text-red-700 pt-2" *ngIf="locality.errors?.['minlength']">Locality is too short.</div>
-                        <div class="form-text text-red-700 pt-2" *ngIf="locality.errors?.['pattern'] && !locality.errors?.['minlength']">Locality should be in Alphabet.</div>
-                      </div>
+                  <div *ngIf="locality.invalid && (locality.touched || locality.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="locality.errors?.['required']">Locality is
+                        required.</div>
+                     <div class="form-text text-red-700 pt-2" *ngIf="locality.errors?.['minlength']">Locality is too
+                        short.</div>
+                     <div class="form-text text-red-700 pt-2"
+                        *ngIf="locality.errors?.['pattern'] && !locality.errors?.['minlength']">Locality should be in
+                        Alphabet.</div>
+                  </div>
                </div>
 
 
@@ -54,26 +75,36 @@
                   <input type="text" formControlName="district" id="district"
                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                      placeholder="Enter your district " required="">
-                     <div  *ngIf="district.invalid && (district.touched || district.dirty || invalid)">
-                        <div class="form-text text-red-700 pt-2" *ngIf="district.errors?.['required']">District is required.</div>
-                        <div class="form-text text-red-700 pt-2" *ngIf="district.errors?.['minlength']">District is too short.</div>
-                        <div class="form-text text-red-700 pt-2" *ngIf="district.errors?.['pattern'] && !district.errors?.['minlength']">District should be in Alphabet.</div>
-                      </div>
+                  <div *ngIf="district.invalid && (district.touched || district.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="district.errors?.['required']">District is
+                        required.</div>
+                     <div class="form-text text-red-700 pt-2" *ngIf="district.errors?.['minlength']">District is too
+                        short.</div>
+                     <div class="form-text text-red-700 pt-2"
+                        *ngIf="district.errors?.['pattern'] && !district.errors?.['minlength']">District should be in
+                        Alphabet.</div>
+                  </div>
                </div>
 
 
                <div class="w-full">
-                  <label for="contactNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
+                  <label for="contactNumber"
+                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact
                      Number</label>
                   <input type="text" formControlName="contactNumber" id="contactNumber"
                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                      placeholder="Enter your contact number" required="">
-                     <div  *ngIf="contactNumber.invalid && (contactNumber.touched || contactNumber.dirty || invalid)">
-                        <div  class="form-text text-red-700 pt-2" *ngIf="contactNumber.errors?.['required']">Contact Number is required.</div>
-                        <div  class="form-text text-red-700 pt-2" *ngIf="contactNumber.errors?.['minlength']">Contact Number is too short.</div>
-                        <div  class="form-text text-red-700 pt-2" *ngIf="contactNumber.errors?.['maxlength']">Contact Number is too long.</div>
-                        <div  class="form-text text-red-700 pt-2" *ngIf="contactNumber.errors?.['pattern'] && !contactNumber.errors?.['minlength'] && !contactNumber.errors?.['maxlength']">Contact Number should be in numeric.</div>
-                      </div>
+                  <div *ngIf="contactNumber.invalid && (contactNumber.touched || contactNumber.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="contactNumber.errors?.['required']">Contact Number
+                        is required.</div>
+                     <div class="form-text text-red-700 pt-2" *ngIf="contactNumber.errors?.['minlength']">Contact Number
+                        is too short.</div>
+                     <div class="form-text text-red-700 pt-2" *ngIf="contactNumber.errors?.['maxlength']">Contact Number
+                        is too long.</div>
+                     <div class="form-text text-red-700 pt-2"
+                        *ngIf="contactNumber.errors?.['pattern'] && !contactNumber.errors?.['minlength'] && !contactNumber.errors?.['maxlength']">
+                        Contact Number should be in numeric.</div>
+                  </div>
                </div>
 
 
@@ -83,9 +114,10 @@
                   <input type="time" formControlName="openTime" id="openTime"
                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                      required="">
-                     <div  *ngIf="openTime.invalid && (openTime.touched || openTime.dirty || invalid)">
-                        <div  class="form-text text-red-700 pt-2" *ngIf="openTime.errors?.['required']">Opening time is required.</div>
-                      </div>
+                  <div *ngIf="openTime.invalid && (openTime.touched || openTime.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="openTime.errors?.['required']">Opening time is
+                        required.</div>
+                  </div>
                </div>
 
 
@@ -94,10 +126,11 @@
                      Time</label>
                   <input type="time" formControlName="closeTime" id="closeTime"
                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                      required="">
-                      <div  *ngIf="closeTime.invalid && (closeTime.touched || closeTime.dirty || invalid)">
-                        <div  class="form-text text-red-700 pt-2" *ngIf="closeTime.errors?.['required']">Closing time is required.</div>
-                      </div>
+                     required="">
+                  <div *ngIf="closeTime.invalid && (closeTime.touched || closeTime.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="closeTime.errors?.['required']">Closing time is
+                        required.</div>
+                  </div>
                </div>
 
 
@@ -105,49 +138,97 @@
                   <label for="chairCount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chair
                      Count</label>
                   <div class="relative flex items-center mb-2">
-                      <button type="button" id="decrement-button" data-input-counter-decrement="chairCount" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                          <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                          </svg>
-                      </button>
-                      <input type="text" formControlName="chairCount" id="chairCount" data-input-counter  data-input-counter-min="1" data-input-counter-max="10" class="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  value="2" required />
-                      
-                     
+                     <button type="button" id="decrement-button" data-input-counter-decrement="chairCount"
+                        class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                        <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true"
+                           xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M1 1h16" />
+                        </svg>
+                     </button>
+                     <input type="text" formControlName="chairCount" id="chairCount" data-input-counter
+                        data-input-counter-min="1" data-input-counter-max="10"
+                        class="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        value="2" required />
 
-                      <button type="button" id="increment-button" data-input-counter-increment="chairCount" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                          <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                          </svg>
-                      </button>
-                     </div>
-                     <div  *ngIf="chairCount.invalid && (chairCount.touched || chairCount.dirty || invalid)">
-                       <div class="form-text text-red-700 pt-2" *ngIf="chairCount.errors?.['required']">Chair count is required.</div>
-                       <div class="form-text text-red-700 pt-2" *ngIf="chairCount.errors?.['pattern'] && !chairCount.errors?.['minlength']">Chair Count should be in single digit.</div>
-                     </div>
+
+
+                     <button type="button" id="increment-button" data-input-counter-increment="chairCount"
+                        class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                        <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true"
+                           xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 1v16M1 9h16" />
+                        </svg>
+                     </button>
+                  </div>
+                  <div *ngIf="chairCount.invalid && (chairCount.touched || chairCount.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="chairCount.errors?.['required']">Chair count is
+                        required.</div>
+                     <div class="form-text text-red-700 pt-2"
+                        *ngIf="chairCount.errors?.['pattern'] && !chairCount.errors?.['minlength']">Chair Count should
+                        be in single digit.</div>
+                  </div>
                </div>
-
 
                <div class="w-full">
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                     for="banner">Upload Banners</label>
-                  <input  #fileInput
-                  (change)="onFileChange($event)"
+                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="banner">Upload
+                     Banners</label>
+                  <input #fileInput (change)="onFileChange($event)"
                      class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                      id="banner" type="file" multiple>
-                     <div  *ngIf="banner.invalid && (banner.touched || banner.dirty || invalid)">
-                        <div  class="form-text text-red-700 pt-2" *ngIf="banner.errors?.['required']">Banner is required.</div>
-                      </div>
+                  <div *ngIf="banner.invalid && (banner.touched || banner.dirty || invalid)">
+                     <div class="form-text text-red-700 pt-2" *ngIf="banner.errors?.['required']">Banner is required.
+                     </div>
+                  </div>
 
                </div>
+
+               <div class="w-full">
+                  <label for="closeTime"
+                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Services</label>
+
+                  <button id="dropdownCheckboxButton" data-dropdown-toggle="dropdownDefaultCheckbox"
+                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                     type="button">Choose Services<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                           d="m1 1 4 4 4-4" />
+                     </svg>
+                  </button>
+
+                  <!-- Dropdown menu -->
+                  <div id="dropdownDefaultCheckbox"
+                     class="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600">
+                     <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownCheckboxButton">
+
+
+                        <li *ngFor=" let service of services">
+                           <div class="flex items-center">
+                              <input [id]="'checkbox-item-'+service._id" type="checkbox" [value]="service.serviceName"
+                                 (change)="updateCheckedServices(service._id)"
+                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                              <label [for]="'checkbox-item-'+ service._id"
+                                 class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                 {{service.serviceName}} </label>
+                           </div>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+
+
+
             </div>
 
             <div>
-               <label  class="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">Facilities
-                  </label>
+               <label class="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white">Facilities
+               </label>
                <ul
-               class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                  
-               <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                  class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+
+                  <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                      <div class="flex items-center ps-3">
                         <input formControlName="wifi" id="wifi-checkbox-list" type="checkbox" value=""
                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
@@ -166,7 +247,7 @@
                      </div>
                   </li>
 
-                  
+
                   <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                      <div class="flex items-center ps-3">
                         <input formControlName="ac" id="ac-checkbox-list" type="checkbox" value=""
@@ -208,6 +289,3 @@
       </div>
    </section>
 </main>
-
-
-

@@ -1,9 +1,17 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import Compressor from 'compressorjs';
+import { IService } from 'src/app/models/service';
+import { VendorService } from 'src/app/services/vendor.service';
+import { GeoapifyService } from 'src/app/services/geoapify.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-vendor-add-salon',
@@ -14,24 +22,36 @@ export class VendorAddSalonComponent implements OnInit {
   salonForm!: FormGroup;
   invalid: boolean = false;
   isSubmitted: boolean = false;
+  showMap: boolean = false;
+
+  markerLat: number = 0;
+  markerLng: number = 0;
+
+  services: IService[] = [];
+  checkedServices: { [key: string]: boolean } = {};
 
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
 
+  geoapifyFilled: boolean = false;
+
   constructor(
     private http: HttpClient,
-    private router: Router,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private vendorService: VendorService,
+    private geoapifyService: GeoapifyService
   ) {}
 
   ngOnInit(): void {
+    initFlowbite();
+    this.getServices();
     this.salonForm = this.formBuilder.group({
       salonName: [
         '',
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.pattern('^[a-zA-Z]*$'),
+          Validators.pattern('^[a-zA-Z]+( [a-zA-Z]+)*$'),
         ],
       ],
       landmark: [
@@ -39,7 +59,7 @@ export class VendorAddSalonComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.pattern('^[^\d\s]+(?:[^\d\s]+|\s)*$'),
+          Validators.pattern('^[^ds]+(?:[^ds]+|s)*$'),
         ],
       ],
       locality: [
@@ -76,55 +96,55 @@ export class VendorAddSalonComponent implements OnInit {
       ac: [false],
       cards: [false],
       tv: [false],
+      latitude: 0,
+      longitude: 0,
     });
   }
 
-
-  get salonName(): FormControl{
-    return this.salonForm.get('salonName') as FormControl
+  get salonName(): FormControl {
+    return this.salonForm.get('salonName') as FormControl;
   }
 
-  get landmark(): FormControl{
-    return this.salonForm.get('landmark') as FormControl
+  get landmark(): FormControl {
+    return this.salonForm.get('landmark') as FormControl;
   }
 
-  get locality(): FormControl{
-    return this.salonForm.get('locality') as FormControl
+  get locality(): FormControl {
+    return this.salonForm.get('locality') as FormControl;
   }
 
-  get contactNumber(): FormControl{
-    return this.salonForm.get('contactNumber') as FormControl
+  get contactNumber(): FormControl {
+    return this.salonForm.get('contactNumber') as FormControl;
   }
 
-  get district(): FormControl{
-    return this.salonForm.get('district') as FormControl
+  get district(): FormControl {
+    return this.salonForm.get('district') as FormControl;
   }
 
-  get openTime(): FormControl{
-    return this.salonForm.get('openTime') as FormControl
+  get openTime(): FormControl {
+    return this.salonForm.get('openTime') as FormControl;
   }
 
-  get closeTime(): FormControl{
-    return this.salonForm.get('closeTime') as FormControl
+  get closeTime(): FormControl {
+    return this.salonForm.get('closeTime') as FormControl;
   }
-  
 
-  get chairCount(): FormControl{
-    return this.salonForm.get('chairCount') as FormControl
+  get chairCount(): FormControl {
+    return this.salonForm.get('chairCount') as FormControl;
   }
-  get banner(): FormControl{
-    return this.salonForm.get('banner') as FormControl
+  get banner(): FormControl {
+    return this.salonForm.get('banner') as FormControl;
   }
 
   onFileChange(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
 
-console.log(`file size:`,file.size);
+      console.log(`file size:`, file.size / (1024 * 1024));
 
-      if (file.size > 10485760) {
+      if (file.size > 1048576) {
         this.compressImage(file).then((compressedFile) => {
-          console.log('compressedsize:',compressedFile.size)
+          console.log('compressedsize:', compressedFile.size / (1024 * 1024));
           this.salonForm.get('banner')?.setValue(compressedFile);
         });
       } else {
@@ -136,7 +156,7 @@ console.log(`file size:`,file.size);
   compressImage(file: File): Promise<Blob> {
     return new Promise((resolve, reject) => {
       new Compressor(file, {
-        quality: 0.6,
+        quality: 0.5,
         success(result) {
           resolve(result);
         },
@@ -148,11 +168,98 @@ console.log(`file size:`,file.size);
     });
   }
 
+  getCheckedServices(): string[] {
+    return Object.keys(this.checkedServices).filter(
+      (key) => this.checkedServices[key]
+    );
+  }
+
+  updateCheckedServices(serviceId: string): void {
+    this.checkedServices[serviceId] = !this.checkedServices[serviceId]; // Toggle value
+    console.log(`value:${this.checkedServices[serviceId]}`);
+  }
+
+  getServices(): void {
+    this.vendorService.getServices().subscribe({
+      next: (res) => {
+        if (res.data) {
+          this.services = res.data.salonData;
+        }
+      },
+    });
+  }
+
+  openMap(): void {
+    this.showMap = true;
+  }
+
+  onLocationChosen(location: { lat: number; lng: number }): void {
+    if (location) {
+      this.markerLat = location.lat;
+      this.markerLng = location.lng;
+
+      this.salonForm.get('landmark')?.enable();
+      this.salonForm.get('locality')?.enable();
+      this.salonForm.get('district')?.enable();
+
+      this.geoapifyService
+        .getLocation(this.markerLat, this.markerLng)
+        .subscribe((response: any) => {
+          console.log(`Geoapify response`, response);
+
+          const salonLocality = response.features[0].properties.city || '';
+          const salonDistrict =
+            response.features[0].properties.state_district || '';
+          const salonLandmark =
+            response.features[0].properties.address_line1 || '';
+
+          this.salonForm.get('latitude')?.setValue(this.markerLat);
+          this.salonForm.get('longitude')?.setValue(this.markerLng);
+
+          // Check if the fields are empty or filled manually
+          const landmarkManuallyFilled =
+            this.salonForm.get('landmark')?.touched ||
+            this.salonForm.get('landmark')?.dirty;
+          const localityManuallyFilled =
+            this.salonForm.get('locality')?.touched ||
+            this.salonForm.get('locality')?.dirty;
+          const districtManuallyFilled =
+            this.salonForm.get('district')?.touched ||
+            this.salonForm.get('district')?.dirty;
+
+          // Set field values only if they are empty or filled manually
+          if (!landmarkManuallyFilled) {
+            this.salonForm.get('landmark')?.setValue(salonLandmark);
+          }
+          if (!localityManuallyFilled) {
+            this.salonForm.get('locality')?.setValue(salonLocality);
+          }
+          if (!districtManuallyFilled) {
+            this.salonForm.get('district')?.setValue(salonDistrict);
+          }
+
+          // Disable the fields again if they were filled with Geoapify response
+          if (salonLandmark && !landmarkManuallyFilled) {
+            this.salonForm.get('landmark')?.disable();
+          }
+          if (salonLocality && !localityManuallyFilled) {
+            this.salonForm.get('locality')?.disable();
+          }
+          if (salonDistrict && !districtManuallyFilled) {
+            this.salonForm.get('district')?.disable();
+          }
+
+          this.geoapifyFilled = true;
+        });
+
+      this.showMap = false;
+    } else {
+      console.error('Invalid location:', location);
+    }
+  }
+
   onSubmit(): void {
     this.isSubmitted = true;
-
-    console.log(this.salonForm.controls, 'contols');
-    
 
     if (this.salonForm.invalid) {
       this.invalid = true;
@@ -160,39 +267,39 @@ console.log(`file size:`,file.size);
       return;
     }
 
-    console.log('submitted');
     const formData = new FormData();
     const formValue = this.salonForm.getRawValue();
-    console.log(`formValue`, formValue);
-
+    console.log('formValue:', JSON.stringify(formValue));
     const facilities: string[] = [];
 
-    if (formValue.wifi) {
-      facilities.push('Wi-Fi');
-    }
-    if (formValue.parking) {
-      facilities.push('Parking');
-    }
-    if (formValue.ac) {
-      facilities.push('Air Conditioning');
-    }
-    if (formValue.cards) {
-      facilities.push('Cards Accepted');
-    }
-    if (formValue.tv) {
-      facilities.push('Television');
+    for (const facility of ['wifi', 'parking', 'ac', 'cards', 'tv']) {
+      if (formValue[facility]) {
+        facilities.push(facility);
+      }
     }
 
     for (const key in formValue) {
-      if (key === 'banner' &&formValue[key]) {
-        formData.append(key, formValue[key], formValue[key]?.name);
-      } else if (!['wifi', 'parking', 'ac', 'cards', 'tv'].includes(key)) {
+      if (key !== 'latitude' && key !== 'longitude') {
         formData.append(key, formValue[key]);
       }
     }
+
+    formData.append(
+      'location',
+      JSON.stringify({
+        latitude: formValue.latitude,
+        longitude: formValue.longitude,
+      })
+    );
+
     formData.append('facilities', JSON.stringify(facilities));
 
-    console.log('FormData entries:');
+    const selectedServices = this.getCheckedServices().map((serviceId) =>
+      serviceId.trim()
+    );
+    formData.append('services', JSON.stringify(selectedServices));
+
+    console.log('FormData:');
     formData.forEach((value, key) => {
       console.log(key + ': ' + value);
     });
@@ -209,5 +316,5 @@ console.log(`file size:`,file.size);
         this.toastr.error('Error adding salon');
       },
     });
-  } 
+  }
 }

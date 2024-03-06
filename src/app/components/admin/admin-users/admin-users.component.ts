@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { AdminService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { IUser } from 'src/app/models/user';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -13,7 +13,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 })
 export class AdminUsersComponent implements OnInit {
   Users: IUser[] = [];
-  allUsers: IUser[] = []
+  allUsers: IUser[] = [];
   currentPage = 1;
   itemsPerPage = 10;
   searchQuery: string = '';
@@ -23,7 +23,7 @@ export class AdminUsersComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -66,7 +66,7 @@ export class AdminUsersComponent implements OnInit {
 
   setFilter(filterOption: string): void {
     if (filterOption === 'all') {
-      this.Users = this.allUsers
+      this.Users = this.allUsers;
     } else if (filterOption === 'active') {
       this.Users = this.allUsers.filter((user) => !user.isBlocked);
     } else if (filterOption === 'blocked') {
@@ -76,21 +76,11 @@ export class AdminUsersComponent implements OnInit {
     this.currentPage = 1;
   }
 
-  onSearch(): void {
-    this.searchQuery = this.searchForm.get('searchQuery')?.value;
-    console.log(`search submitted`, this.searchQuery);
-    this.currentPage = 1;
-    this.getUsers();
-  }
-
- 
-
   onPageChange(page: number): void {
     this.currentPage = page;
     this.getUsers();
   }
 
-  
   getLastItemIndex(): number {
     return Math.min(this.currentPage * this.itemsPerPage, this.userCount);
   }

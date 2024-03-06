@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { IService } from 'src/app/models/service';
-import { AdminService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { initFlowbite } from 'flowbite';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
@@ -103,12 +103,6 @@ export class AdminServicesComponent implements OnInit {
     this.currentPage = 1;
   }
 
-  // onSearch(): void {
-  //   this.searchQuery = this.searchForm.get('searchQuery')?.value;
-  //   this.currentPage = 1;
-  //   this.getServices();
-  // }
-
   onPageChange(page: number): void {
     this.currentPage = page;
     this.getServices();
@@ -131,10 +125,9 @@ export class AdminServicesComponent implements OnInit {
 
     this.adminService.editService(update).subscribe({
       next: (res) => {
-        console.log(`response after edit`,res);
+        console.log(`response after edit`, res);
         this.Services[index].serviceName = res.data.serviceName;
         this.toastr.success(res.message);
-
       },
     });
 

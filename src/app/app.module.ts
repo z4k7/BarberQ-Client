@@ -6,17 +6,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ToastrModule } from 'ngx-toastr';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TransformUrlInterceptor } from './interceptors/transform-url.interceptor';
 import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { RouterModule } from '@angular/router'; 
-import { MapBoxComponent } from './components/common/map-box/map-box.component';
+import { RouterModule } from '@angular/router';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
-  declarations: [AppComponent, MapBoxComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +27,8 @@ import { MapBoxComponent } from './components/common/map-box/map-box.component';
     MatIconModule,
     HttpClientModule,
     RouterModule,
+    FormsModule,
+    ScrollingModule,
   ],
   providers: [
     {
@@ -48,5 +50,3 @@ import { MapBoxComponent } from './components/common/map-box/map-box.component';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-
-

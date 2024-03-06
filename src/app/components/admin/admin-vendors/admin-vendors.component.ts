@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { AdminService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { IVendor } from 'src/app/models/vendor';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
-
-
 
 @Component({
   selector: 'app-admin-vendors',
@@ -15,7 +13,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 })
 export class AdminVendorsComponent implements OnInit {
   Vendors: IVendor[] = [];
-  allVendors: IVendor[] = []
+  allVendors: IVendor[] = [];
 
   currentPage = 1;
   itemsPerPage = 10;
@@ -23,12 +21,10 @@ export class AdminVendorsComponent implements OnInit {
   vendorCount = 0;
   searchForm!: FormGroup;
 
-
   constructor(
     private adminService: AdminService,
     private toastr: ToastrService,
     private fb: FormBuilder
-
   ) {}
 
   ngOnInit() {
@@ -40,14 +36,13 @@ export class AdminVendorsComponent implements OnInit {
     });
 
     this.searchForm
-    .get('searchQuery')
-    ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
-    .subscribe((value) => {
-      this.searchQuery = value;
-      this.currentPage = 1;
-      this.getVendors();
-    });
-
+      .get('searchQuery')
+      ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((value) => {
+        this.searchQuery = value;
+        this.currentPage = 1;
+        this.getVendors();
+      });
   }
   getVendors(): void {
     this.adminService
@@ -56,6 +51,7 @@ export class AdminVendorsComponent implements OnInit {
         next: (res) => {
           if (res.data !== null) {
             this.Vendors = res.data.adminData.vendors;
+            this.allVendors = res.data.adminData.vendors;
             this.vendorCount = res.data.adminData.vendorCount;
           }
         },
@@ -70,7 +66,7 @@ export class AdminVendorsComponent implements OnInit {
 
   setFilter(filterOption: string): void {
     if (filterOption === 'all') {
-      this.Vendors = this.allVendors
+      this.Vendors = this.allVendors;
     } else if (filterOption === 'active') {
       this.Vendors = this.allVendors.filter((vendor) => !vendor.isBlocked);
     } else if (filterOption === 'blocked') {
@@ -79,14 +75,6 @@ export class AdminVendorsComponent implements OnInit {
     this.itemsPerPage = this.Vendors.length;
     this.currentPage = 1;
   }
-
-  onSearch(): void {
-    this.searchQuery = this.searchForm.get('searchQuery')?.value;
-    this.currentPage = 1;
-    this.getVendors();
-  }
-
-
 
   onPageChange(page: number): void {
     this.currentPage = page;
