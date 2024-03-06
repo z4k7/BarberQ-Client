@@ -1,4 +1,4 @@
-export interface IVendor extends Document{
+export interface IVendor  {
     _id: string;
     name: string;
     email:string;

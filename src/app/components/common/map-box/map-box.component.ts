@@ -1,17 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as mapboxgl from 'mapbox-gl';
+import { CommonModule } from '@angular/common';
+import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 @Component({
   selector: 'app-map-box',
   templateUrl: './map-box.component.html',
   styleUrls: ['./map-box.component.css'],
+  standalone: true,
+  imports: [CommonModule],
 })
 export class MapBoxComponent implements OnInit {
   map: mapboxgl.Map | undefined;
   style = 'mapbox://styles/mapbox/streets-v11';
-  lat: number = 30.2672;
-  lng: number = -97.7431;
+  lat: number = 11.2588;
+  lng: number = 75.7804;
+  marker: mapboxgl.Marker | undefined;
+  geocoder: MapboxGeocoder | undefined;
+  @Output() locationSelected = new EventEmitter<{ lat: number; lng: number }>();
+  @Output() chooseLocation = new EventEmitter<{ lat: number; lng: number }>();
 
   ngOnInit(): void {
     this.map = new mapboxgl.Map({
@@ -23,98 +31,61 @@ export class MapBoxComponent implements OnInit {
     });
 
     this.map.on('load', () => {
-      this.map?.addSource('earthquakes', {
-        type: 'geojson',
-        // Use a URL for the value for the `data` property.
-        data: 'https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson',
+      this.geocoder = new MapboxGeocoder({
+        accessToken: environment.mapbox.accessToken,
+        mapboxgl: mapboxgl,
+        placeholder: 'Search for a location',
       });
 
-      this.map?.addLayer({
-        id: 'earthquakes-layer',
-        type: 'circle',
-        source: 'earthquakes',
-        paint: {
-          'circle-radius': 4,
-          'circle-stroke-width': 2,
-          'circle-color': 'red',
-          'circle-stroke-color': 'white',
-        },
-      });
+      this.map?.addControl(this.geocoder);
 
-      this.map?.addSource('Austin Hex', {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          properties: [],
-          geometry: {
-            type: 'Polygon',
-            coordinates: [
-              [
-                [-97.792921355615277, 30.127749592004189],
-                [-97.792921355615277, 30.196912993949898],
-                [-97.723644348336762, 30.231476492188843],
-                [-97.654367341058247, 30.196912993949898],
-                [-97.654367341058247, 30.127749592004189],
-                [-97.723644348336762, 30.093149704984011],
-                [-97.792921355615277, 30.127749592004189],
-              ],
-            ],
-          },
-        },
-      });
+      const canvas = this.map?.getCanvas();
+      if (canvas) {
+        canvas.style.cursor = 'grab';
+      }
 
-      this.map?.addSource('Austin Points', {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [-97.693686723567652, 30.282059053494251],
-              },
-              properties: {
-                title: 'Austin 1',
-              },
-            },
-            {
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [-97.763899906620225, 30.251333606714322],
-              },
-              properties: {
-                title: 'Austin 2',
-              },
-            },
-          ],
-        },
-      });
-
-      this.map?.addLayer({
-        id: 'Austin Hex',
-        type: 'fill',
-        source: 'Austin Hex', // reference the data source
-        layout: {},
-        paint: {
-          'fill-color': '#0080ff', // blue color fill
-          'fill-opacity': 0.5,
-        },
-      });
-
-      this.map?.addLayer({
-        id: 'Austin Points',
-        type: 'circle', // circle marker types
-        source: 'Austin Points', // reference the data source
-        layout: {},
-        paint: {
-          'circle-color': 'blue',
-          'circle-radius': 6,
-          'circle-stroke-width': 2,
-          'circle-stroke-color': 'white',
-        },
+      this.map?.on('dblclick', (e) => {
+        const { lngLat } = e;
+        if (this.map && lngLat) {
+          this.addMarker(lngLat);
+        }
       });
     });
   }
+
+  addMarker(lngLat: mapboxgl.LngLat): void {
+    // Remove existing marker
+    if (this.marker) {
+      this.marker.remove();
+    }
+
+    // Create a new marker at the clicked location
+    this.marker = new mapboxgl.Marker({
+      draggable: true,
+    }).setLngLat(lngLat);
+
+    // Add the new marker to the map
+    if (this.map) {
+      this.marker.addTo(this.map);
+    }
+  }
+
+  chooseLocationClicked(): void {
+    if (this.marker) {
+      const coordinates = this.marker.getLngLat();
+      this.chooseLocation.emit({
+        lat: coordinates.lat,
+        lng: coordinates.lng,
+      });
+    }
+  }
+
+  onMoveMarker = (e: mapboxgl.MapMouseEvent) => {
+    const lngLat = e.lngLat;
+    this.marker?.setLngLat([lngLat.lng, lngLat.lat]);
+    this.chooseLocation.emit({
+      lat: lngLat.lat,
+      lng: lngLat.lng,
+    });
+  };
 }

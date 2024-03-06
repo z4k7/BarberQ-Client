@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { IService } from 'src/app/models/service';
-import { AdminService } from 'src/app/services/admin-service.service';
+import { AdminService } from 'src/app/services/admin.service';
 import { initFlowbite } from 'flowbite';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-admin-services',
@@ -15,22 +13,37 @@ import { Router } from '@angular/router';
 })
 export class AdminServicesComponent implements OnInit {
   Services: IService[] = [];
+  allServices: IService[] = [];
   form!: FormGroup;
-  backendURL = environment.baseURL;
+  currentPage = 1;
+  itemsPerPage = 10;
+  searchQuery: string = '';
+  serviceCount = 0;
+  searchForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private router: Router,
     private adminService: AdminService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.adminService.getServices().subscribe((services) => {
-      this.Services = services?.data?.serviceData;
-      initFlowbite();
+    initFlowbite();
+    this.getServices();
+
+    this.searchForm = this.fb.group({
+      searchQuery: [''],
     });
+
+    this.searchForm
+      .get('searchQuery')
+      ?.valueChanges.pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((value) => {
+        this.searchQuery = value;
+        this.currentPage = 1;
+        this.getServices();
+      });
 
     this.form = this.formBuilder.group({
       serviceName: [
@@ -53,13 +66,68 @@ export class AdminServicesComponent implements OnInit {
     });
   }
 
+  getServices(): void {
+    this.adminService
+      .getServices(this.currentPage, this.itemsPerPage, this.searchQuery)
+      .subscribe({
+        next: (res) => {
+          if (res.data !== null) {
+            console.log(`response`, res);
+            this.Services = res.data.serviceData.services;
+            this.allServices = res.data.serviceData.services;
+            this.serviceCount = res.data.serviceData.serviceCount;
+          }
+        },
+      });
+  }
+
+  setItemsPerPage(itemsPerPage: number): void {
+    this.itemsPerPage = itemsPerPage;
+    this.currentPage = 1;
+    this.getServices();
+  }
+
+  setFilter(filterOption: string): void {
+    if (filterOption === 'all') {
+      this.Services = this.allServices;
+    } else if (filterOption === 'face') {
+      this.Services = this.allServices.filter(
+        (service) => service.category == 'Face Treatment'
+      );
+    } else if (filterOption === 'hair') {
+      this.Services = this.allServices.filter(
+        (service) => service.category == 'Hair Treatment'
+      );
+    }
+    this.itemsPerPage = this.Services.length;
+    this.currentPage = 1;
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.getServices();
+  }
+
+  getLastItemIndex(): number {
+    return Math.min(this.currentPage * this.itemsPerPage, this.serviceCount);
+  }
+
+  get totalPages(): number[] {
+    return Array.from(
+      { length: Math.ceil(this.serviceCount / this.itemsPerPage) },
+      (_, i) => i + 1
+    );
+  }
+
   saveChanges(service: IService, index: number): void {
     const update = this.form.getRawValue();
     update._id = service._id;
 
     this.adminService.editService(update).subscribe({
       next: (res) => {
+        console.log(`response after edit`, res);
         this.Services[index].serviceName = res.data.serviceName;
+        this.toastr.success(res.message);
       },
     });
 
@@ -143,18 +211,22 @@ export class AdminServicesComponent implements OnInit {
   }
 
   onAction(visible: boolean, index: number, id: string) {
-    if (visible) {
-      this.Services[index].isVisible = false;
-      this.adminService.hideService(id).subscribe((data) => {
-        this.toastr.warning(`${this.Services[index].serviceName} is Hidden`);
-        this.closeHideModal(this.Services[index]);
-      });
-    } else {
-      this.Services[index].isVisible = true;
-      this.adminService.hideService(id).subscribe((data) => {
-        this.toastr.warning(`${this.Services[index].serviceName} is Visible`);
-        this.closeHideModal(this.Services[index]);
-      });
-    }
+    // if (visible) {
+    this.Services[index].isVisible = !visible;
+    this.adminService.hideService(id).subscribe((data) => {
+      this.toastr.warning(
+        `${this.Services[index].serviceName} is ${
+          visible ? 'Hidden' : 'Visible'
+        }`
+      );
+      this.closeHideModal(this.Services[index]);
+    });
+    // } else {
+    //   this.Services[index].isVisible = true;
+    //   this.adminService.hideService(id).subscribe((data) => {
+    //     this.toastr.warning(`${this.Services[index].serviceName} is Visible`);
+    //     this.closeHideModal(this.Services[index]);
+    //   });
+    // }
   }
 }

@@ -94,12 +94,18 @@
                     <div class="form-text text-danger pt-2" *ngIf="otp.errors?.['maxlength'] && (otp.touched || otp.dirty)"> 
                         otp is too Long.
                     </div>
+                    <div class="form-text text-danger pt-2" > 
+                        Time remaining {{ formattedTime}}
+                    </div>
                 </div>
 
 
+                <button type="button" *ngIf="showOtpField && remainingTime == 0 " (click)="resendOtp()" class="bttn" >Resend Otp</button>
+
+                <button  *ngIf=" showOtpField && !otp.errors && otpResendCount <3" type="submit" class="bttn" >Verify</button>
 
 
-                <button type="submit" class="bttn" >Register</button>
+                <button *ngIf="!showOtpField" type="submit" class="bttn" >Register</button>
                 <div class="login-register">
                     <p>Don't have an account? <a routerLink="/user/login" class="register-link">Login</a></p>
                 </div>

@@ -8,13 +8,12 @@ import { VendorHomeComponent } from './vendor-home/vendor-home.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { VendorNavbarComponent } from './vendorCommon/vendor-navbar/vendor-navbar.component';
 import { VendorSidebarComponent } from './vendorCommon/vendor-sidebar/vendor-sidebar.component';
 import { VendorAddSalonComponent } from './vendor-add-salon/vendor-add-salon.component';
-
-
+import { MapBoxComponent } from '../common/map-box/map-box.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,8 @@ import { VendorAddSalonComponent } from './vendor-add-salon/vendor-add-salon.com
     HttpClientModule,
     ReactiveFormsModule,
     MatIconModule,
+    FormsModule,
+    MapBoxComponent,
   ],
-  
 })
-export class VendorModule { }
+export class VendorModule {}

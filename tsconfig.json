@@ -13,6 +13,7 @@
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
+    
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
@@ -22,7 +23,8 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "incremental": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

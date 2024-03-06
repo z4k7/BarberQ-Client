@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { formatTime } from 'src/app/helpers/timer';
 
 @Component({
   selector: 'app-vendor-register',
@@ -21,9 +22,15 @@ export class VendorRegisterComponent implements OnInit {
   isSubmitted = false;
   showOtpField = false;
   invalid: boolean = false;
+
   oHide = true;
   pHide = true;
   cHide = true;
+
+  remainingTime = 0;
+  formattedTime: string = '00:30';
+  otpResendCount: number = 0;
+  showOtpResend: boolean = true;
 
   constructor(
     private readonly http: HttpClient,
@@ -116,6 +123,35 @@ export class VendorRegisterComponent implements OnInit {
     return password === confirmPassword ? null : { passwordMismatch: true };
   };
 
+  startTimer(): void {
+    this.remainingTime = 30;
+
+    const timer = setInterval(() => {
+      this.remainingTime--;
+
+      if (this.remainingTime <= 0) {
+        clearInterval(timer);
+        console.log(`Otp Expired`);
+      }
+      this.formattedTime = formatTime(this.remainingTime);
+    }, 1000);
+  }
+
+  resendOtp(): void {
+    if (this.otpResendCount < 3) {
+      this.http.get('/vendor/resend-otp').subscribe({
+        next: () => {
+          console.log(`ResendOtp sent successfully`);
+          this.toastr.success('Please enter new otp', 'OTP Resend Successfully');
+          this.startTimer();
+          this.otpResendCount++;
+        },
+      });
+    } else {
+      this.toastr.info('Maximum resend attempts reached','Oops!');
+    }
+  }
+
   onSubmit(): void {
     this.isSubmitted = true;
 
@@ -124,7 +160,7 @@ export class VendorRegisterComponent implements OnInit {
       return;
     }
     if (this.form.invalid) {
-      this.invalid = true;
+      // this.invalid = true;
       this.toastr.error('Please check the provided input');
     } else {
       const vendor = this.form.getRawValue();
@@ -135,8 +171,13 @@ export class VendorRegisterComponent implements OnInit {
             this.showOtpField = true;
             this.form.get('otp')?.enable();
             this.toastr.success(
-              'Vendor Details Submitted Successfully. Enter OTP.'
+              'Enter OTP', 'Vendor Details Submitted Successfully.'
             );
+            this.startTimer();
+
+            setTimeout(() => {
+              this.showOtpResend = false;
+            }, 1000 * 3);
           },
         });
       } else {

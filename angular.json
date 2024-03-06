@@ -13,6 +13,10 @@
         "build": {
           "builder": "@ngx-env/builder:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "mapbox-gl",
+              "compressorjs"
+            ],
             "outputPath": "dist/client",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -29,8 +33,8 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "ngxEnv":{
-              "prefix":"^NG_APP_"
+            "ngxEnv": {
+              "prefix": "^NG_APP_"
             }
           },
           "configurations": {
@@ -79,7 +83,7 @@
           }
         },
         "test": {
-          "builder":"@ngx-env/builder:karma",
+          "builder": "@ngx-env/builder:karma",
           "options": {
             "polyfills": [
               "zone.js",
