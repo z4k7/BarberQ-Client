@@ -101,14 +101,14 @@ export class AdminVendorsComponent implements OnInit {
       });
     } else {
       this.Vendors[index].isBlocked = true;
-      this.adminService.blockUnblockVendor(id).subscribe((data) => {
+      this.adminService.blockUnblockVendor(id).subscribe(() => {
         this.toastr.warning(`${this.Vendors[index].name} is Blocked`);
         this.closeBlockModal(this.Vendors[index]);
       });
     }
   }
 
-  openBlockModal(vendor: any) {
+  openBlockModal(vendor: IVendor) {
     const modal = document.getElementById(
       `hide-modal-${vendor._id}`
     ) as HTMLDivElement;
@@ -118,7 +118,7 @@ export class AdminVendorsComponent implements OnInit {
     }
   }
 
-  closeBlockModal(vendor: any) {
+  closeBlockModal(vendor: IVendor) {
     const modal = document.getElementById(
       `hide-modal-${vendor._id}`
     ) as HTMLDivElement;

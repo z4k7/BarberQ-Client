@@ -14,6 +14,8 @@ import { ErrorHandlerInterceptor } from './interceptors/error-handler.intercepto
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { RouterModule } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +31,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     RouterModule,
     FormsModule,
     ScrollingModule,
+    NgxSpinnerModule,
   ],
   providers: [
     {
@@ -44,6 +47,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpinnerInterceptor,
       multi: true,
     },
   ],

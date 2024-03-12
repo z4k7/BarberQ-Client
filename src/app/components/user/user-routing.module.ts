@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {  RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { UserLoginComponent } from './user-login/user-login.component';
@@ -15,20 +15,17 @@ const routes: Routes = [
     title: 'BarberQ | Login',
     component: UserLoginComponent,
     canActivate: [loginGuard],
-   
-    
   },
   {
     path: 'register',
     title: 'BarberQ | Register',
     component: UserRegisterComponent,
     canActivate: [loginGuard],
-   
   },
   {
     path: '',
     title: 'BarberQ | Home',
-    component: UserHomeComponent
+    component: UserHomeComponent,
   },
   {
     path: 'salons',
@@ -39,24 +36,23 @@ const routes: Routes = [
         path: '',
         title: 'BarberQ | Salon',
         component: UserSalonsComponent,
-    },
+      },
       {
         path: 'salon-details',
         title: 'BarberQ | Salon Details',
         component: UserSalonDetailsComponent,
-      }, {
+      },
+      {
         path: 'book-a-chair',
         title: 'BarberQ | Book A Chair',
-        component: UserBookAChairComponent
-      }
-    ]
-  }
+        component: UserBookAChairComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UserRoutingModule {
-  
- }
+export class UserRoutingModule {}

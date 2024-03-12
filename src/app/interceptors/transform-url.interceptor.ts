@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class TransformUrlInterceptor implements HttpInterceptor {
+  constructor() {}
+
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler

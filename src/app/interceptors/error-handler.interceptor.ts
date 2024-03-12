@@ -3,28 +3,37 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor,HttpErrorResponse
+  HttpInterceptor,
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
+  constructor(private toastr: ToastrService) {}
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    // this.spinner.show();
 
-  constructor(private toastr : ToastrService) {}
+    return next.handle(request).pipe(
+      catchError((err: HttpErrorResponse) => {
+        let errorMessage = 'An error occurred during login.';
+        if (err.error && err.error.data && err.error.data.message) {
+          errorMessage = err.error.data.message;
+        }
+        this.toastr.error(errorMessage);
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(catchError((err: HttpErrorResponse) => {
-
-      let errorMessage = 'An error occurred during login.';
-      if (err.error && err.error.data && err.error.data.message) {
-        errorMessage = err.error.data.message;
-      }
-     this.toastr.error(errorMessage);
-
-      return throwError(()=>err)
-
-    }))
+        return throwError(() => err);
+      })
+      // finalize(() => {
+      //   setTimeout(() => {
+      //     this.spinner.hide();
+      //   }, 1000);
+      // }
+      //   )
+    );
   }
 }

@@ -168,7 +168,7 @@ export class AdminServicesComponent implements OnInit {
     }
   }
 
-  openEditModal(service: any) {
+  openEditModal(service: IService) {
     const modal = document.getElementById(
       `crud-modal-edit-${service._id}`
     ) as HTMLDivElement;
@@ -181,7 +181,7 @@ export class AdminServicesComponent implements OnInit {
     }
   }
 
-  closeEditModal(service: any) {
+  closeEditModal(service: IService) {
     const modal = document.getElementById(
       `crud-modal-edit-${service._id}`
     ) as HTMLDivElement;
@@ -190,7 +190,7 @@ export class AdminServicesComponent implements OnInit {
       modal.setAttribute('aria-hidden', 'true');
     }
   }
-  openHideModal(service: any) {
+  openHideModal(service: IService) {
     const modal = document.getElementById(
       `hide-modal-${service._id}`
     ) as HTMLDivElement;
@@ -200,7 +200,7 @@ export class AdminServicesComponent implements OnInit {
     }
   }
 
-  closeHideModal(service: any) {
+  closeHideModal(service: IService) {
     const modal = document.getElementById(
       `hide-modal-${service._id}`
     ) as HTMLDivElement;
@@ -211,9 +211,8 @@ export class AdminServicesComponent implements OnInit {
   }
 
   onAction(visible: boolean, index: number, id: string) {
-    // if (visible) {
     this.Services[index].isVisible = !visible;
-    this.adminService.hideService(id).subscribe((data) => {
+    this.adminService.hideService(id).subscribe(() => {
       this.toastr.warning(
         `${this.Services[index].serviceName} is ${
           visible ? 'Hidden' : 'Visible'
@@ -221,12 +220,5 @@ export class AdminServicesComponent implements OnInit {
       );
       this.closeHideModal(this.Services[index]);
     });
-    // } else {
-    //   this.Services[index].isVisible = true;
-    //   this.adminService.hideService(id).subscribe((data) => {
-    //     this.toastr.warning(`${this.Services[index].serviceName} is Visible`);
-    //     this.closeHideModal(this.Services[index]);
-    //   });
-    // }
   }
 }
