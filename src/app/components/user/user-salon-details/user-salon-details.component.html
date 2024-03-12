@@ -5,29 +5,29 @@
 <!-- Content Start -->
 <div class="container mx-auto">
     <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
-        <div class="skeleton">
+        <div class="max-w-5xl">
             <!-- Card start -->
             <div
-                class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-purple-700">
-                <figure><img src={{salon.banners[0]}} class="card-image" alt="Movie" /></figure>
+                class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-black">
+                <figure>
+                    <img src="{{ salon.banners[0] }}" class="card-image" alt="Salon" />
+                </figure>
                 <div class="card-body">
-                    <h1 class="card-title">{{salon.salonName}}</h1>
-                    <span>
-                        {{salon.landmark}}<br>
-                        {{salon.locality}}<br>
-                        {{salon.district}}
+                    <h1 class="card-title text-white">{{ salon.salonName }}</h1>
+                    <span class="text-base text-white">
+                        Nr. {{ salon.landmark }}<br />
+                        {{ salon.locality }}<br />
+                        {{ salon.district }}
                     </span>
-
-                    <span>No. Of Chairs:{{salon.chairCount}}</span>
-
-
-                    <div class="card-actions justify-end">
-                        <button (click)="bookChair(salon)" class="btn hover:border-white">Book A Chair</button>
-
-                        <!-- <button routerLink="/user/salons/book-a-chair" class="btn hover:border-white">Book A Chair</button> -->
+                    <div class="card-actions">
+                        <button (click)="bookChair(salon)"
+                            class="btn bg-black text-white skeleton transition-transform hover:scale-105 hover:border-white">
+                            Book A Chair
+                        </button>
                     </div>
                 </div>
             </div>
+
             <!-- Card end -->
 
             <!-- Accordion Start -->
@@ -35,40 +35,61 @@
             <div class="accordion gap-4 py-10 transition-transform hover:scale-105">
                 <div (click)="openAccord($event, 'serviceAccord')" class="collapse collapse-plus bg-base-200 ">
                     <input type="radio" id="serviceAccord" name="serviceAccordion" value="serviceAccord" />
-                    <div class="collapse-title text-xl font-medium" for="serviceAccord">
+                    <div class="collapse-title text-xl text-white font-medium" for="serviceAccord">
                         Services
                     </div>
                     <div class="collapse-content">
-                        <p>hello</p>
+                        <ng-container *ngFor="let service of services">
+                            <div class="badge badge-info me-4 mb-4 badge-lg">{{service?.serviceName}} </div>
+                        </ng-container>
+
+
+
+
                     </div>
                 </div>
 
                 <div (click)="openAccord($event, 'aboutAccord')" class=" collapse collapse-plus bg-base-200">
                     <input type="radio" id="aboutAccord" name="aboutAccordion" value="aboutAccord" />
-                    <div class="collapse-title text-xl font-medium" for="aboutAccord">
+                    <div class="collapse-title text-white text-xl font-medium" for="aboutAccord">
                         About
                     </div>
                     <div class="collapse-content">
-                        <p>hello</p>
+                        <h4 class="text-white" style="text-decoration: underline;">Facilities</h4>
+                        <ng-container *ngFor="let facility of facilities ">
+                            <div class="badge badge-info me-4 mb-4 badge-lg">{{facility}} </div>
+                        </ng-container>
+
+                        <h4 class="text-white mt-4" style="text-decoration: underline;">No. of Chairs</h4>
+
+                        <div class="badge badge-info me-4 badge-lg">{{salon.chairCount}} </div>
+
+
                     </div>
                 </div>
 
                 <div (click)="openAccord($event, 'ratingAccord')" class="collapse collapse-plus bg-base-200">
                     <input type="radio" id="ratingAccord" name="ratingAccordion" value="ratingAccord" />
-                    <div class="collapse-title text-xl font-medium" for="ratingAccord">
+                    <div class="collapse-title text-xl text-white font-medium" for="ratingAccord">
                         Reviews & Ratings
                     </div>
                     <div class="collapse-content">
-                        <p>hello</p>
+                        <div class="rating rating-md">
+                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
+                        </div>
                     </div>
                 </div>
                 <div (click)="openAccord($event, 'contactAccord')" class="collapse collapse-plus bg-base-200">
                     <input type="radio" id="contactAccord" name="contactAccordion" value="contactAccord" />
-                    <div class="collapse-title text-xl font-medium" for="contactAccord">
+                    <div class="collapse-title text-white text-xl font-medium" for="contactAccord">
                         Contact
                     </div>
                     <div class="collapse-content">
-                        <p>hello</p>
+                        <span class="icon text-lg "><mat-icon>phone</mat-icon>{{salon.contactNumber}} </span>
                     </div>
                 </div>
             </div>

@@ -1,50 +1,180 @@
-<!-- Navbar Start -->
-<app-user-navbar></app-user-navbar>
+<ngx-spinner bdColor="rgba(0,0,0,1)" template="<img src='..\assets\spinner.gif' />">
+</ngx-spinner>
 
-<!-- Navbar End -->
-<!-- Content start -->
+<div class="fixed z-20 w-full  top-0 start-0 ">
+    <app-user-navbar>
 
-<div class="h-56 flex flex-wrap justify-center  gap-4 py-5 pb-9 content-start  ">
+        <button aria-expanded="true" aria-controls="drawer-example" type="button" data-drawer-target="drawer-example"
+            data-drawer-show="drawer-example"
+            class="hidden p-2 mr-3 text-gray-600 rounded cursor-pointer lg:inline hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M1 1h14M1 6h14M1 11h7" />
+            </svg>
+        </button>
 
 
-    <div *ngFor="let salon of Salons; trackBy: trackBySalonId " (click)="viewSalonDetails(salon)"
-        class="transition-transform hover:scale-105 cursor-pointer ">
-        <div class="skeleton card card-compact w-96 bg-black shadow-lg hover:shadow-purple-700 ">
-            <figure><img loading="lazy" src={{salon.banners[0]}} alt="Salon Image" class="card-image" /></figure>
-            <div class="card-body">
-                <h2 class="card-title">{{salon.salonName}}</h2>
-                <p>{{salon.locality}}</p>
-                <div class="card-actions justify-end">
-                    <button (click)="bookChair(salon)" class="btn hover:border-white">Book A Chair</button>
-                </div>
+
+    </app-user-navbar>
+
+
+
+    <form [formGroup]="searchForm" class="max-w-lg mx-auto">
+        <div class="flex ">
+
+            <div class="relative mt-3 w-full">
+                <input formControlName="searchQuery" type="search" id="search-dropdown"
+                    class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                    placeholder="Search for salons..." required />
+                <button type="button"
+                    class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                    <span class="sr-only">Search</span>
+                </button>
             </div>
         </div>
-    </div>
-
-
-
-
-
-
-
-
+    </form>
 
 
 
 </div>
 
 
+<!-- Content start -->
+<div class="pt-32">
+
+
+    <div>
+
+
+        <!-- drawer component -->
+        <form (submit)="applyFilters()" [formGroup]="searchForm" id="drawer-example"
+            class="fixed top-0 left-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
+            tabindex="-1" aria-labelledby="drawer-label">
+            <h5 id="drawer-label"
+                class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+                Apply filters
+            </h5>
+            <button type="button" data-drawer-dismiss="drawer-example" aria-controls="drawer-example"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span class="sr-only">Close menu</span>
+            </button>
+
+            <div class="flex flex-col justify-between flex-1">
+                <div class="space-y-6">
+                    <!-- Categories -->
+                    <div class="space-y-2">
+                        <h6 class="text-base font-medium text-black dark:text-white">
+                            Facilities
+                        </h6>
+
+
+                        <div *ngFor="let facility of facilities">
+
+                            <div class="flex items-center">
+                                <input [id]="facility" type="checkbox" [value]="facility"
+                                    [checked]="selectedFacilities[facility]" (change)="checkbox($event)"
+                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+
+                                <label [for]="facility"
+                                    class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                    {{ facility }}
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Rating -->
+
+
+                </div>
+
+                <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-6 space-x-4 md:px-4 md:absolute">
+                    <button type="submit"
+                        class="w-full px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800">
+                        Apply filters
+                    </button>
+                    <button type="reset"
+                        class="w-full px-5 py-2 text-sm font-medium text-white bg-red-700 hover:bg-red-600 border border-gray-200 rounded-lg focus:outline-none  focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                        Clear all
+                    </button>
+                </div>
+            </div>
+        </form>
 
 
 
 
 
 
+    </div>
+
+
+    <div class="h-56 flex flex-wrap justify-center  gap-4 py-5 pb-9 content-start">
+        <ng-container *ngFor="let salon of Salons; trackBy: trackBySalonId">
+            <div class="transition-transform hover:scale-105 cursor-pointer" (click)="viewSalonDetails(salon)">
+                <div class=" card card-compact w-96 text-white  shadow-lg hover:shadow-black hover:border-black ">
+                    <figure>
+                        <!-- Lazy loading image -->
+                        <img loading="lazy" [src]="salon.banners[0]" alt="Salon Image" class="card-image" />
+                    </figure>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ salon.salonName }}</h2>
+                        <p>{{ salon.locality }}</p>
+
+                        <div class=" rating rating-md">
+                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                        </div>
+                        <div class="card-actions justify-end">
+                            <button (click)="bookChair(salon)"
+                                class="btn bg-black text-white skeleton transition-transform hover:scale-105 hover:border-white">Book
+                                A
+                                Chair</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- <app-pagination [currPage]="page" class="z-20 flex justify-center content-center w-full"></app-pagination> -->
+
+        <nav class="z-20 flex justify-center content-center w-full" aria-label="Page navigation example">
+            <ul class="pagination inline-flex -space-x-px text-sm">
+                <li>
+                    <a (click)="previousPage()"
+                        class="flex items-center justify-center px-3 h-8 ms-0 leading-tight transition-transform hover:scale-105 text-gray-500 bg-white border border-e-0 border-black rounded-s-lg hover:bg-white hover:text-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                </li>
+                <li *ngFor="let page of totalPages()">
+                    <a (click)="setCurrentPage(page)" [class.active]="currentPage === page"
+                        class="flex items-center justify-center px-3 h-8 leading-tight transition-transform hover:scale-105 text-gray-500 bg-white border border-black hover:bg-white hover:text-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{page}}</a>
+                </li>
+                <li>
+                    <a (click)="nextPage()"
+                        class="flex items-center justify-center px-3 h-8 leading-tight transition-transform hover:scale-105 text-gray-500 bg-white border border-black rounded-e-lg hover:bg-white hover:text-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                </li>
+            </ul>
+        </nav>
 
 
 
-
-
-
-
+        <app-footer class="w-full"></app-footer>
+    </div>
+</div>
 <!-- content end -->

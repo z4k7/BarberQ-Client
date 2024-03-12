@@ -27,11 +27,10 @@ export class UserRegisterComponent implements OnInit {
   pHide = true;
   cHide = true;
 
-  remainingTime = 0
-  formattedTime: string = '00:30'
+  remainingTime = 0;
+  formattedTime: string = '00:30';
   otpResendCount: number = 0;
   showOtpResend: boolean = true;
-
 
   constructor(
     private readonly http: HttpClient,
@@ -100,7 +99,6 @@ export class UserRegisterComponent implements OnInit {
     return this.form.get('email') as FormControl;
   }
 
-
   get mobile(): FormControl {
     return this.form.get('mobile') as FormControl;
   }
@@ -126,7 +124,7 @@ export class UserRegisterComponent implements OnInit {
     return password === confirmPassword ? null : { passwordMismatch: true };
   };
 
-  startTimer(): void{
+  startTimer(): void {
     this.remainingTime = 30;
 
     const timer = setInterval(() => {
@@ -137,21 +135,24 @@ export class UserRegisterComponent implements OnInit {
         console.log(`Otp Expired`);
       }
       this.formattedTime = formatTime(this.remainingTime);
-    },1000)
+    }, 1000);
   }
 
-  resendOtp(): void{
+  resendOtp(): void {
     if (this.otpResendCount < 3) {
       this.http.get('/user/resend-otp').subscribe({
         next: () => {
           console.log(`ResendOtp sent successfully`);
-          this.toastr.success('Please enter new otp', 'OTP Resend Successfully')
-          this.startTimer()
-          this.otpResendCount++
-        }
-      })
+          this.toastr.success(
+            'Please enter new otp',
+            'OTP Resend Successfully'
+          );
+          this.startTimer();
+          this.otpResendCount++;
+        },
+      });
     } else {
-      this.toastr.info( 'Maximum resend attempts reached','Oops!');
+      this.toastr.info('Maximum resend attempts reached', 'Oops!');
     }
   }
 
@@ -164,7 +165,6 @@ export class UserRegisterComponent implements OnInit {
     }
 
     if (this.form.invalid) {
-      // this.invalid = true;
       this.toastr.error('Please check the provided input');
     } else {
       const user = this.form.getRawValue();
@@ -175,12 +175,13 @@ export class UserRegisterComponent implements OnInit {
             this.showOtpField = true;
             this.form.get('otp')?.enable();
             this.toastr.success(
-              ' Enter OTP','User details submitted successfully.'
+              ' Enter OTP',
+              'User details submitted successfully.'
             );
-            this.startTimer()
+            this.startTimer();
 
             setTimeout(() => {
-              this.showOtpResend = false
+              this.showOtpResend = false;
             }, 1000 * 3);
           },
         });

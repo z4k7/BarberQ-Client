@@ -12,6 +12,7 @@ import { IService } from 'src/app/models/service';
 import { VendorService } from 'src/app/services/vendor.service';
 import { GeoapifyService } from 'src/app/services/geoapify.service';
 import { initFlowbite } from 'flowbite';
+import { ISalonApiResponse } from 'src/app/models/salon';
 
 @Component({
   selector: 'app-vendor-add-salon',
@@ -137,6 +138,7 @@ export class VendorAddSalonComponent implements OnInit {
   }
 
   onFileChange(event: any): void {
+    console.log(`Event`, event);
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
 
@@ -175,7 +177,7 @@ export class VendorAddSalonComponent implements OnInit {
   }
 
   updateCheckedServices(serviceId: string): void {
-    this.checkedServices[serviceId] = !this.checkedServices[serviceId]; // Toggle value
+    this.checkedServices[serviceId] = !this.checkedServices[serviceId];
     console.log(`value:${this.checkedServices[serviceId]}`);
   }
 
@@ -216,36 +218,17 @@ export class VendorAddSalonComponent implements OnInit {
           this.salonForm.get('latitude')?.setValue(this.markerLat);
           this.salonForm.get('longitude')?.setValue(this.markerLng);
 
-          // Check if the fields are empty or filled manually
-          const landmarkManuallyFilled =
-            this.salonForm.get('landmark')?.touched ||
-            this.salonForm.get('landmark')?.dirty;
-          const localityManuallyFilled =
-            this.salonForm.get('locality')?.touched ||
-            this.salonForm.get('locality')?.dirty;
-          const districtManuallyFilled =
-            this.salonForm.get('district')?.touched ||
-            this.salonForm.get('district')?.dirty;
+          this.salonForm.get('landmark')?.setValue(salonLandmark);
+          this.salonForm.get('locality')?.setValue(salonLocality);
+          this.salonForm.get('district')?.setValue(salonDistrict);
 
-          // Set field values only if they are empty or filled manually
-          if (!landmarkManuallyFilled) {
-            this.salonForm.get('landmark')?.setValue(salonLandmark);
-          }
-          if (!localityManuallyFilled) {
-            this.salonForm.get('locality')?.setValue(salonLocality);
-          }
-          if (!districtManuallyFilled) {
-            this.salonForm.get('district')?.setValue(salonDistrict);
-          }
-
-          // Disable the fields again if they were filled with Geoapify response
-          if (salonLandmark && !landmarkManuallyFilled) {
+          if (salonLandmark) {
             this.salonForm.get('landmark')?.disable();
           }
-          if (salonLocality && !localityManuallyFilled) {
+          if (salonLocality) {
             this.salonForm.get('locality')?.disable();
           }
-          if (salonDistrict && !districtManuallyFilled) {
+          if (salonDistrict) {
             this.salonForm.get('district')?.disable();
           }
 
@@ -261,9 +244,16 @@ export class VendorAddSalonComponent implements OnInit {
   onSubmit(): void {
     this.isSubmitted = true;
 
-    if (this.salonForm.invalid) {
+    if (this.salonForm.invalid || this.markerLat == 0 || this.markerLng == 0) {
       this.invalid = true;
-      this.toastr.error('Please check the provided input');
+      this.toastr.error('Please check the provided input', 'Invalid Form');
+
+      if (this.markerLat == 0 && this.markerLat == 0) {
+        this.toastr.error(
+          'Make sure you have choosed your location from map.',
+          'Use Map'
+        );
+      }
       return;
     }
 
@@ -304,7 +294,7 @@ export class VendorAddSalonComponent implements OnInit {
       console.log(key + ': ' + value);
     });
 
-    this.http.post<any>('/vendor/add-salon', formData).subscribe({
+    this.http.post<ISalonApiResponse>('/vendor/add-salon', formData).subscribe({
       next: (response) => {
         console.log(`Response from backend`, response);
         this.toastr.success('Salon added successfully');

@@ -95,7 +95,7 @@ export class AdminUsersComponent implements OnInit {
   onAction(blocked: boolean, index: number, id: string) {
     if (blocked) {
       this.Users[index].isBlocked = false;
-      this.adminService.blockUnblockUser(id).subscribe((data) => {
+      this.adminService.blockUnblockUser(id).subscribe(() => {
         this.toastr.warning(`${this.Users[index].name} is Unblocked`);
         this.closeBlockModal(this.Users[index]);
       });
@@ -108,7 +108,8 @@ export class AdminUsersComponent implements OnInit {
     }
   }
 
-  openBlockModal(user: any) {
+  openBlockModal(user: IUser) {
+    console.log(`user for modal`, user);
     const modal = document.getElementById(
       `hide-modal-${user._id}`
     ) as HTMLDivElement;
@@ -118,7 +119,7 @@ export class AdminUsersComponent implements OnInit {
     }
   }
 
-  closeBlockModal(user: any) {
+  closeBlockModal(user: IUser) {
     const modal = document.getElementById(
       `hide-modal-${user._id}`
     ) as HTMLDivElement;

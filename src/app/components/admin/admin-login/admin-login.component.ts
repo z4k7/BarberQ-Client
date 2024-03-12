@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AdminApiResponse } from 'src/app/models/admin';
 
 @Component({
   selector: 'app-admin-login',
@@ -51,11 +52,13 @@ export class AdminLoginComponent implements OnInit {
     } else {
       const admin = this.form.getRawValue();
       this.http
-        .post(`/admin/login`, admin, {
+        .post<AdminApiResponse>(`/admin/login`, admin, {
           withCredentials: true,
         })
         .subscribe({
-          next: (res: any) => {
+          next: (res) => {
+            console.log(`Response in admin Login`, res);
+
             if (res.data && res.data.accessToken && res.data.refreshToken) {
               localStorage.setItem('adminJwtAccess', res.data.accessToken);
               localStorage.setItem('adminJwtRefresh', res.data.refreshToken);

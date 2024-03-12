@@ -8,7 +8,7 @@ import { UserRegisterComponent } from './user-register/user-register.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { UserSalonsComponent } from './user-salons/user-salons.component';
@@ -18,6 +18,10 @@ import { DatePickerComponent } from '../common/date-picker/date-picker.component
 import { UserNavbarComponent } from './userCommon/user-navbar/user-navbar.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { LoaderComponent } from '../common/loader/loader.component';
+import { PaginationComponent } from './userCommon/pagination/pagination.component';
+import { FooterComponent } from './userCommon/footer/footer.component';
+import { FilterComponent } from './userCommon/filter/filter.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -28,17 +32,22 @@ import { LoaderComponent } from '../common/loader/loader.component';
     UserSalonDetailsComponent,
     UserBookAChairComponent,
     UserNavbarComponent,
+    PaginationComponent,
+    FooterComponent,
+    FilterComponent,
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     MatIconModule,
     DatePickerComponent,
     ScrollingModule,
     LoaderComponent,
+    NgxSpinnerModule,
   ],
 })
 export class UserModule {}

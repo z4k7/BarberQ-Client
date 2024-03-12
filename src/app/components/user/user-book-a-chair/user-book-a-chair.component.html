@@ -5,26 +5,31 @@
 <!-- Content Start -->
 <div class="container mx-auto">
     <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
-        <div>
+        <div class="max-w-5xl">
             <!-- Card start -->
-            <div class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-purple-700">
-                <figure><img src={{salon.banners[0]}} class="card-image" alt="Movie" /></figure>
+            <div
+                class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-black">
+                <figure><img src={{salon.banners[0]}} class="card-image" alt="Salon Image" /></figure>
                 <div class="card-body">
-                    <h1 class="card-title">{{salon.salonName}}</h1>
-                    <p>Details</p>
-                   
+                    <h1 class="card-title text-white ">{{salon.salonName}}</h1>
+                    <span class="text-base text-white">
+                        Nr. {{salon.landmark}}<br>
+                        {{salon.locality}}<br>
+                        {{salon.district}}
+                    </span>
+
                 </div>
             </div>
             <!-- Card end -->
             <div class="datepicker gap-4 py-10 transition-transform hover:scale-105">
 
-            <app-date-picker></app-date-picker>
+                <app-date-picker></app-date-picker>
             </div>
-            
+
         </div>
     </div>
 </div>
 
-  
-  
-  <!-- Content End -->
+
+
+<!-- Content End -->

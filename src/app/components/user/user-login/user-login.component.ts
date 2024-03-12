@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserLoginResponse } from 'src/app/models/user';
 
 @Component({
   selector: 'app-user-login',
@@ -50,19 +51,21 @@ export class UserLoginComponent implements OnInit {
       return;
     } else {
       const user = this.form.getRawValue();
-      this.http.post(`/user/login`, user, { withCredentials: true }).subscribe({
-        next: (res: any) => {
-          console.log(`res:`, res);
-          if (res.data && res.data.accessToken && res.data.refreshToken) {
-            localStorage.setItem('userJwtAccess', res.data.accessToken);
-            localStorage.setItem('userJwtRefresh', res.data.refreshToken);
-            this.router.navigate(['/']);
-          } else {
-            console.error('Invalid response format:', res);
-            this.toastr.error('Invalid response format');
-          }
-        },
-      });
+      this.http
+        .post<UserLoginResponse>(`/user/login`, user, { withCredentials: true })
+        .subscribe({
+          next: (res) => {
+            console.log(`response of user login:`, res);
+            if (res.data && res.data.accessToken && res.data.refreshToken) {
+              localStorage.setItem('userJwtAccess', res.data.accessToken);
+              localStorage.setItem('userJwtRefresh', res.data.refreshToken);
+              this.router.navigate(['/']);
+            } else {
+              console.error('Invalid response format:', res);
+              this.toastr.error('Invalid response format');
+            }
+          },
+        });
     }
   }
 }

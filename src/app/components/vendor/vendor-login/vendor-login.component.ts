@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { IVendorLoginResponse } from 'src/app/models/vendor';
 
 @Component({
   selector: 'app-vendor-login',
@@ -51,11 +52,13 @@ export class VendorLoginComponent implements OnInit {
     } else {
       const vendor = this.form.getRawValue();
       this.http
-        .post(`/vendor/login`, vendor, {
+        .post<IVendorLoginResponse>(`/vendor/login`, vendor, {
           withCredentials: true,
         })
         .subscribe({
-          next: (res: any) => {
+          next: (res) => {
+            console.log(`Response from vendor login`, res);
+
             if (res.data && res.data.accessToken && res.data.refreshToken) {
               localStorage.setItem('vendorJwtAccess', res.data.accessToken);
               localStorage.setItem('vendorJwtRefresh', res.data.refreshToken);
