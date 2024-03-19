@@ -14,6 +14,10 @@ import { VendorNavbarComponent } from './vendorCommon/vendor-navbar/vendor-navba
 import { VendorSidebarComponent } from './vendorCommon/vendor-sidebar/vendor-sidebar.component';
 import { VendorAddSalonComponent } from './vendor-add-salon/vendor-add-salon.component';
 import { MapBoxComponent } from '../common/map-box/map-box.component';
+import { StoreModule } from '@ngrx/store';
+import { vendorReducer } from 'src/app/state/vendor-store/vendor.reducer';
+import { VendorSalonsComponent } from './vendor-salons/vendor-salons.component';
+import { VendorSalonDetailsComponent } from './vendor-salon-details/vendor-salon-details.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,8 @@ import { MapBoxComponent } from '../common/map-box/map-box.component';
     VendorNavbarComponent,
     VendorSidebarComponent,
     VendorAddSalonComponent,
+    VendorSalonsComponent,
+    VendorSalonDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +38,7 @@ import { MapBoxComponent } from '../common/map-box/map-box.component';
     ReactiveFormsModule,
     MatIconModule,
     FormsModule,
+    StoreModule.forFeature('vendor', vendorReducer),
     MapBoxComponent,
   ],
 })

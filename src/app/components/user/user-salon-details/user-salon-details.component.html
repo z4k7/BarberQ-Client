@@ -3,14 +3,17 @@
 <!-- Navbar End -->
 
 <!-- Content Start -->
-<div class="container mx-auto">
+<div *ngIf="salon" class="container mx-auto">
     <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
         <div class="max-w-5xl">
             <!-- Card start -->
             <div
                 class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-black">
                 <figure>
-                    <img src="{{ salon.banners[0] }}" class="card-image" alt="Salon" />
+                    <div *ngIf="salon && salon.banners && salon.banners.length > 0">
+                        <img [src]="salon.banners[0]" class="card-image" alt="Salon" />
+                    </div>
+
                 </figure>
                 <div class="card-body">
                     <h1 class="card-title text-white">{{ salon.salonName }}</h1>
@@ -39,7 +42,7 @@
                         Services
                     </div>
                     <div class="collapse-content">
-                        <ng-container *ngFor="let service of services">
+                        <ng-container *ngFor="let service of salon.services">
                             <div class="badge badge-info me-4 mb-4 badge-lg">{{service?.serviceName}} </div>
                         </ng-container>
 
@@ -56,7 +59,7 @@
                     </div>
                     <div class="collapse-content">
                         <h4 class="text-white" style="text-decoration: underline;">Facilities</h4>
-                        <ng-container *ngFor="let facility of facilities ">
+                        <ng-container *ngFor="let facility of salon.facilities ">
                             <div class="badge badge-info me-4 mb-4 badge-lg">{{facility}} </div>
                         </ng-container>
 
@@ -100,6 +103,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 

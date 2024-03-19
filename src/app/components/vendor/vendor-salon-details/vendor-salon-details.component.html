@@ -1,0 +1,349 @@
+<main class="p-4  bg-white md:ml-64  pt-20">
+
+    <!-- Content Start -->
+    <div *ngIf="salon" class="container mx-auto">
+        <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
+            <div class="max-w-4xl">
+                <!-- Card start -->
+                <div
+                    class="card card-side bg-white mb-10 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-black">
+                    <figure>
+                        <img src="{{ salon.banners[0] }}" class="card-image" alt="Salon" />
+                    </figure>
+                    <div class="card-body">
+                        <h1 class="card-title text-black">{{ salon.salonName }}</h1>
+                        <span class="text-base text-black">
+                            Nr. {{ salon.landmark }}<br />
+                            {{ salon.locality }}<br />
+                            {{ salon.district }}
+                        </span>
+                        <div class="card-actions">
+                            <button
+                                class="btn bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-white">
+                                <svg class="w-6 h-6 text-sky-600 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                    viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
+                                </svg>
+
+                                Edit
+                            </button>
+                            <button
+                                class="btn bg-black text-red-600 skeleton transition-transform hover:scale-105 hover:border-white">
+                                <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card end -->
+                <!-- Accordion Start -->
+
+                <div class="accordion gap-4 py-10 transition-transform hover:scale-105">
+
+                    <div class="collapse collapse-plus border bg-white">
+                        <input type="radio" name="my-accordion-3" checked="checked" id="my-accordion-0" />
+                        <div #accordionTitle class="collapse-title text-black text-xl font-medium"
+                            (click)="toggleAccordion(0)">
+                            Services
+                        </div>
+                        <div class="collapse-content text-black">
+                            <ng-container *ngFor="let service of salon.services">
+                                <div class="badge badge-warning me-4 mb-4 badge-lg">{{service?.serviceName}} </div>
+                            </ng-container>
+                            <div class="flex items-end gap-3">
+
+                                <button (click)="openEditServiceModal()"
+                                    class="btn btn-sm bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-white">
+                                    <svg class="w-6 h-6 text-sky-600 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
+                                    </svg>
+
+                                    Edit
+                                </button>
+                                <button (click)="openDeleteServiceModal()"
+                                    class="btn btn-sm bg-black text-red-600 skeleton transition-transform hover:scale-105 hover:border-white">
+                                    <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd"
+                                            d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse collapse-plus border bg-white">
+                        <input type="radio" name="my-accordion-3" id="my-accordion-1" />
+                        <div class="collapse-title text-black text-xl font-medium" (click)="toggleAccordion(1)">
+                            About
+                        </div>
+                        <div class="collapse-content text-black">
+                            <h4 class="text-black" style="text-decoration: underline;">Facilities</h4>
+                            <ng-container *ngFor="let facility of salon.facilities ">
+                                <div class="badge badge-warning me-4 mb-4 badge-lg">{{facility}} </div>
+                            </ng-container>
+
+                            <h4 class="text-black mt-4" style="text-decoration: underline;">No. of Chairs</h4>
+
+                            <div class="badge badge-warning me-4 badge-lg">{{salon.chairCount}} </div>
+                        </div>
+                    </div>
+                    <div class="collapse collapse-plus border bg-white">
+                        <input type="radio" name="my-accordion-3" id="my-accordion-2" />
+                        <div class="collapse-title text-black text-xl font-medium" (click)="toggleAccordion(2)">
+                            Contact
+                        </div>
+                        <div class="collapse-content">
+                            <span class="icon text-black text-lg "><mat-icon>phone</mat-icon>{{salon.contactNumber}}
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Accordion End -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Backdrop -->
+    <div id="modal-backdrop" class="fixed top-0 right-0 left-0 bottom-0 bg-black opacity-50 z-40 hidden"></div>
+
+
+    <!-- Edit Modal Start -->
+    <!-- Main modal -->
+    <div id="edit-service" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                <!-- Modal header -->
+                <div
+                    class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Edit Service
+                    </h3>
+                    <button type="button" (click)="closeEditServiceModal()"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form>
+                    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+
+                        <div>
+                            <label for="category"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                            <select id="category" [(ngModel)]="selectedCategory" name="category"
+                                (change)="filterServicesByCategory()"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+
+                                <option value="">Select Category</option>
+                                <option *ngFor="let category of categories" [value]="category"> {{category}} </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="serviceName"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <select id="serviceName" [(ngModel)]="selectedService" name="serviceName"
+                                (change)="selectedService && setSelectedService(selectedService)"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Select Service</option>
+                                <option *ngFor="let service of filteredServices " [ngValue]="service">
+                                    {{service.serviceName}}
+                                </option>
+                            </select>
+                            <div *ngIf="selectedService"
+                                class="absolute text-black inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                {{ selectedService.serviceName }}
+                            </div>
+
+                        </div>
+                        <div>
+                            <label for="price"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                            <input type="number" [(ngModel)]="selectedServicePrice" name="price" id="price"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="$299">
+                        </div>
+                        <div>
+                            <label for="duration"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duration</label>
+                            <input type="number" [(ngModel)]="selectedServiceDuration" name="duration" id="duration"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Duration in minutes">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="selected-services"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selected
+                                Services</label>
+
+                            <div class="flex flex-wrap gap-2">
+                                <span *ngFor="let service of selectedServices" id="badge-dismiss-dark"
+                                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300">
+                                    {{service.serviceName}}
+                                    <button type="button" (click)="removeSelectedService(service)"
+                                        class="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+                                        aria-label="Remove">
+                                        <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                        </svg>
+                                        <span class="sr-only">Remove badge</span>
+                                    </button>
+                                </span>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" (click)="updateService()"
+                            class="text-white bg-sky-600 hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Update Service
+                        </button>
+                        <button type="button" (click)="confirmEdits()"
+                            class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Confirm
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Modal End -->
+
+    <!-- Delete Service Modal Start -->
+
+    <!-- Main modal -->
+    <div id="delete-service" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
+        <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+            <!-- Modal content -->
+            <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                <!-- Modal header -->
+                <div
+                    class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Delete Service
+                    </h3>
+                    <button type="button" (click)="closeDeleteServiceModal()"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form action="#">
+                    <div class="grid gap-4 mb-4 sm:grid-cols-2">
+
+
+
+                        <div>
+                            <label for="category-delete"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                            <select id="category-delete" [(ngModel)]="selectedCategory"
+                                (change)="filterServicesByCategory()" name="category-delete"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Select Category</option>
+                                <option *ngFor="let category of categories" [value]="category"> {{category}} </option>
+
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="serviceName-delete"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <select id="serviceName-delete" [(ngModel)]="selectedService"
+                                (change)="selectedService && selectedServiceForDeletion(selectedService)"
+                                name="serviceName-delete"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Select Service</option>
+                                <option *ngFor="let service of filteredServices" [ngValue]="service">
+                                    {{service.serviceName}} </option>
+
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="description"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                            <div class="flex flex-wrap gap-2">
+                                <span *ngFor="let service of selectedServicesToDelete" id="badge-dismiss-delete"
+                                    class="inline-flex items-center px-2 py-1 me-2 text-sm font-medium text-gray-800 bg-gray-100 rounded dark:bg-gray-700 dark:text-gray-300">
+                                    {{service.serviceName}}
+                                    <button type="button" (click)="removeServiceFromDeletionList(service)"
+                                        class="inline-flex items-center p-1 ms-2 text-sm text-gray-400 bg-transparent rounded-sm hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-gray-300"
+                                        aria-label="Remove">
+                                        <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                        </svg>
+                                        <span class="sr-only">Remove badge</span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-end">
+
+                        <button type="button" (click)="confirmDeletion()"
+                            class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                            <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Confirm
+                        </button>
+
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Delete Service Modal End -->
+
+
+
+    <!-- Content End -->
+
+</main>

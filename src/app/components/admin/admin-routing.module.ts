@@ -7,6 +7,7 @@ import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { AdminVendorsComponent } from './admin-vendors/admin-vendors.component';
 import { AdminServicesComponent } from './admin-services/admin-services.component';
 import { AdminOverviewComponent } from './admin-overview/admin-overview.component';
+import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
 import { authGuard } from 'src/app/guards/auth.guard';
 import { loginGuard } from 'src/app/guards/login.guard';
 
@@ -15,7 +16,7 @@ const routes: Routes = [
     path: 'login',
     title: 'Admin | Login',
     component: AdminLoginComponent,
-    canActivate: [loginGuard],    
+    canActivate: [loginGuard],
   },
   {
     path: '', // Empty path for the Admin module root
@@ -38,6 +39,11 @@ const routes: Routes = [
         component: AdminServicesComponent,
       },
       {
+        path: 'adminSalons',
+        title: 'Admin | Salons',
+        component: AdminSalonsComponent,
+      },
+      {
         path: 'adminOverview',
         title: 'Admin | Overview',
         component: AdminOverviewComponent,
@@ -45,14 +51,14 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'adminOverview' 
-      }
+        redirectTo: 'adminOverview',
+      },
     ],
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],  
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class AdminRoutingModule {}

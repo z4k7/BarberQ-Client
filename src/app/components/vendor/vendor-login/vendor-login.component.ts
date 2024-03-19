@@ -9,6 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { IVendorLoginResponse } from 'src/app/models/vendor';
+import { Store } from '@ngrx/store';
+import { saveVendor } from 'src/app/state/vendor-store/vendor.actions';
 
 @Component({
   selector: 'app-vendor-login',
@@ -25,7 +27,8 @@ export class VendorLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -62,6 +65,13 @@ export class VendorLoginComponent implements OnInit {
             if (res.data && res.data.accessToken && res.data.refreshToken) {
               localStorage.setItem('vendorJwtAccess', res.data.accessToken);
               localStorage.setItem('vendorJwtRefresh', res.data.refreshToken);
+
+              this.store.dispatch(
+                saveVendor({
+                  vendorDetails: res.data.vendorData,
+                })
+              );
+
               this.router.navigate(['/vendor']);
             } else {
               console.error('Invalid response format:', res);

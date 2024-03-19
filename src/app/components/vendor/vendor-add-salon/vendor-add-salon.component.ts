@@ -182,10 +182,10 @@ export class VendorAddSalonComponent implements OnInit {
   }
 
   getServices(): void {
-    this.vendorService.getServices().subscribe({
+    this.vendorService.getAllServices().subscribe({
       next: (res) => {
         if (res.data) {
-          this.services = res.data.salonData;
+          this.services = res.data.serviceData;
         }
       },
     });

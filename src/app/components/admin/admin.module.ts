@@ -18,6 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AdminVendorsComponent } from './admin-vendors/admin-vendors.component';
 import { AdminServicesComponent } from './admin-services/admin-services.component';
 import { AdminOverviewComponent } from './admin-overview/admin-overview.component';
+import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AdminOverviewComponent } from './admin-overview/admin-overview.componen
     AdminVendorsComponent,
     AdminServicesComponent,
     AdminOverviewComponent,
+    AdminSalonsComponent,
   ],
   imports: [
     CommonModule,

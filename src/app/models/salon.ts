@@ -1,3 +1,5 @@
+import { IService } from './service';
+
 export interface ISalon {
   _id: string;
   vendorId: string;
@@ -14,7 +16,8 @@ export interface ISalon {
     longitude: number;
     latitude: number;
   };
-  services: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  services: any;
   status: string;
   updatedAt: string;
 }

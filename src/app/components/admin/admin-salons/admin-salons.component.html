@@ -6,7 +6,7 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a class="flex items-center space-x-3 rtl:space-x-reverse">
                 <span
-                    class="self-center text-2xl font-semibold font-serif whitespace-nowrap text-white dark:text-white">Users
+                    class="self-center text-2xl font-semibold font-serif whitespace-nowrap text-white dark:text-white">Salon
                     List</span>
             </a>
         </div>
@@ -43,9 +43,8 @@
                         </form>
                     </div>
 
-                    <div class="relative  flex items-center space-x-3 w-full md:w-auto" data-dropdown="filterDropdown"
-                        [class.open]="filterOpen">
-                        <button type="button" id="filterDropdownButton" (click)="toggleFilter()"
+                    <!-- <div class="flex items-center space-x-3 w-full md:w-auto" data-dropdown="filterDropdown">
+                        <button type="button" id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                             class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                             Filter
                             <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
@@ -54,32 +53,32 @@
                                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                             </svg>
                         </button>
-                        <div id="filterDropdown" [class.hidden]="!filterOpen"
-                            class=" absolute top-full left-0 mt-2 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        <div id="filterDropdown"
+                            class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="filterDropdownButton">
 
                                 <li>
-                                    <a (click)="setFilter('all');closeFilter()"
+                                    <a (click)="setFilter('all')"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show
                                         all users</a>
                                 </li>
                                 <li>
-                                    <a (click)="setFilter('active');closeFilter()"
+                                    <a (click)="setFilter('active')"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show
                                         active users</a>
                                 </li>
                                 <li>
-                                    <a (click)="setFilter('blocked'); closeFilter()"
+                                    <a (click)="setFilter('blocked')"
                                         class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show
                                         blocked users</a>
                                 </li>
                             </ul>
 
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="relative flex items-center space-x-3 w-full md:w-auto" data-dropdown="limitDropdown"
+                    <div class=" relative flex items-center space-x-3 w-full md:w-auto" data-dropdown="limitDropdown"
                         [class.open]="limitOpen">
                         <button type="button" id="limitDropdownButton" (click)="toggleLimit()"
                             class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -91,7 +90,7 @@
                             </svg>
                         </button>
                         <div id="limitDropdown" [class.hidden]="!limitOpen"
-                            class=" absolute top-full left-0 mt-2 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                            class="absolute top-full left-0 mt-2 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                             <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="limitDropdownButton">
                                 <li>
@@ -133,21 +132,24 @@
                                 </th>
 
                                 <th scope="col" class="px-6 py-3">
-                                    Name
+                                    Salon Name
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Mobile
+                                    District
                                 </th>
                                 <th scope="col" class="px-6 py-3">
+                                    Contact Number
+                                </th>
+                                <!-- <th scope="col" class="px-6 py-3">
                                     Status
-                                </th>
+                                </th> -->
                                 <th scope="col" class="px-6 py-3">
                                     Action
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let user of Users; let i = index"
+                            <tr *ngFor="let salon of Salons ; let i = index"
                                 class="bg-white text-black border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-800 hover:text-white  dark:hover:bg-gray-600">
 
 
@@ -160,81 +162,39 @@
                                     <img class="w-10 h-10 rounded-full" src="../../../../assets/final logo.jpg"
                                         alt="Jese image">
                                     <div class="ps-3">
-                                        <div class="text-base font-semibold"> {{user?.name}} </div>
-                                        <div class="font-normal ">{{user.email}}</div>
+                                        <div class="text-base font-semibold"> {{salon.salonName}} </div>
+                                        <div class="font-normal ">{{salon.locality}}</div>
                                     </div>
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{user.mobile}}
+                                    {{salon.district.split(' ')[0]}}
                                 </td>
                                 <td class="px-6 py-4">
+                                    {{salon.contactNumber}}
+                                </td>
+                                <!-- <td class="px-6 py-4">
                                     <div class="flex items-center">
-                                        <div
-                                            [ngClass]=" user.isBlocked? 'h-2.5 w-2.5 rounded-full bg-red-500 me-2' :  'h-2.5 w-2.5 rounded-full bg-green-500 me-2'">
+                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2">
                                         </div>
 
-                                        {{user.isBlocked?'Blocked':'Active'}}
+                                        status
                                     </div>
 
 
-                                </td>
+                                </td> -->
                                 <td class="px-6 py-4">
 
 
-                                    <!-- Delete Modal Toggle -->
 
 
 
-                                    <button (click)="openBlockModal(user)"
-                                        [ngClass]="user.isBlocked?   'block text-white bg-green-700 hover:bg-green-600 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' : 'block text-white bg-red-700 hover:bg-red-600 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'  "
+
+                                    <button
+                                        class="block text-white bg-sky-600 hover:bg-sky-500 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                         type="button">
-                                        {{user.isBlocked?'Unblock':'Block'}}
+                                        View Details
                                     </button>
 
-                                    <!-- Delete Modal Start -->
-                                    <div [id]="'hide-modal-'+user?._id" tabindex="-1"
-                                        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                        <div class="relative p-4 w-full max-w-md max-h-full">
-                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                <button type="button" (click)="closeBlockModal(user)"
-                                                    class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                                    <svg class="w-3 h-3" aria-hidden="true"
-                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 14 14">
-                                                        <path stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="2"
-                                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                                    </svg>
-                                                    <span class="sr-only">Close modal</span>
-                                                </button>
-                                                <div class="p-4 md:p-5 text-center">
-                                                    <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
-                                                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none" viewBox="0 0 20 20">
-                                                        <path stroke="currentColor" stroke-linecap="round"
-                                                            stroke-linejoin="round" stroke-width="2"
-                                                            d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                    </svg>
-                                                    <h3
-                                                        class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                                        Are you
-                                                        sure you want to {{user.isBlocked?'unblock':'block'}}
-                                                        this user?</h3>
-                                                    <button type="button" (click)="onAction(user.isBlocked,i,user._id)"
-                                                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
-                                                        Yes, I'm sure
-                                                    </button>
-                                                    <button (click)="closeBlockModal(user)" type="button"
-                                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
-                                                        cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
-                                    <!-- Delete Modal End -->
 
 
 
@@ -255,7 +215,7 @@
                             1}}</span> -
                         <span class="font-semibold text-gray-900 dark:text-white">{{getLastItemIndex()}}</span>
                         of
-                        <span class="font-semibold text-gray-900 dark:text-white">{{userCount}}</span>
+                        <span class="font-semibold text-gray-900 dark:text-white">{{salonCount}}</span>
                     </span>
                     <ul class="inline-flex items-stretch -space-x-px">
 
@@ -306,19 +266,7 @@
     </section>
     <!-- End block -->
 
-
-
-
-
-
-
-
-
-
     <!-- new crud table end -->
-
-
-
 
 
 </main>

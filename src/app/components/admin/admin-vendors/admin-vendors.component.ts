@@ -20,6 +20,8 @@ export class AdminVendorsComponent implements OnInit {
   searchQuery: string = '';
   vendorCount = 0;
   searchForm!: FormGroup;
+  limitOpen: boolean = false;
+  filterOpen: boolean = false;
 
   constructor(
     private adminService: AdminService,
@@ -44,6 +46,22 @@ export class AdminVendorsComponent implements OnInit {
         this.getVendors();
       });
   }
+
+  toggleLimit() {
+    this.limitOpen = !this.limitOpen;
+  }
+
+  toggleFilter() {
+    this.filterOpen = !this.filterOpen;
+  }
+
+  closeLimit() {
+    this.limitOpen = false;
+  }
+  closeFilter() {
+    this.filterOpen = false;
+  }
+
   getVendors(): void {
     this.adminService
       .getVendors(this.currentPage, this.itemsPerPage, this.searchQuery)

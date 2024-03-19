@@ -19,6 +19,8 @@ export class AdminUsersComponent implements OnInit {
   searchQuery: string = '';
   userCount = 0;
   searchForm!: FormGroup;
+  limitOpen: boolean = false;
+  filterOpen: boolean = false;
 
   constructor(
     private adminService: AdminService,
@@ -41,6 +43,19 @@ export class AdminUsersComponent implements OnInit {
         this.currentPage = 1;
         this.getUsers();
       });
+  }
+  toggleLimit() {
+    this.limitOpen = !this.limitOpen;
+  }
+  toggleFilter() {
+    this.filterOpen = !this.filterOpen;
+  }
+
+  closeLimit() {
+    this.limitOpen = false;
+  }
+  closeFilter() {
+    this.filterOpen = false;
   }
 
   getUsers(): void {

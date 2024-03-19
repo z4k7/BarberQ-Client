@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -19,16 +19,19 @@ interface IFilters {
 })
 export class UserSalonsComponent implements OnInit {
   Salons: ISalon[] = [];
+  allSalons: ISalon[] = [];
   searchQuery: string = '';
   searchForm!: FormGroup;
   currentPage = 1;
   itemsPerPage = 6;
   salonCount = 0;
+  showFilter: boolean = false;
+
   filters: IFilters = {
     facilities: [],
   };
 
-  facilities: string[] = ['TV', 'WiFi', 'Parking', 'AC', 'Cards'];
+  facilities: string[] = ['tv', 'wifi', 'parking', 'ac', 'cards'];
   selectedFacilities: { [key: string]: boolean } = {};
 
   constructor(
@@ -46,7 +49,7 @@ export class UserSalonsComponent implements OnInit {
 
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000);
+    }, 3000);
 
     this.searchForm = this.fb.group({
       searchQuery: [''],
@@ -77,11 +80,6 @@ export class UserSalonsComponent implements OnInit {
     const target = event.target as HTMLInputElement;
     const facility = target.value;
     this.selectedFacilities[facility] = target.checked;
-    this.applyFilters();
-  }
-
-  handleClick(event: MouseEvent): void {
-    event.stopPropagation();
   }
 
   getSalons(): void {
@@ -91,7 +89,8 @@ export class UserSalonsComponent implements OnInit {
         next: (res) => {
           if (res.data !== null) {
             this.Salons = res.data?.salonData.salons;
-            console.log(`Salons`, this.Salons);
+            this.allSalons = res.data?.salonData.salons;
+            console.log(`Salons inside getSalons`, this.Salons);
             this.salonCount = res.data?.salonData.salonCount;
           }
         },
@@ -106,11 +105,26 @@ export class UserSalonsComponent implements OnInit {
 
   applyFilters(): void {
     console.log(`Filter Applied`);
-    const selectedFacilitiesArray = Object.keys(this.selectedFacilities).filter(
-      (facility) => this.selectedFacilities[facility]
-    );
-    this.filters.facilities = selectedFacilitiesArray;
+
+    this.Salons = this.allSalons.filter((salon) => {
+      console.log(`Salon Facilities`, salon.facilities);
+      if (Object.values(this.selectedFacilities).every((value) => !value)) {
+        return true;
+      }
+      return Object.keys(this.selectedFacilities).some(
+        (facility) =>
+          this.selectedFacilities[facility] &&
+          salon.facilities.includes(facility)
+      );
+    });
+    this.toastr.info('Filter Applied');
+    this.salonCount = this.Salons.length;
+  }
+  resetFilter(): void {
+    console.log(`Reset clicked`);
+    this.selectedFacilities = {};
     this.getSalons();
+    this.toastr.info('Filter Cleared');
   }
 
   setCurrentPage(page: number): void {
@@ -141,13 +155,13 @@ export class UserSalonsComponent implements OnInit {
 
   bookChair(salon: ISalon): void {
     this.router.navigate(['/user/salons/book-a-chair'], {
-      queryParams: { salon: JSON.stringify(salon) },
+      queryParams: { salonId: salon._id },
     });
   }
 
   viewSalonDetails(salon: ISalon): void {
     this.router.navigate(['/user/salons/salon-details'], {
-      queryParams: { salon: JSON.stringify(salon) },
+      queryParams: { salonId: salon._id },
     });
   }
   trackBySalonId(index: number, salon: ISalon): string {

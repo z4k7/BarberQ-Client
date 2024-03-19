@@ -20,6 +20,8 @@ export class AdminServicesComponent implements OnInit {
   searchQuery: string = '';
   serviceCount = 0;
   searchForm!: FormGroup;
+  limitOpen: boolean = false;
+  filterOpen: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,6 +66,20 @@ export class AdminServicesComponent implements OnInit {
       ],
       category: ['', Validators.required],
     });
+  }
+
+  toggleLimit() {
+    this.limitOpen = !this.limitOpen;
+  }
+  toggleFilter() {
+    this.filterOpen = !this.filterOpen;
+  }
+
+  closeLimit() {
+    this.limitOpen = false;
+  }
+  closeFilter() {
+    this.filterOpen = false;
   }
 
   getServices(): void {
