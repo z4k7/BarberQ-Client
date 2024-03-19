@@ -1,7 +1,8 @@
 export interface IService {
-    _id: string;
-    serviceName: string;
-    duration: string;
-    category: string;
-    isVisible: boolean;
+  _id: string;
+  serviceName: string;
+  price: number;
+  duration: number;
+  category: string;
+  isVisible: boolean;
 }

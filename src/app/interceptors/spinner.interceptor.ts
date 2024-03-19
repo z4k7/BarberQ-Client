@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize, delay } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
@@ -23,7 +23,6 @@ export class SpinnerInterceptor implements HttpInterceptor {
     this.spinner.show();
 
     return next.handle(request).pipe(
-      delay(1000),
       finalize(() => {
         this.spinner.hide();
       })

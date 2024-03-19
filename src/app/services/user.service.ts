@@ -23,6 +23,9 @@ export class UserService {
       httpOptions
     );
   }
+  getSalonDetails(salonId: string): Observable<any> {
+    return this.http.get(`/user/salon/${salonId}`);
+  }
 
   getServices(serviceIds: string[]): Observable<any> {
     const queryParams = serviceIds.map((id) => `serviceIds=${id}`).join('&');

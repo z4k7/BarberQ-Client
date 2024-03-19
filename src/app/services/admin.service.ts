@@ -7,26 +7,52 @@ import { IApiResponse } from '../models/common';
 const httpOptions = {
   headers: new HttpHeaders({
     'content-Type': 'application/json',
-      }),
+  }),
 };
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-
   constructor(private http: HttpClient) {}
 
-  getUsers(page:number, limit:number, searchQuery?:string): Observable<any> {
-    return this.http.get(`/admin/users?page=${page}&limit=${limit}&searchQuery=${searchQuery}`, httpOptions);
+  getUsers(page: number, limit: number, searchQuery?: string): Observable<any> {
+    return this.http.get(
+      `/admin/users?page=${page}&limit=${limit}&searchQuery=${searchQuery}`,
+      httpOptions
+    );
   }
 
-  getVendors(page:number,limit:number,searchQuery?:string): Observable<any> {
-    return this.http.get(`/admin/vendors/?page=${page}&limit=${limit}&searchQuery=${searchQuery}`, httpOptions);
+  getVendors(
+    page: number,
+    limit: number,
+    searchQuery?: string
+  ): Observable<any> {
+    return this.http.get(
+      `/admin/vendors/?page=${page}&limit=${limit}&searchQuery=${searchQuery}`,
+      httpOptions
+    );
+  }
+  getSalons(
+    page: number,
+    limit: number,
+    searchQuery?: string
+  ): Observable<any> {
+    return this.http.get(
+      `/admin/salons/?page=${page}&limit=${limit}&searchQuery=${searchQuery}`,
+      httpOptions
+    );
   }
 
-  getServices(page:number,limit:number,searchQuery?:string): Observable<any> {
-    return this.http.get(`/admin/services/?page=${page}&limit=${limit}&searchQuery=${searchQuery}`, httpOptions);
+  getServices(
+    page: number,
+    limit: number,
+    searchQuery?: string
+  ): Observable<any> {
+    return this.http.get(
+      `/admin/services/?page=${page}&limit=${limit}&searchQuery=${searchQuery}`,
+      httpOptions
+    );
   }
 
   addService(service: IService): Observable<any> {
@@ -46,25 +72,16 @@ export class AdminService {
   }
 
   hideService(id: string): Observable<any> {
-    return this.http.patch(
-      `/admin/services/hide/${id}`,
-      httpOptions
-    );
+    return this.http.patch(`/admin/services/hide/${id}`, httpOptions);
   }
 
   blockUnblockUser(id: string): Observable<any> {
     console.log(id, 'id');
-    return this.http.patch(
-      `/admin/users/block/${id}`,
-      httpOptions
-    );
+    return this.http.patch(`/admin/users/block/${id}`, httpOptions);
   }
 
   blockUnblockVendor(id: string): Observable<any> {
     console.log(id, 'id');
-    return this.http.patch(
-      `/admin/vendors/block/${id}`,
-      httpOptions
-    );
+    return this.http.patch(`/admin/vendors/block/${id}`, httpOptions);
   }
 }

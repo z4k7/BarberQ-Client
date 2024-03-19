@@ -1,6 +1,8 @@
 <ngx-spinner bdColor="rgba(0,0,0,1)" template="<img src='..\assets\spinner.gif' />">
 </ngx-spinner>
 
+
+
 <div class="fixed z-20 w-full  top-0 start-0 ">
     <app-user-navbar>
 
@@ -103,11 +105,11 @@
                 </div>
 
                 <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-6 space-x-4 md:px-4 md:absolute">
-                    <button type="submit"
+                    <button type="submit" data-drawer-dismiss="drawer-example"
                         class="w-full px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800">
                         Apply filters
                     </button>
-                    <button type="reset"
+                    <button type="button" (click)="resetFilter()" data-drawer-dismiss="drawer-example"
                         class="w-full px-5 py-2 text-sm font-medium text-white bg-red-700 hover:bg-red-600 border border-gray-200 rounded-lg focus:outline-none  focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                         Clear all
                     </button>

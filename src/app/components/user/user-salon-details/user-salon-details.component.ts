@@ -12,12 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class UserSalonDetailsComponent implements OnInit {
   checked: boolean = false;
-  salon!: ISalon;
-  facilities: string[] = [];
-  services: any[] = [];
-  serviceIds: string[] = [];
-  faceTreatment: string[] = [];
-  hairTreatment: string[] = [];
+  salon: ISalon | null = null;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -30,35 +25,26 @@ export class UserSalonDetailsComponent implements OnInit {
     this.route.queryParams
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
-        if (params['salon']) {
-          this.salon = JSON.parse(params['salon']);
-          console.log(this.salon, 'salon from query');
-
-          this.facilities = this.salon.facilities;
-          this.serviceIds = this.salon.services;
-          console.log(`serviceIDs`, this.serviceIds);
-          this.getServices(this.serviceIds);
+        if (params['salonId']) {
+          this.fetchSalonDetails(params['salonId']);
         }
       });
   }
 
-  getServices(serviceIds: string[]): void {
-    this.faceTreatment = [];
-    this.hairTreatment = [];
-
+  fetchSalonDetails(salonId: string): void {
     this.userService
-      .getServices(serviceIds)
+      .getSalonDetails(salonId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        console.log('Response', response);
-        this.services = response.services.data;
-        console.log('Services', this.services);
+      .subscribe((salon) => {
+        console.log(`salon response`, salon);
+        this.salon = salon.data.salonData;
+        console.log(`Salon details`, this.salon);
       });
   }
 
   bookChair(salon: ISalon): void {
     this.router.navigate(['/user/salons/book-a-chair'], {
-      queryParams: { salon: JSON.stringify(salon) },
+      queryParams: { salonId: salon._id },
     });
   }
 

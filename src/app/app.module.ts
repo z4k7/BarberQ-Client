@@ -16,6 +16,12 @@ import { RouterModule } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
+import { StoreModule, MetaReducer } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { hydrationMetaReducer } from './state/hydration.reducer';
+import { Reducers } from './state/app.state';
+
+export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +38,8 @@ import { SpinnerInterceptor } from './interceptors/spinner.interceptor';
     FormsModule,
     ScrollingModule,
     NgxSpinnerModule,
+    StoreModule.forRoot(Reducers, { metaReducers }),
+    EffectsModule.forRoot([]),
   ],
   providers: [
     {
