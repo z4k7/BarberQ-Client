@@ -134,6 +134,7 @@ export class VendorSalonDetailsComponent implements OnInit {
         .subscribe((response) => {
           this.toastr.success('Services Updated Successfully', 'Success');
           this.selectedServices = [];
+          this.getSalonDetails();
           this.closeEditServiceModal();
         });
     } else {
@@ -156,8 +157,10 @@ export class VendorSalonDetailsComponent implements OnInit {
       this.vendorService
         .deleteSalonServices(this.salon._id, this.selectedServicesToDelete)
         .subscribe((response) => {
+          console.log(`Response in confirm delete`, response);
           this.toastr.success('Services Deleted Successfully', 'Success');
           this.selectedServicesToDelete = [];
+          this.getSalonDetails();
           this.closeDeleteServiceModal();
         });
     } else {

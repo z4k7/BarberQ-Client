@@ -10,6 +10,7 @@ import { VendorAddSalonComponent } from './vendor-add-salon/vendor-add-salon.com
 import { MapBoxComponent } from '../common/map-box/map-box.component';
 import { VendorSalonsComponent } from './vendor-salons/vendor-salons.component';
 import { VendorSalonDetailsComponent } from './vendor-salon-details/vendor-salon-details.component';
+import { VendorSalonEditComponent } from './vendor-salon-edit/vendor-salon-edit.component';
 
 const routes: Routes = [
   { path: 'map', component: MapBoxComponent },
@@ -45,6 +46,11 @@ const routes: Routes = [
         path: 'salon-details/:id',
         title: 'Vendor | Salon Details',
         component: VendorSalonDetailsComponent,
+      },
+      {
+        path: 'salon-edit/:id',
+        title: 'Vendor | Salon Edit',
+        component: VendorSalonEditComponent,
       },
     ],
   },
