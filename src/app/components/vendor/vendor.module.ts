@@ -18,6 +18,7 @@ import { StoreModule } from '@ngrx/store';
 import { vendorReducer } from 'src/app/state/vendor-store/vendor.reducer';
 import { VendorSalonsComponent } from './vendor-salons/vendor-salons.component';
 import { VendorSalonDetailsComponent } from './vendor-salon-details/vendor-salon-details.component';
+import { VendorSalonEditComponent } from './vendor-salon-edit/vendor-salon-edit.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { VendorSalonDetailsComponent } from './vendor-salon-details/vendor-salon
     VendorAddSalonComponent,
     VendorSalonsComponent,
     VendorSalonDetailsComponent,
+    VendorSalonEditComponent,
   ],
   imports: [
     CommonModule,

@@ -15,6 +15,14 @@ const httpOptions = {
 export class VendorService {
   constructor(private http: HttpClient) {}
 
+  updateSalon(salonId: string, updatedSalonDetails: any): Observable<any> {
+    return this.http.patch(
+      `/vendor/salons/${salonId}`,
+      updatedSalonDetails,
+      httpOptions
+    );
+  }
+
   updateSalonServices(salonId: string, services: IService[]): Observable<any> {
     return this.http.put(
       `/vendor/salons/${salonId}/services`,

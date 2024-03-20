@@ -18,7 +18,7 @@
                             {{ salon.district }}
                         </span>
                         <div class="card-actions">
-                            <button
+                            <button [routerLink]="['/vendor/salon-edit', salon._id]"
                                 class="btn bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-white">
                                 <svg class="w-6 h-6 text-sky-600 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"

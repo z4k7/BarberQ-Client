@@ -148,6 +148,7 @@ export class VendorSalonsComponent implements OnInit, OnDestroy {
           this.toastr.success('Services updated successfully', 'Success');
           form.resetForm();
           this.selectedServices = [];
+          this.getSalons();
           this.closeAddModal();
         });
     }
