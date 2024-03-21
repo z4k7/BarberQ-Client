@@ -10,6 +10,7 @@ import { AdminOverviewComponent } from './admin-overview/admin-overview.componen
 import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
 import { authGuard } from 'src/app/guards/auth.guard';
 import { loginGuard } from 'src/app/guards/login.guard';
+import { AdminSalonDetailsComponent } from './admin-salon-details/admin-salon-details.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,11 @@ const routes: Routes = [
         path: 'adminOverview',
         title: 'Admin | Overview',
         component: AdminOverviewComponent,
+      },
+      {
+        path: 'salon-details/:id',
+        title: 'Admin | Salon Details',
+        component: AdminSalonDetailsComponent,
       },
       {
         path: '',

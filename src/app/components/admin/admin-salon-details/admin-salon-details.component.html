@@ -1,0 +1,147 @@
+<main class="p-4  bg-white md:ml-64  pt-20">
+
+
+    <nav class="bg-cyan-600  border-gray-200 dark:bg-gray-900 sm:rounded-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span
+                    class="self-center text-2xl font-semibold font-serif whitespace-nowrap text-white dark:text-white">Salon
+                    Details</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Content Start -->
+    <div *ngIf="salon" class="container mx-auto">
+        <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
+            <div class="max-w-4xl">
+                <!-- Card start -->
+                <div
+                    class="card card-side bg-white mb-10  transition-transform hover:scale-105 cursor-pointer shadow-xl hover:shadow-black">
+                    <figure>
+                        <img src="{{ salon.banners[0] }}" class="card-image" alt="Salon" />
+                    </figure>
+                    <div class="card-body p-16">
+                        <h1 class="card-title text-black">{{ salon.salonName }}</h1>
+                        <span class="text-base text-black">
+                            Nr. {{ salon.landmark }}<br />
+                            {{ salon.locality }}<br />
+                            {{ salon.district }}
+                        </span>
+                        <div class="card-actions">
+
+                            <ng-container
+                                *ngIf="salon.status=='pending' || salon.status== 'rejected' || salon.status== 'disapproved' ">
+                                <button (click)="approveSalon()"
+                                    class="btn bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-sky-600">
+                                    <svg class="w-6 h-6 text-sky-600 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z" />
+                                    </svg>
+
+
+
+                                    Approve
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="salon.status=='pending'  ">
+                                <button (click)="rejectSalon()"
+                                    class="btn bg-black text-red-600 skeleton transition-transform hover:scale-105 hover:border-red-600">
+                                    <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+
+
+                                    Reject
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="salon.status=='approved' || salon.status=='active'">
+                                <button (click)="disapproveSalon()"
+                                    class="btn bg-black text-red-600 skeleton transition-transform hover:scale-105 hover:border-red-600">
+
+                                    <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                                    </svg>
+
+                                    Disapprove
+                                </button>
+                            </ng-container>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card end -->
+                <!-- Accordion Start -->
+
+                <div class="accordion gap-4 py-10 transition-transform hover:scale-105 ">
+
+                    <div class="collapse collapse-plus border bg-white shadow-xl hover:shadow-black ">
+                        <input type="radio" name="my-accordion-3" checked="checked" id="my-accordion-0" />
+                        <div #accordionTitle class="collapse-title text-black text-xl font-medium"
+                            (click)="toggleAccordion(0)">
+                            Services
+                        </div>
+                        <div class="collapse-content text-black">
+                            <ng-container *ngFor="let service of salon.services">
+                                <div class="badge badge-warning me-4 mb-4 badge-lg">{{service?.serviceName}} </div>
+                            </ng-container>
+
+                        </div>
+                    </div>
+                    <div class="collapse collapse-plus border bg-white shadow-xl hover:shadow-black ">
+                        <input type="radio" name="my-accordion-3" id="my-accordion-1" />
+                        <div class="collapse-title text-black text-xl font-medium" (click)="toggleAccordion(1)">
+                            About
+                        </div>
+                        <div class="collapse-content text-black">
+                            <h4 class="text-black" style="text-decoration: underline;">Facilities</h4>
+                            <ng-container *ngFor="let facility of salon.facilities ">
+                                <div class="badge badge-warning me-4 mb-4 badge-lg">{{facility}} </div>
+                            </ng-container>
+
+                            <h4 class="text-black mt-4" style="text-decoration: underline;">No. of Chairs</h4>
+
+                            <div class="badge badge-warning me-4 badge-lg">{{salon.chairCount}} </div>
+                        </div>
+                    </div>
+                    <div class="collapse collapse-plus border bg-white shadow-xl hover:shadow-black  ">
+                        <input type="radio" name="my-accordion-3" id="my-accordion-2" />
+                        <div class="collapse-title text-black text-xl font-medium" (click)="toggleAccordion(2)">
+                            Contact
+                        </div>
+                        <div class="collapse-content">
+                            <span class="icon text-black text-lg "><mat-icon>phone</mat-icon>{{salon.contactNumber}}
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- Accordion End -->
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!-- Content End -->
+
+
+</main>

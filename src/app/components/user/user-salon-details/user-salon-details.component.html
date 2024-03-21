@@ -8,14 +8,14 @@
         <div class="max-w-5xl">
             <!-- Card start -->
             <div
-                class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-black">
+                class="card card-side bg-base-100  transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black">
                 <figure>
                     <div *ngIf="salon && salon.banners && salon.banners.length > 0">
                         <img [src]="salon.banners[0]" class="card-image" alt="Salon" />
                     </div>
 
                 </figure>
-                <div class="card-body">
+                <div class="card-body p-16">
                     <h1 class="card-title text-white">{{ salon.salonName }}</h1>
                     <span class="text-base text-white">
                         Nr. {{ salon.landmark }}<br />
@@ -36,7 +36,8 @@
             <!-- Accordion Start -->
 
             <div class="accordion gap-4 py-10 transition-transform hover:scale-105">
-                <div (click)="openAccord($event, 'serviceAccord')" class="collapse collapse-plus bg-base-200 ">
+                <div (click)="openAccord($event, 'serviceAccord')"
+                    class="collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black ">
                     <input type="radio" id="serviceAccord" name="serviceAccordion" value="serviceAccord" />
                     <div class="collapse-title text-xl text-white font-medium" for="serviceAccord">
                         Services
@@ -52,7 +53,8 @@
                     </div>
                 </div>
 
-                <div (click)="openAccord($event, 'aboutAccord')" class=" collapse collapse-plus bg-base-200">
+                <div (click)="openAccord($event, 'aboutAccord')"
+                    class=" collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black">
                     <input type="radio" id="aboutAccord" name="aboutAccordion" value="aboutAccord" />
                     <div class="collapse-title text-white text-xl font-medium" for="aboutAccord">
                         About
@@ -71,7 +73,8 @@
                     </div>
                 </div>
 
-                <div (click)="openAccord($event, 'ratingAccord')" class="collapse collapse-plus bg-base-200">
+                <div (click)="openAccord($event, 'ratingAccord')"
+                    class="collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black ">
                     <input type="radio" id="ratingAccord" name="ratingAccordion" value="ratingAccord" />
                     <div class="collapse-title text-xl text-white font-medium" for="ratingAccord">
                         Reviews & Ratings
@@ -86,7 +89,8 @@
                         </div>
                     </div>
                 </div>
-                <div (click)="openAccord($event, 'contactAccord')" class="collapse collapse-plus bg-base-200">
+                <div (click)="openAccord($event, 'contactAccord')"
+                    class="collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black ">
                     <input type="radio" id="contactAccord" name="contactAccordion" value="contactAccord" />
                     <div class="collapse-title text-white text-xl font-medium" for="contactAccord">
                         Contact

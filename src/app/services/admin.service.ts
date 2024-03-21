@@ -44,6 +44,10 @@ export class AdminService {
     );
   }
 
+  getSalonById(salonId: string): Observable<any> {
+    return this.http.get(`/admin/salons/salon-details/${salonId}`, httpOptions);
+  }
+
   getServices(
     page: number,
     limit: number,
@@ -67,6 +71,13 @@ export class AdminService {
     return this.http.put<IApiResponse<IService>>(
       `/admin/services/editService`,
       service,
+      httpOptions
+    );
+  }
+  updateSalonStatus(salonId: string, status: string): Observable<any> {
+    return this.http.patch(
+      `/admin/salons/${salonId}/status`,
+      { status },
       httpOptions
     );
   }

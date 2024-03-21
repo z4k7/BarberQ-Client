@@ -19,6 +19,7 @@ import { vendorReducer } from 'src/app/state/vendor-store/vendor.reducer';
 import { VendorSalonsComponent } from './vendor-salons/vendor-salons.component';
 import { VendorSalonDetailsComponent } from './vendor-salon-details/vendor-salon-details.component';
 import { VendorSalonEditComponent } from './vendor-salon-edit/vendor-salon-edit.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { VendorSalonEditComponent } from './vendor-salon-edit/vendor-salon-edit.
     FormsModule,
     StoreModule.forFeature('vendor', vendorReducer),
     MapBoxComponent,
+    SharedModule,
   ],
 })
 export class VendorModule {}

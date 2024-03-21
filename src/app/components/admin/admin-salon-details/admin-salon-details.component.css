@@ -1,0 +1,26 @@
+.card-image {
+    width: 100%; /* Ensure the image takes the full width of its container */
+    height: 400px; /* Set a fixed height for all images */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire space */
+}
+.icon {
+    display: inline-flex;
+    align-items: center; 
+  }
+  
+  .icon mat-icon {
+    margin-right: 5px; 
+  }
+  
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.card-actions {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+}
