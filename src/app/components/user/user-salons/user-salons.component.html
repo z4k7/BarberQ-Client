@@ -8,7 +8,7 @@
 
         <button aria-expanded="true" aria-controls="drawer-example" type="button" data-drawer-target="drawer-example"
             data-drawer-show="drawer-example"
-            class="hidden p-2 mr-3 text-gray-600 rounded cursor-pointer lg:inline hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
+            class="hidden p-2 mr-3 text-gray-600 rounded cursor-pointer lg:inline transition-transform hover:scale-105  hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M1 1h14M1 6h14M1 11h7" />
@@ -22,7 +22,7 @@
 
 
     <form [formGroup]="searchForm" class="max-w-lg mx-auto">
-        <div class="flex ">
+        <div class="flex transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black">
 
             <div class="relative mt-3 w-full">
                 <input formControlName="searchQuery" type="search" id="search-dropdown"
@@ -155,10 +155,11 @@
             </div>
         </ng-container>
 
-        <!-- <app-pagination [currPage]="page" class="z-20 flex justify-center content-center w-full"></app-pagination> -->
 
-        <nav class="z-20 flex justify-center content-center w-full" aria-label="Page navigation example">
-            <ul class="pagination inline-flex -space-x-px text-sm">
+
+        <nav class="z-20 flex justify-center content-center w-full  " aria-label="Page navigation example">
+            <ul
+                class="pagination inline-flex -space-x-px text-sm transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black ">
                 <li>
                     <a (click)="previousPage()"
                         class="flex items-center justify-center px-3 h-8 ms-0 leading-tight transition-transform hover:scale-105 text-gray-500 bg-white border border-e-0 border-black rounded-s-lg hover:bg-white hover:text-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>

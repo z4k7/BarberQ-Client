@@ -19,6 +19,8 @@ import { AdminVendorsComponent } from './admin-vendors/admin-vendors.component';
 import { AdminServicesComponent } from './admin-services/admin-services.component';
 import { AdminOverviewComponent } from './admin-overview/admin-overview.component';
 import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
+import { AdminSalonDetailsComponent } from './admin-salon-details/admin-salon-details.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
     AdminServicesComponent,
     AdminOverviewComponent,
     AdminSalonsComponent,
+    AdminSalonDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -41,7 +44,7 @@ import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
     ToastrModule.forRoot(),
     MatSlideToggleModule,
     MatIconModule,
+    SharedModule,
   ],
-  
 })
 export class AdminModule {}

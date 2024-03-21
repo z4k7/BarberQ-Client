@@ -1,16 +1,26 @@
 <main class="p-4  bg-white md:ml-64  pt-20">
 
+    <nav class="bg-cyan-600  border-gray-200 dark:bg-gray-900 sm:rounded-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span
+                    class="self-center text-2xl font-semibold font-serif whitespace-nowrap text-white dark:text-white">Salon
+                    Details</span>
+            </a>
+        </div>
+    </nav>
+
     <!-- Content Start -->
     <div *ngIf="salon" class="container mx-auto">
         <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
             <div class="max-w-4xl">
                 <!-- Card start -->
                 <div
-                    class="card card-side bg-white mb-10 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-black">
+                    class="card card-side bg-white mb-10 shadow-xl transition-transform hover:scale-105 cursor-pointer  hover:shadow-black">
                     <figure>
                         <img src="{{ salon.banners[0] }}" class="card-image" alt="Salon" />
                     </figure>
-                    <div class="card-body">
+                    <div class="card-body p-16">
                         <h1 class="card-title text-black">{{ salon.salonName }}</h1>
                         <span class="text-base text-black">
                             Nr. {{ salon.landmark }}<br />
@@ -18,8 +28,20 @@
                             {{ salon.district }}
                         </span>
                         <div class="card-actions">
+                            <ng-container *ngIf="salon.status=='approved'">
+                                <button
+                                    class="btn bg-black text-green-500 skeleton transition-transform hover:scale-105 hover:border-green-500">
+                                    <svg class="w-6 h-6 text-green-500 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                            d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+                                    </svg>
+                                    Payment
+                                </button>
+                            </ng-container>
                             <button [routerLink]="['/vendor/salon-edit', salon._id]"
-                                class="btn bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-white">
+                                class="btn bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-sky-500">
                                 <svg class="w-6 h-6 text-sky-600 dark:text-white" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                     viewBox="0 0 24 24">
@@ -30,18 +52,7 @@
 
                                 Edit
                             </button>
-                            <button
-                                class="btn bg-black text-red-600 skeleton transition-transform hover:scale-105 hover:border-white">
-                                <svg class="w-6 h-6 text-red-600 dark:text-white" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd"
-                                        d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z"
-                                        clip-rule="evenodd" />
-                                </svg>
 
-                                Delete
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -51,7 +62,7 @@
 
                 <div class="accordion gap-4 py-10 transition-transform hover:scale-105">
 
-                    <div class="collapse collapse-plus border bg-white">
+                    <div class="collapse collapse-plus border bg-white shadow-xl hover:shadow-black ">
                         <input type="radio" name="my-accordion-3" checked="checked" id="my-accordion-0" />
                         <div #accordionTitle class="collapse-title text-black text-xl font-medium"
                             (click)="toggleAccordion(0)">
@@ -90,7 +101,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="collapse collapse-plus border bg-white">
+                    <div class="collapse collapse-plus border bg-white shadow-xl hover:shadow-black ">
                         <input type="radio" name="my-accordion-3" id="my-accordion-1" />
                         <div class="collapse-title text-black text-xl font-medium" (click)="toggleAccordion(1)">
                             About
@@ -106,7 +117,7 @@
                             <div class="badge badge-warning me-4 badge-lg">{{salon.chairCount}} </div>
                         </div>
                     </div>
-                    <div class="collapse collapse-plus border bg-white">
+                    <div class="collapse collapse-plus border bg-white shadow-xl hover:shadow-black ">
                         <input type="radio" name="my-accordion-3" id="my-accordion-2" />
                         <div class="collapse-title text-black text-xl font-medium" (click)="toggleAccordion(2)">
                             Contact

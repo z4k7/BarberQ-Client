@@ -8,8 +8,6 @@ import {
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import Compressor from 'compressorjs';
-import { IService } from 'src/app/models/service';
-import { VendorService } from 'src/app/services/vendor.service';
 import { GeoapifyService } from 'src/app/services/geoapify.service';
 import { initFlowbite } from 'flowbite';
 import { ISalonApiResponse } from 'src/app/models/salon';
@@ -28,9 +26,6 @@ export class VendorAddSalonComponent implements OnInit {
   markerLat: number = 0;
   markerLng: number = 0;
 
-  services: IService[] = [];
-  checkedServices: { [key: string]: boolean } = {};
-
   @ViewChild('fileInput') fileInput: ElementRef | undefined;
 
   geoapifyFilled: boolean = false;
@@ -39,13 +34,13 @@ export class VendorAddSalonComponent implements OnInit {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private vendorService: VendorService,
+
     private geoapifyService: GeoapifyService
   ) {}
 
   ngOnInit(): void {
     initFlowbite();
-    this.getServices();
+
     this.salonForm = this.formBuilder.group({
       salonName: [
         '',
@@ -170,27 +165,6 @@ export class VendorAddSalonComponent implements OnInit {
     });
   }
 
-  getCheckedServices(): string[] {
-    return Object.keys(this.checkedServices).filter(
-      (key) => this.checkedServices[key]
-    );
-  }
-
-  updateCheckedServices(serviceId: string): void {
-    this.checkedServices[serviceId] = !this.checkedServices[serviceId];
-    console.log(`value:${this.checkedServices[serviceId]}`);
-  }
-
-  getServices(): void {
-    this.vendorService.getAllServices().subscribe({
-      next: (res) => {
-        if (res.data) {
-          this.services = res.data.serviceData;
-        }
-      },
-    });
-  }
-
   openMap(): void {
     this.showMap = true;
   }
@@ -283,11 +257,6 @@ export class VendorAddSalonComponent implements OnInit {
     );
 
     formData.append('facilities', JSON.stringify(facilities));
-
-    const selectedServices = this.getCheckedServices().map((serviceId) =>
-      serviceId.trim()
-    );
-    formData.append('services', JSON.stringify(selectedServices));
 
     console.log('FormData:');
     formData.forEach((value, key) => {

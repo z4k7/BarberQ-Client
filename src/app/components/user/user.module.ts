@@ -18,7 +18,6 @@ import { DatePickerComponent } from '../common/date-picker/date-picker.component
 import { UserNavbarComponent } from './userCommon/user-navbar/user-navbar.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { LoaderComponent } from '../common/loader/loader.component';
-import { PaginationComponent } from './userCommon/pagination/pagination.component';
 import { FooterComponent } from './userCommon/footer/footer.component';
 import { FilterComponent } from './userCommon/filter/filter.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -32,7 +31,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     UserSalonDetailsComponent,
     UserBookAChairComponent,
     UserNavbarComponent,
-    PaginationComponent,
     FooterComponent,
     FilterComponent,
   ],
