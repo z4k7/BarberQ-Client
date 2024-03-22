@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ISalon } from 'src/app/models/salon';
 import { IService } from 'src/app/models/service';
 import { VendorService } from 'src/app/services/vendor.service';
+import { PaymentService } from 'src/app/services/payment.service';
+import { Store } from '@ngrx/store';
+import { selectVendorDetails } from 'src/app/state/vendor-store/vendor.selector';
+import { IVendor } from 'src/app/models/vendor';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-vendor-salon-details',
   templateUrl: './vendor-salon-details.component.html',
   styleUrls: ['./vendor-salon-details.component.css'],
 })
-export class VendorSalonDetailsComponent implements OnInit {
+export class VendorSalonDetailsComponent implements OnInit, OnDestroy {
   salon!: ISalon;
   categories: string[] = ['Face Treatment', 'Hair Treatment'];
   services: IService[] = [];
@@ -23,14 +28,67 @@ export class VendorSalonDetailsComponent implements OnInit {
 
   selectedServicesToDelete: IService[] = [];
 
+  vendorState$ = this.store.select(selectVendorDetails);
+  vendorData!: IVendor;
+  vendorSubscription!: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private vendorService: VendorService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private paymentService: PaymentService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
+    this.vendorSubscription = this.vendorState$.subscribe((vendor) => {
+      if (vendor) this.vendorData = vendor;
+    });
+
     this.getSalonDetails();
+    this.paymentService.paymentSuccess.subscribe((response) => {
+      this.updateSalonStatus();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.vendorSubscription.unsubscribe();
+  }
+
+  makePayment() {
+    const paymentOptions = {
+      key: 'rzp_test_EJWa8kbghrVZQl',
+      amount: 200000,
+      currency: 'INR',
+      name: 'BarberQ',
+      description: 'Salon Activation Fee',
+      image: '../../../assets/final logo.jpg',
+      prefill: {
+        name: this.vendorData.name,
+        email: this.vendorData.email,
+        contact: this.vendorData.mobile,
+      },
+      notes: {
+        address: this.salon.locality,
+      },
+      theme: {
+        color: '#123456',
+      },
+    };
+
+    this.paymentService.openPaymentModal(paymentOptions);
+  }
+
+  updateSalonStatus() {
+    this.vendorService.updateSalonStatus(this.salon._id, 'active').subscribe(
+      (response) => {
+        this.toastr.success('Salon activated successfully', 'Success!');
+        this.getSalonDetails();
+      },
+      (error) => {
+        this.toastr.error('Failed to activate salon', 'Error');
+      }
+    );
   }
 
   getSalonDetails(): void {

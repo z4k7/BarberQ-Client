@@ -12,11 +12,11 @@ import { selectVendorDetails } from 'src/app/state/vendor-store/vendor.selector'
   styleUrls: ['./vendor-navbar.component.css'],
 })
 export class VendorNavbarComponent implements OnInit, OnDestroy {
+  constructor(private router: Router, private store: Store) {}
+
   vendorState$ = this.store.select(selectVendorDetails);
   vendorData!: IVendor;
   vendorSubscription!: Subscription;
-
-  constructor(private router: Router, private store: Store) {}
 
   ngOnInit(): void {
     this.vendorSubscription = this.vendorState$.subscribe((vendor) => {

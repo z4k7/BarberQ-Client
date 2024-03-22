@@ -8,6 +8,7 @@ import { UserSalonsComponent } from './user-salons/user-salons.component';
 import { UserSalonDetailsComponent } from './user-salon-details/user-salon-details.component';
 import { UserBookAChairComponent } from './user-book-a-chair/user-book-a-chair.component';
 import { loginGuard } from 'src/app/guards/login.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,11 @@ const routes: Routes = [
         component: UserBookAChairComponent,
       },
     ],
+  },
+  {
+    path: 'profile',
+    title: 'BarberQ | User Profile',
+    component: UserProfileComponent,
   },
 ];
 
