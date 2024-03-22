@@ -21,6 +21,7 @@ import { LoaderComponent } from '../common/loader/loader.component';
 import { FooterComponent } from './userCommon/footer/footer.component';
 import { FilterComponent } from './userCommon/filter/filter.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     UserNavbarComponent,
     FooterComponent,
     FilterComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,

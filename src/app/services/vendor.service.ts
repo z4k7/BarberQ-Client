@@ -73,4 +73,12 @@ export class VendorService {
       httpOptions
     );
   }
+
+  updateSalonStatus(salonId: string, status: string): Observable<any> {
+    return this.http.patch(
+      `/vendor/salons/${salonId}/status`,
+      { status },
+      httpOptions
+    );
+  }
 }

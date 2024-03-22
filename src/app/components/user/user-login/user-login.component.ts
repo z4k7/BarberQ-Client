@@ -9,6 +9,8 @@ import {
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserLoginResponse } from 'src/app/models/user';
+import { Store } from '@ngrx/store';
+import { saveUser } from 'src/app/state/user-store/user.actions';
 
 @Component({
   selector: 'app-user-login',
@@ -25,7 +27,8 @@ export class UserLoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +62,9 @@ export class UserLoginComponent implements OnInit {
             if (res.data && res.data.accessToken && res.data.refreshToken) {
               localStorage.setItem('userJwtAccess', res.data.accessToken);
               localStorage.setItem('userJwtRefresh', res.data.refreshToken);
+
+              this.store.dispatch(saveUser({ userDetails: res.data.userData }));
+
               this.router.navigate(['/']);
             } else {
               console.error('Invalid response format:', res);
