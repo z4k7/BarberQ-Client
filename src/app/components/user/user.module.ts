@@ -19,9 +19,12 @@ import { UserNavbarComponent } from './userCommon/user-navbar/user-navbar.compon
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { LoaderComponent } from '../common/loader/loader.component';
 import { FooterComponent } from './userCommon/footer/footer.component';
-import { FilterComponent } from './userCommon/filter/filter.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfilecommonComponent } from './user-profilecommon/user-profilecommon.component';
+import { UserBookingsComponent } from './user-bookings/user-bookings.component';
+import { UserWalletComponent } from './user-wallet/user-wallet.component';
+import { UserContactusComponent } from './user-contactus/user-contactus.component';
 
 @NgModule({
   declarations: [
@@ -33,8 +36,11 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     UserBookAChairComponent,
     UserNavbarComponent,
     FooterComponent,
-    FilterComponent,
     UserProfileComponent,
+    UserProfilecommonComponent,
+    UserBookingsComponent,
+    UserWalletComponent,
+    UserContactusComponent,
   ],
   imports: [
     CommonModule,

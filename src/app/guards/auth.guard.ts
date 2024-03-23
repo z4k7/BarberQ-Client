@@ -13,13 +13,13 @@ export const authGuard: CanActivateFn = (
 ) => {
   const role = route.parent?.routeConfig?.path;
   const token = localStorage.getItem(`${role}JwtRefresh`);
-  const router: Router = inject(Router)
+  const router: Router = inject(Router);
 
   if (token === null || isTokenExpired(token)) {
-    if (role !== 'user') {
-      router.navigate([`/${role}/login`]);
-      return false;
-    }
+    // if (role !== 'user') {
+    //   return false;
+    // }
+    router.navigate([`/${role}/login`]);
 
     return false;
   }

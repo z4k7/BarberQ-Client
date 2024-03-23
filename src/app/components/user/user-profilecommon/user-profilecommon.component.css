@@ -1,0 +1,42 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .content-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .router-outlet-container {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  /* Active menu item */
+.active {
+    background-color: #2563eb;
+    color: #ffffff;
+  }
+  
+  .active svg {
+    color: #ffffff;
+  }
+  
+  /* Inactive menu item */
+  a:not(.active) {
+    background-color: #f8fafc;
+    color: #4b5563;
+  }
+  
+  a:not(.active):hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+  }
+  
+  a:not(.active) svg {
+    color: #6b7280;
+  }
