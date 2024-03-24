@@ -1,6 +1,4 @@
-
 <mat-card class="demo-inline-calendar-card">
-    <mat-calendar [(selected)]="selected"></mat-calendar>
+    <mat-calendar [startAt]="selected" (selectedChange)="onDateChange($event)"></mat-calendar>
 </mat-card>
 <p>Selected date: {{selected | date:'dd-MM-yyyy'}}</p>
-  

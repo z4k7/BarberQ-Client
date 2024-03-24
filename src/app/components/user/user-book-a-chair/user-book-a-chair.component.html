@@ -23,7 +23,22 @@
             <!-- Card end -->
             <div class="datepicker gap-4 py-10 transition-transform hover:scale-105">
 
-                <app-date-picker></app-date-picker>
+                <app-date-picker (dateSelected)="getAvailableSlots($event)"></app-date-picker>
+            </div>
+
+            <div *ngIf="availableSlots.length>0">
+                <h3>Available Slots</h3>
+
+                <ul>
+                    <li *ngFor="let slot of availableSlots">
+                        <label>
+                            <input type="radio" name="slot" [(ngModel)]="selectedSlot" , [value]="slot" />
+                            {{slot.time}} - Chair{{slot.chair}}
+                        </label>
+                    </li>
+
+                </ul>
+                <button (click)="bookSlot()" [disabled]="!selectedSlot"> Book Slot </button>
             </div>
 
         </div>
