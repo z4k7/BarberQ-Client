@@ -21,30 +21,61 @@
                 </div>
             </div>
             <!-- Card end -->
-            <div class="datepicker gap-4 py-10 transition-transform hover:scale-105">
 
-                <app-date-picker (dateSelected)="getAvailableSlots($event)"></app-date-picker>
+            <!-- Services Start -->
+            <div class=" py-10">
+                <h1 class="text-white">Choose Service</h1>
+                <button class="btn bg-black" (click)="filterServices('Face Treatment')">Face Treatment</button>
+                <button class="btn bg-black" (click)="filterServices('Hair Treatment')">Hair Treatment</button>
+                <div class="scroll-x  ">
+                    <ng-container *ngFor="let service of filteredServices ">
+                        <div class="card service-card w-96  bg-white shadow-xl">
+                            <div class="card-body">
+                                <h2 class="card-title text-black ">
+                                    <input type="checkbox" [checked]="selectedServices.includes(service._id)"
+                                        (change)="toggleService(service._id)" class="checkbox checkbox-info " />
+                                    {{service.serviceName}}
+                                </h2>
+                                <p class="text-black"> Category: {{ service.category}} </p>
+                                <p class="text-black"> Price: ₹{{service.price}} </p>
+                                <p class="text-black"> Duration: {{service.duration }} minutes </p>
+
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Services End-->
+
+            <div class="datepicker flex gap-4 py-10 transition-transform hover:scale-105">
+
+                <app-date-picker (dateSelected)="getAvailableSlots($event)" class="flex-1"></app-date-picker>
+
+                <div class="card w-96 bg-white text-primary-content flex-1">
+                    <div class="card-body">
+                        <h2 class="card-title">Available Slots</h2>
+
+                        <ng-container *ngIf="!availableSlots.length">
+                            <h3>Please Choose your service and date!</h3>
+                        </ng-container>
+
+                        <div *ngIf="availableSlots.length > 0" class="badge-container">
+                            <ng-container *ngFor="let slot of availableSlots">
+
+                                <div class="badge badge-neutral p-4 badge-lg">
+                                    <input type="radio" name="slot" [(ngModel)]="selectedSlot" [value]="slot" />
+                                    {{slot}}
+                                </div>
+                            </ng-container>
+                        </div>
+
+                        <div *ngIf="availableSlots.length > 0" class="card-actions justify-end">
+                            <button class="btn bg-black" (click)="bookSlot()" [disabled]="!selectedSlot">Book
+                                Slot</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div *ngIf="availableSlots.length>0">
-                <h3>Available Slots</h3>
-
-                <ul>
-                    <li *ngFor="let slot of availableSlots">
-                        <label>
-                            <input type="radio" name="slot" [(ngModel)]="selectedSlot" , [value]="slot" />
-                            {{slot.time}} - Chair{{slot.chair}}
-                        </label>
-                    </li>
-
-                </ul>
-                <button (click)="bookSlot()" [disabled]="!selectedSlot"> Book Slot </button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-
-<!-- Content End -->
+            <!-- Content End -->

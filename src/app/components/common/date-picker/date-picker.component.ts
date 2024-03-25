@@ -25,9 +25,11 @@ export class DatePickerComponent {
   onDateChange(event: any) {
     this.selected = event;
     console.log(`Selected date object`, this.selected);
-    const selectedDate = this.selected
-      ? this.selected.toISOString().split('T')[0]
-      : '';
+
+    const day = this.selected.getDate().toString().padStart(2, '0');
+    const month = (this.selected.getMonth() + 1).toString().padStart(2, '0');
+    const year = this.selected.getFullYear();
+    const selectedDate = `${day}-${month}-${year}`;
 
     console.log(`Emitted date string`, selectedDate);
 
