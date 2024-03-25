@@ -46,6 +46,8 @@ export class VendorSalonEditComponent implements OnInit {
       salonName: '',
       contactNumber: '',
       chairCount: '',
+      openingTime: '',
+      closingTime: '',
     });
   }
 
@@ -54,6 +56,8 @@ export class VendorSalonEditComponent implements OnInit {
       salonName: this.salon.salonName,
       contactNumber: this.salon.contactNumber,
       chairCount: this.salon.chairCount,
+      openingTime: this.salon.openingTime,
+      closingTime: this.salon.closingTime,
     });
   }
 

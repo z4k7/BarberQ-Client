@@ -12,6 +12,8 @@ export interface ISalon {
   facilities: string[];
   landmark: string;
   locality: string;
+  openingTime: string;
+  closingTime: string;
   location: {
     longitude: number;
     latitude: number;

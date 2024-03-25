@@ -3,3 +3,29 @@
     height: 500px; /* Set a fixed height for all images */
     object-fit: cover; /* Maintain aspect ratio and cover the entire space */
 }
+
+.scroll-x {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem; 
+   }
+   
+   .service-card {
+    flex: 0 0 auto; 
+    margin-right: 1rem;
+  
+   }
+
+   .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem; /* Adjust the gap between badges as needed */
+}
+
+.badge {
+    flex: 0 0 auto; /* This ensures that the badges do not grow or shrink */
+    margin-right: 1rem; /* Add some margin to the right of each badge for spacing */
+}
+
+   

@@ -83,8 +83,8 @@ export class VendorAddSalonComponent implements OnInit {
           Validators.pattern('[0-9]*'),
         ],
       ],
-      openTime: ['', [Validators.required]],
-      closeTime: ['', [Validators.required]],
+      openingTime: ['', [Validators.required]],
+      closingTime: ['', [Validators.required]],
       chairCount: ['', [Validators.required, Validators.pattern('^[1-9]$')]],
       banner: [null, [Validators.required]],
       wifi: [false],
@@ -117,12 +117,12 @@ export class VendorAddSalonComponent implements OnInit {
     return this.salonForm.get('district') as FormControl;
   }
 
-  get openTime(): FormControl {
-    return this.salonForm.get('openTime') as FormControl;
+  get openingTime(): FormControl {
+    return this.salonForm.get('openingTime') as FormControl;
   }
 
-  get closeTime(): FormControl {
-    return this.salonForm.get('closeTime') as FormControl;
+  get closingTime(): FormControl {
+    return this.salonForm.get('closingTime') as FormControl;
   }
 
   get chairCount(): FormControl {
