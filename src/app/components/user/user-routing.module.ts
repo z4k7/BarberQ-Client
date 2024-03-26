@@ -11,7 +11,6 @@ import { loginGuard } from 'src/app/guards/login.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfilecommonComponent } from './user-profilecommon/user-profilecommon.component';
 import { UserBookingsComponent } from './user-bookings/user-bookings.component';
-import { UserWalletComponent } from './user-wallet/user-wallet.component';
 import { UserContactusComponent } from './user-contactus/user-contactus.component';
 
 const routes: Routes = [
@@ -69,11 +68,7 @@ const routes: Routes = [
         title: 'BarberQ | User Bookings',
         component: UserBookingsComponent,
       },
-      {
-        path: 'wallet',
-        title: 'BarberQ | User Wallet',
-        component: UserWalletComponent,
-      },
+
       {
         path: 'contact-us',
         title: 'BarberQ | User Contact Us',

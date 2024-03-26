@@ -140,55 +140,137 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
 
   bookSlot() {
     if (this.selectedSlot) {
-      console.log(`Date in bookSlot`, this.selectedDate);
-
       const totalAmount = this.calculateTotalAmount();
 
-      const paymentOptions = {
-        key: 'rzp_test_EJWa8kbghrVZQl',
-        amount: totalAmount * 100,
-        currency: 'INR',
-        name: 'Your Salon Name',
-        description: 'Service Booking',
-        image: '../../../assets/final logo.jpg',
-        prefill: {
-          name: this.userData.name,
-          email: this.userData.email,
-          contact: this.userData.mobile,
-        },
-        notes: {
-          address: this.salon?.locality,
-        },
-        theme: {
-          color: '#123456',
-        },
-      };
-
-      this.paymentService.paymentSuccess.subscribe((response) => {
-        this.salonService
-          .bookSlot(
-            this.selectedSalonId!,
-            this.userData._id,
-            this.selectedServices,
-            this.selectedDate,
-            this.selectedSlot
-          )
-          .subscribe({
-            next: (booking) => {
-              this.toastr.success(
-                'Slot Booked Successfully',
-                'Booking Successfull!'
-              );
-              console.log(`Booking Successfull`, booking);
-              this.availableSlots = [];
+      this.salonService.createPaymentOrder(totalAmount).subscribe({
+        next: (response) => {
+          console.log(`Response in next`, response);
+          const paymentOptions = {
+            key: 'rzp_test_EJWa8kbghrVZQl',
+            amount: response.order.amount,
+            currency: 'INR',
+            name: this.salon?.salonName,
+            description: 'Service Booking',
+            image: '../../../assets/final logo.jpg',
+            order_id: response.order.id, // Add the order ID received from the backend
+            prefill: {
+              name: this.userData.name,
+              email: this.userData.email,
+              contact: this.userData.mobile,
             },
-            error: (error) => {
-              this.toastr.error(error, 'Error!');
+            notes: {
+              address: this.salon?.locality,
             },
-          });
+            theme: {
+              color: '#123456',
+            },
+            handler: (response: any) => {
+              this.verifyPayment(response);
+            },
+          };
+          this.paymentService.openPaymentModal(paymentOptions);
+        },
+        error: (error) => {
+          this.toastr.error(error, 'Error creating payment order!');
+          console.error('Error creating payment order', error);
+        },
       });
-
-      this.paymentService.openPaymentModal(paymentOptions);
     }
   }
+
+  verifyPayment(response: any) {
+    console.log(`Response passed into Verify Payment:`, response);
+    const paymentId = response.razorpay_payment_id;
+    this.salonService.verifyPayment(response).subscribe({
+      next: (response) => {
+        this.toastr.success(
+          'Payment Verified Successfully',
+          'Verification Success!'
+        );
+        console.log(`Response from verify payment:`, response);
+        this.bookSlotInBackend(paymentId);
+      },
+      error: (error) => {
+        console.error('Error verifying Payment', error);
+      },
+    });
+  }
+
+  bookSlotInBackend(paymentId: string) {
+    this.salonService
+      .bookSlot(
+        this.selectedSalonId!,
+        this.userData._id,
+        paymentId,
+        this.selectedServices,
+        this.selectedDate,
+        this.selectedSlot
+      )
+      .subscribe({
+        next: (booking) => {
+          this.toastr.success(
+            'Slot Booked Successfully',
+            'Booking Successfull!'
+          );
+          console.log(`Booking Successfull:`, booking);
+          this.availableSlots = [];
+        },
+        error: (error) => {
+          this.toastr.error(error, 'Error!');
+          console.error('Error booking slot', error);
+        },
+      });
+  }
+
+  // bookSlot() {
+  //   if (this.selectedSlot) {
+  //           const totalAmount = this.calculateTotalAmount();
+
+  //     const paymentOptions = {
+  //       key: 'rzp_test_EJWa8kbghrVZQl',
+  //       amount: totalAmount * 100,
+  //       currency: 'INR',
+  //       name: 'Your Salon Name',
+  //       description: 'Service Booking',
+  //       image: '../../../assets/final logo.jpg',
+  //       prefill: {
+  //         name: this.userData.name,
+  //         email: this.userData.email,
+  //         contact: this.userData.mobile,
+  //       },
+  //       notes: {
+  //         address: this.salon?.locality,
+  //       },
+  //       theme: {
+  //         color: '#123456',
+  //       },
+  //     };
+
+  //     this.paymentService.paymentSuccess.subscribe((response) => {
+  //       this.salonService
+  //         .bookSlot(
+  //           this.selectedSalonId!,
+  //           this.userData._id,
+  //           this.selectedServices,
+  //           this.selectedDate,
+  //           this.selectedSlot
+  //         )
+  //         .subscribe({
+  //           next: (booking) => {
+  //             this.toastr.success(
+  //               'Slot Booked Successfully',
+  //               'Booking Successfull!'
+  //             );
+  //             console.log(`Booking Successfull`, booking);
+  //             this.availableSlots = [];
+  //           },
+  //           error: (error) => {
+  //             this.toastr.error(error, 'Error!');
+  //           },
+  //         });
+  //     });
+
+  //     this.paymentService.openPaymentModal(paymentOptions);
+  //   }
+  // }
 }
