@@ -23,8 +23,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfilecommonComponent } from './user-profilecommon/user-profilecommon.component';
 import { UserBookingsComponent } from './user-bookings/user-bookings.component';
-import { UserWalletComponent } from './user-wallet/user-wallet.component';
 import { UserContactusComponent } from './user-contactus/user-contactus.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,6 @@ import { UserContactusComponent } from './user-contactus/user-contactus.componen
     UserProfileComponent,
     UserProfilecommonComponent,
     UserBookingsComponent,
-    UserWalletComponent,
     UserContactusComponent,
   ],
   imports: [
@@ -54,6 +53,7 @@ import { UserContactusComponent } from './user-contactus/user-contactus.componen
     ScrollingModule,
     LoaderComponent,
     NgxSpinnerModule,
+    SharedModule,
   ],
 })
 export class UserModule {}
