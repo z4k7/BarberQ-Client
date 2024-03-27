@@ -29,6 +29,9 @@ export class StatusDirective implements OnChanges {
       rejected: 'h-2.5 w-2.5 rounded-full bg-red-500 me-2',
       disapproved: 'h-2.5 w-2.5 rounded-full bg-red-500 me-2',
       active: 'h-2.5 w-2.5 rounded-full bg-green-500 me-2',
+      booked: 'h-2.5 w-2.5 rounded-full bg-sky-500 me-2',
+      completed: 'h-2.5 w-2.5 rounded-full bg-green-400 me-2',
+      cancelled: 'h-2.5 w-2.5 rounded-full bg-red-400 me-2',
     };
 
     const newClass =

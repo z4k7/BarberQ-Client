@@ -157,7 +157,7 @@
                                     {{booking.date}}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{booking.time}}
+                                    {{booking.time | time}}
                                 </td>
 
                                 <td class="px-6 py-4">
@@ -179,7 +179,8 @@
                                     </button>
                                 </td>
                                 <td class="px-6 py-4">
-                                    <button type="button" (click)="openConfirmationModal(booking)"
+                                    <button type="button" *ngIf="booking.orderStatus !== 'cancelled'  "
+                                        (click)="openConfirmationModal(booking)"
                                         class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
                                         <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor"
                                             viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -265,10 +266,10 @@
                     <!-- Modal header -->
                     <div class="flex justify-between mb-4 rounded-t sm:mb-5">
                         <div class="text-lg text-gray-900 md:text-xl dark:text-white">
-                            <p class="font-bold ">
+                            <p class="font-bold " *ngIf="selectedBooking">
                                 Salon Name: {{selectedBooking.salonName}}
                             </p>
-                            <h2 class="font-bold">
+                            <h2 class="font-bold" *ngIf="selectedBooking">
                                 Booking Amount: ₹{{selectedBooking.totalAmount}}
                             </h2>
                         </div>
@@ -281,7 +282,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-row gap-6">
+                    <div class="flex flex-row gap-6" *ngIf="selectedBooking">
                         <dl>
                             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Choosed Services
                             </dt>
@@ -298,13 +299,20 @@
                         </dl>
                         <dl>
                             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Time</dt>
-                            <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">{{selectedBooking.time}}
+                            <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
+                                {{selectedBooking.time|time }}
                             </dd>
                         </dl>
                         <dl>
                             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Chair No.</dt>
                             <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
                                 {{selectedBooking.chairNumber}}
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Status</dt>
+                            <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
+                                {{selectedBooking.orderStatus | capitalize}}
                             </dd>
                         </dl>
                     </div>
@@ -327,14 +335,13 @@
 
         <!-- Confirmation Modal Start -->
 
-        <div id="deleteModal" tabindex="-1" aria-hidden="true"
+        <div id="confirmModal" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
             <div class="relative p-4 w-full max-w-md h-full md:h-auto">
                 <!-- Modal content -->
-                <div class="relative p-4 text-center bg-gray-500 rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                <div class="relative p-4 text-center bg-white border rounded-lg shadow dark:bg-gray-800 sm:p-5">
                     <button type="button" (click)="closeConfirmationModal()"
-                        class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        data-modal-toggle="deleteModal">
+                        class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -349,9 +356,10 @@
                             d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                             clip-rule="evenodd"></path>
                     </svg>
-                    <p class="mb-4 text-black dark:text-gray-300">Are you sure you want to cancel the booking in
+                    <p class="mb-4 text-black dark:text-gray-300" *ngIf="selectedBooking">Are you sure you want to
+                        cancel the booking in
                         {{selectedBooking.salonName}} on {{selectedBooking.date}} at {{selectedBooking.time}}?</p>
-                    <div class="flex justify-center items-center space-x-4">
+                    <div class="flex justify-center items-center space-x-4" *ngIf="selectedBooking">
                         <button type="button" (click)="closeConfirmationModal()"
                             class="py-2 px-3 text-sm font-medium text-black bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
                             No, cancel

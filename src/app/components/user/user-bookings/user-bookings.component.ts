@@ -140,6 +140,7 @@ export class UserBookingsComponent implements OnInit, OnDestroy {
       next: (response) => {
         this.toastr.success('Booking cancelled successfully!', 'Cancelled');
         console.log('Refund Success', response);
+        this.getUserBookings();
       },
     });
     this.closeConfirmationModal();
@@ -147,7 +148,7 @@ export class UserBookingsComponent implements OnInit, OnDestroy {
 
   openConfirmationModal(booking: any): void {
     this.selectedBooking = booking;
-    const modal = document.getElementById('deleteModal') as HTMLDivElement;
+    const modal = document.getElementById('confirmModal') as HTMLDivElement;
     const backdrop = document.getElementById('modal-backdrop');
 
     if (modal) {
@@ -158,7 +159,7 @@ export class UserBookingsComponent implements OnInit, OnDestroy {
   }
 
   closeConfirmationModal(): void {
-    const modal = document.getElementById('deleteModal') as HTMLDivElement;
+    const modal = document.getElementById('confirmModal') as HTMLDivElement;
     const backdrop = document.getElementById('modal-backdrop');
 
     if (modal) {

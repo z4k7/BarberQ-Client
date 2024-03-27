@@ -46,9 +46,11 @@ export class VendorSalonDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.getSalonDetails();
-    this.paymentService.paymentSuccess.subscribe((response) => {
-      this.updateSalonStatus();
-    });
+    // this.paymentService.paymentSuccess.subscribe((response) => {
+    //   console.log(`Payment Response`, response);
+    //   // this.updateSalonStatus();
+    //   // this.verifyPayment()
+    // });
   }
 
   ngOnDestroy(): void {
@@ -56,39 +58,91 @@ export class VendorSalonDetailsComponent implements OnInit, OnDestroy {
   }
 
   makePayment() {
-    const paymentOptions = {
-      key: 'rzp_test_EJWa8kbghrVZQl',
-      amount: 200000,
-      currency: 'INR',
-      name: 'BarberQ',
-      description: 'Salon Activation Fee',
-      image: '../../../assets/final logo.jpg',
-      prefill: {
-        name: this.vendorData.name,
-        email: this.vendorData.email,
-        contact: this.vendorData.mobile,
-      },
-      notes: {
-        address: this.salon.locality,
-      },
-      theme: {
-        color: '#123456',
-      },
-    };
+    this.vendorService.createPaymentOrder(2000).subscribe({
+      next: (response) => {
+        const paymentOptions = {
+          key: 'rzp_test_EJWa8kbghrVZQl',
+          amount: response.order.amount,
+          currency: 'INR',
+          name: 'BarberQ',
+          description: 'Salon Activation Fee',
+          image: '../../../assets/final logo.jpg',
+          order_id: response.order.id, // Add the order ID received from the backend
+          prefill: {
+            name: this.vendorData.name,
+            email: this.vendorData.email,
+            contact: this.vendorData.mobile,
+          },
+          notes: {
+            address: this.salon.locality,
+          },
+          theme: {
+            color: '#123456',
+          },
+          handler: (response: any) => {
+            console.log(`Response inside makePayment handler`, response);
 
-    this.paymentService.openPaymentModal(paymentOptions);
+            this.verifyPayment(response);
+          },
+        };
+        this.paymentService.openPaymentModal(paymentOptions);
+      },
+      error: (error) => {
+        console.error('Error creating payment order', error);
+      },
+    });
   }
 
+  verifyPayment(response: any) {
+    console.log(`Verify payment inside vendor salon details called`);
+
+    this.vendorService.verifyPayment(response).subscribe({
+      next: (response) => {
+        console.log(`Rsponse`, response);
+        this.updateSalonStatus();
+      },
+      error: (error) => {
+        this.toastr.error(error.message, 'Error!');
+      },
+    });
+  }
+
+  // makePayment() {
+  //   const paymentOptions = {
+  //     key: 'rzp_test_EJWa8kbghrVZQl',
+  //     amount: 200000,
+  //     currency: 'INR',
+  //     name: 'BarberQ',
+  //     description: 'Salon Activation Fee',
+  //     image: '../../../assets/final logo.jpg',
+  //     prefill: {
+  //       name: this.vendorData.name,
+  //       email: this.vendorData.email,
+  //       contact: this.vendorData.mobile,
+  //     },
+  //     notes: {
+  //       address: this.salon.locality,
+  //     },
+  //     theme: {
+  //       color: '#123456',
+  //     },
+  //   };
+
+  //   this.paymentService.openPaymentModal(paymentOptions);
+  // }
+
   updateSalonStatus() {
-    this.vendorService.updateSalonStatus(this.salon._id, 'active').subscribe(
-      (response) => {
+    this.vendorService.updateSalonStatus(this.salon._id, 'active').subscribe({
+      next: (response) => {
         this.toastr.success('Salon activated successfully', 'Success!');
+        console.log('Response in update Salon', response);
         this.getSalonDetails();
       },
-      (error) => {
+      error: (error) => {
+        console.log(`Error in update salon`, error);
         this.toastr.error('Failed to activate salon', 'Error');
-      }
-    );
+      },
+    });
   }
 
   getSalonDetails(): void {

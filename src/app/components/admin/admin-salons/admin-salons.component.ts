@@ -71,10 +71,6 @@ export class AdminSalonsComponent implements OnInit {
     this.getSalons();
   }
 
-  // setFilter(filterOption: string): void{
-
-  // }
-
   onPageChange(page: number): void {
     this.currentPage = page;
     this.getSalons();
