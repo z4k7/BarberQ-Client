@@ -4,6 +4,7 @@ import { ISalon } from 'src/app/models/salon';
 import { UserService } from 'src/app/services/user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-user-salon-details',
@@ -22,6 +23,8 @@ export class UserSalonDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    initFlowbite();
+
     this.route.queryParams
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {

@@ -8,7 +8,7 @@
         <div class="max-w-5xl">
             <!-- Card start -->
             <div
-                class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer shadow-lg hover:shadow-black">
+                class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer  hover:shadow-black">
                 <figure><img src={{salon.banners[0]}} class="card-image" alt="Salon Image" /></figure>
                 <div class="card-body">
                     <h1 class="card-title text-white ">{{salon.salonName}}</h1>
@@ -16,6 +16,12 @@
                         Nr. {{salon.landmark}}<br>
                         {{salon.locality}}<br>
                         {{salon.district}}
+                    </span>
+                    <span class="text-base text-white">
+                        Opening Time: {{salon.openingTime | time}}
+                    </span>
+                    <span class="text-base text-white">
+                        Closing Time: {{salon.closingTime | time}}
                     </span>
 
                 </div>
@@ -64,7 +70,7 @@
 
                                 <div class="badge badge-neutral p-4 badge-lg">
                                     <input type="radio" name="slot" [(ngModel)]="selectedSlot" [value]="slot" />
-                                    {{slot}}
+                                    {{slot | time}}
                                 </div>
                             </ng-container>
                         </div>

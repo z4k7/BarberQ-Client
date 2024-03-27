@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { initFlowbite } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-user-home',
@@ -9,6 +10,7 @@ export class UserHomeComponent implements OnInit {
   constructor(private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {
+    initFlowbite();
     this.spinner.show();
 
     setTimeout(() => {

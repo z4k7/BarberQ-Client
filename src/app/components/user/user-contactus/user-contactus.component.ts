@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { initFlowbite } from 'flowbite';
 import { Subscription } from 'rxjs';
 import { IUser } from 'src/app/models/user';
 import { ChatService } from 'src/app/services/chat.service';
@@ -21,9 +22,10 @@ export class UserContactusComponent implements OnInit, OnDestroy {
   userData!: IUser;
   userSubscription!: Subscription;
 
-  date:Date = new Date()
+  date: Date = new Date();
 
   ngOnInit(): void {
+    initFlowbite();
     this.userSubscription = this.userState$.subscribe((user) => {
       if (user) this.userData = user;
     });

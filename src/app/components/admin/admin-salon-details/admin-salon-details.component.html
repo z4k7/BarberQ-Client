@@ -29,9 +29,21 @@
                             {{ salon.district }}
                         </span>
                         <div class="card-actions">
+                            <ng-container *ngIf="salon.status== 'disapproved'  ">
+                                <button (click)="activateSalon()"
+                                    class="btn bg-black text-green-600 skeleton transition-transform hover:scale-105 hover:border-green-600">
+                                    <svg class="w-6 h-6 text-green-600 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 7 2 2 4-4m-5-9v4h4V3h-4Z" />
+                                    </svg>
+                                    Activate
+                                </button>
+                            </ng-container>
 
-                            <ng-container
-                                *ngIf="salon.status=='pending' || salon.status== 'rejected' || salon.status== 'disapproved' ">
+                            <ng-container *ngIf="salon.status=='pending' || salon.status== 'rejected'">
                                 <button (click)="approveSalon()"
                                     class="btn bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-sky-600">
                                     <svg class="w-6 h-6 text-sky-600 dark:text-white" aria-hidden="true"

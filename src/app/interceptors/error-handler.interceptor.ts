@@ -21,10 +21,12 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
         let errorMessage = 'An error occurred during login.';
+        console.error(err.error);
         if (err.error && err.error.data && err.error.data.message) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           errorMessage = err.error.data.message;
         }
-        this.toastr.error(errorMessage);
+        this.toastr.error(err.error.message, 'Error!');
 
         return throwError(() => err);
       })

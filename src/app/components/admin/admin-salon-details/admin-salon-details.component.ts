@@ -53,6 +53,10 @@ export class AdminSalonDetailsComponent implements OnInit {
     this.updateSalonStatus('rejected');
   }
 
+  activateSalon(): void {
+    this.updateSalonStatus('active');
+  }
+
   disapproveSalon(): void {
     this.updateSalonStatus('disapproved');
   }

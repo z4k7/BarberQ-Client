@@ -12,6 +12,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserProfilecommonComponent } from './user-profilecommon/user-profilecommon.component';
 import { UserBookingsComponent } from './user-bookings/user-bookings.component';
 import { UserContactusComponent } from './user-contactus/user-contactus.component';
+import { authGuard } from 'src/app/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -23,8 +24,8 @@ const routes: Routes = [
   {
     path: 'register',
     title: 'BarberQ | Register',
-    component: UserRegisterComponent,
     canActivate: [loginGuard],
+    component: UserRegisterComponent,
   },
   {
     path: '',
@@ -57,6 +58,7 @@ const routes: Routes = [
     path: 'profile',
     title: 'BarberQ | User Profile',
     component: UserProfilecommonComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',

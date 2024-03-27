@@ -81,4 +81,18 @@ export class VendorService {
       httpOptions
     );
   }
+
+  createPaymentOrder(amount: number): Observable<any> {
+    const body = { amount };
+    return this.http.post(`/vendor/salons/create-order`, body, httpOptions);
+  }
+
+  verifyPayment(paymentResponse: any): Observable<any> {
+    const body = {
+      razorpayPaymentId: paymentResponse.razorpay_payment_id,
+      razorpayOrderId: paymentResponse.razorpay_order_id,
+      razorpaySignature: paymentResponse.razorpay_signature,
+    };
+    return this.http.post(`/vendor/salons/verify-payment`, body);
+  }
 }

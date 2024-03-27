@@ -9,6 +9,7 @@ import { IUser } from 'src/app/models/user';
 import { selectUserDetails } from 'src/app/state/user-store/user.selector';
 import { ToastrService } from 'ngx-toastr';
 import { PaymentService } from 'src/app/services/payment.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-user-book-a-chair',
@@ -43,6 +44,8 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    initFlowbite();
+
     this.userSubscription = this.userState$.subscribe((user) => {
       if (user) this.userData = user;
     });
