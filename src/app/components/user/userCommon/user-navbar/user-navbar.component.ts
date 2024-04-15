@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  HostListener,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,11 +20,16 @@ import { deleteUser } from 'src/app/state/user-store/user.actions';
   styleUrls: ['./user-navbar.component.css'],
 })
 export class UserNavbarComponent implements OnInit, OnDestroy {
+  @ViewChild('userMenuButton') userMenuButton!: ElementRef;
+  @ViewChild('profileDropdown') profileDropdown!: ElementRef;
+
   constructor(private router: Router, private store: Store) {}
 
   userState$ = this.store.select(selectUserDetails);
   userData!: IUser;
   userSubscription!: Subscription;
+
+  dropdownVisible = false;
 
   ngOnInit(): void {
     initFlowbite();
@@ -29,11 +41,26 @@ export class UserNavbarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
   }
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
 
   onLogout(): void {
     localStorage.removeItem('userJwtAccess');
     localStorage.removeItem('userJwtRefresh');
     this.store.dispatch(deleteUser());
     this.router.navigate(['/user/']);
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: { target: any }) {
+    if (
+      this.userMenuButton.nativeElement !== event.target &&
+      !this.userMenuButton.nativeElement.contains(event.target) &&
+      this.profileDropdown.nativeElement !== event.target &&
+      !this.profileDropdown.nativeElement.contains(event.target)
+    ) {
+      this.dropdownVisible = false;
+    }
   }
 }

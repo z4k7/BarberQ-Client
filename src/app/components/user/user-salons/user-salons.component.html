@@ -1,11 +1,8 @@
-<ngx-spinner bdColor="rgba(0,0,0,1)" template="<img src='..\assets\spinner.gif' />">
-</ngx-spinner>
-
-
+<!-- <ngx-spinner bdColor="rgba(0,0,0,1)" template="<img src='..\assets\spinner.gif' />">
+</ngx-spinner> -->
 
 <div class="fixed z-20 w-full  top-0 start-0 ">
     <app-user-navbar>
-
         <button aria-expanded="true" aria-controls="drawer-example" type="button" data-drawer-target="drawer-example"
             data-drawer-show="drawer-example"
             class="hidden p-2 mr-3 text-gray-600 rounded cursor-pointer lg:inline transition-transform hover:scale-105  hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
@@ -14,12 +11,7 @@
                     d="M1 1h14M1 6h14M1 11h7" />
             </svg>
         </button>
-
-
-
     </app-user-navbar>
-
-
 
     <form [formGroup]="searchForm" class="max-w-lg mx-auto">
         <div class="flex transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black">
@@ -41,18 +33,10 @@
         </div>
     </form>
 
-
-
 </div>
-
-
 <!-- Content start -->
 <div class="pt-32">
-
-
     <div>
-
-
         <!-- drawer component -->
         <form (submit)="applyFilters()" [formGroup]="searchForm" id="drawer-example"
             class="fixed top-0 left-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform -translate-x-full bg-white dark:bg-gray-800"
@@ -96,14 +80,8 @@
                         </div>
 
                     </div>
-
-
-
                     <!-- Rating -->
-
-
                 </div>
-
                 <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-6 space-x-4 md:px-4 md:absolute">
                     <button type="submit" data-drawer-dismiss="drawer-example"
                         class="w-full px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-700 dark:hover:bg-primary-800 dark:focus:ring-primary-800">
@@ -116,46 +94,68 @@
                 </div>
             </div>
         </form>
-
-
-
-
-
-
     </div>
-
-
     <div class="h-56 flex flex-wrap justify-center  gap-4 py-5 pb-9 content-start">
-        <ng-container *ngFor="let salon of Salons; trackBy: trackBySalonId">
-            <div class="transition-transform hover:scale-105 cursor-pointer" (click)="viewSalonDetails(salon)">
-                <div class=" card card-compact w-96 text-white  shadow-lg hover:shadow-black hover:border-black ">
-                    <figure>
-                        <!-- Lazy loading image -->
-                        <img loading="lazy" [src]="salon.banners[0]" alt="Salon Image" class="card-image" />
-                    </figure>
-                    <div class="card-body">
-                        <h2 class="card-title">{{ salon.salonName }}</h2>
-                        <p>{{ salon.locality }}</p>
 
-                        <div class=" rating rating-md">
-                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
-                        </div>
-                        <div class="card-actions justify-end">
-                            <button (click)="bookChair(salon)"
-                                class="btn bg-black text-white skeleton transition-transform hover:scale-105 hover:border-white">Book
-                                A
-                                Chair</button>
-                        </div>
+
+        <ng-container *ngIf="isLoading; else salonsContent">
+
+            <div class="skeleton card card-compact w-96" *ngFor="let _ of [1,2,3,4,5,6]">
+                <figure>
+
+                    <img alt="image" class="card-image text-transparent" />
+                </figure>
+                <div class="card-body">
+                    <h2 class="card-title text-transparent "> salon.salonName </h2>
+                    <p class="text-transparent"> salon.locality</p>
+
+                    <div class=" rating rating-md">
+                        <input type="radio" name="rating-8" class=" mask mask-star-2 bg-transparent" />
+                        <input type="radio" name="rating-8" class=" mask mask-star-2 bg-transparent" />
+                        <input type="radio" name="rating-8" class=" mask mask-star-2 bg-transparent" />
+                        <input type="radio" name="rating-8" class=" mask mask-star-2 bg-transparent" />
+                        <input type="radio" name="rating-8" class=" mask mask-star-2 bg-transparent" />
+                    </div>
+                    <div class="card-actions justify-end">
+                        <button
+                            class="btn bg-black text-transparent skeleton transition-transform hover:scale-105 hover:border-white">Book
+                            A
+                            Chair</button>
                     </div>
                 </div>
             </div>
         </ng-container>
 
+        <ng-template #salonsContent>
+            <ng-container *ngFor="let salon of Salons; trackBy: trackBySalonId">
+                <div class="transition-transform hover:scale-105 cursor-pointer" (click)="viewSalonDetails(salon)">
+                    <div class=" card card-compact w-96 text-white  shadow-lg hover:shadow-black hover:border-black ">
+                        <figure>
+                            <!-- Lazy loading image -->
+                            <img loading="lazy" [src]="salon.banners[0]" alt="Salon Image" class="card-image" />
+                        </figure>
+                        <div class="card-body">
+                            <h2 class="card-title">{{ salon.salonName }}</h2>
+                            <p>{{ salon.locality }}</p>
 
+                            <div class=" rating rating-md">
+                                <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                                <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                                <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                                <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                                <input type="radio" name="rating-8" class=" mask mask-star-2 bg-yellow-400" />
+                            </div>
+                            <div class="card-actions justify-end">
+                                <button (click)="bookChair(salon)"
+                                    class="btn bg-black text-white skeleton transition-transform hover:scale-105 hover:border-white">Book
+                                    A
+                                    Chair</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
 
         <nav class="z-20 flex justify-center content-center w-full  " aria-label="Page navigation example">
             <ul
@@ -174,8 +174,6 @@
                 </li>
             </ul>
         </nav>
-
-
 
         <app-footer class="w-full"></app-footer>
     </div>

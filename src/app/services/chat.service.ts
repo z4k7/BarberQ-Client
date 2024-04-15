@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 const { backendURL } = environment;
 
@@ -10,32 +11,49 @@ const { backendURL } = environment;
 })
 export class ChatService {
   private socket!: Socket;
-  private messageObserver!: Observer<string>;
-  private messageObservable!: Observable<string>;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.socket = io(backendURL);
-    this.createMessageObservable();
-  }
-
-  private createMessageObservable() {
-    this.messageObservable = new Observable<string>((observer) => {
-      this.socket.on('message', (data: string) => {
-        observer.next(data);
-      });
-      this.messageObserver = observer;
-    });
-  }
-
-  sendMessage(message: string) {
-    this.socket.emit('message', message);
-  }
-
-  getMessage(): Observable<string> {
-    return this.messageObservable;
   }
 
   disconnectSocket(): void {
     this.socket.disconnect();
+  }
+
+  createConversation(members: {
+    senderId: string;
+    receiverId: string;
+  }): Observable<any> {
+    return this.http.post(`/user/newConversation`, {
+      members,
+    });
+  }
+
+  addUser(userId: string) {
+    this.socket.emit('addUser', userId);
+  }
+
+  listen(socketEvent: string): Observable<any> {
+    return new Observable((subscribe) => {
+      this.socket.on(socketEvent, (data) => {
+        subscribe.next(data);
+      });
+    });
+  }
+
+  emit(socketEvent: string, data: any): void {
+    this.socket.emit(socketEvent, data);
+  }
+
+  getMessagesForAdmin(conversationId: string): Observable<any> {
+    return this.http.get(`/admin/getMessages/${conversationId}`);
+  }
+
+  getMessages(conversationId: string): Observable<any> {
+    return this.http.get(`/user/getMessages/${conversationId}`);
+  }
+
+  getAllConversations(): Observable<any> {
+    return this.http.get(`/admin/get-all-conversations`);
   }
 }

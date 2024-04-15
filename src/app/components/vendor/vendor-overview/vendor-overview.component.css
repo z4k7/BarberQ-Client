@@ -1,5 +1,12 @@
+
+body{
+  overflow-x:hidden !important
+}
+
+
 .chart-container { 
     .chart-wrapper {
+    
       padding: 30px;
       background-color: #fff;
       border-radius: 5px;
@@ -8,6 +15,7 @@
   }
   
 
+ 
   @media (max-width: 767px) {
     .topgrid {
       grid-template-columns: 1fr;

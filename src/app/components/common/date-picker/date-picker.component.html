@@ -1,4 +1,14 @@
-<mat-card class="demo-inline-calendar-card">
-    <mat-calendar [startAt]="selected" (selectedChange)="onDateChange($event)"></mat-calendar>
+<!-- <mat-card class="demo-inline-calendar-card">
+    <mat-calendar [startAt]="selected" [min]="minDate" (selectedChange)="onDateChange($event)"></mat-calendar>
 </mat-card>
-<p>Selected date: {{selected | date:'dd-MM-yyyy'}}</p>
+<p>Selected date: {{ selected | date:'dd-MM-yyyy' }}</p> -->
+
+
+<mat-card class="demo-inline-calendar-card">
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateChange($event.value)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</mat-card>
+<p>Selected date: {{ selected | date:'dd-MM-yyyy' }}</p>

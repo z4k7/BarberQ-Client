@@ -11,6 +11,9 @@ import { MapBoxComponent } from '../common/map-box/map-box.component';
 import { VendorSalonsComponent } from './vendor-salons/vendor-salons.component';
 import { VendorSalonDetailsComponent } from './vendor-salon-details/vendor-salon-details.component';
 import { VendorSalonEditComponent } from './vendor-salon-edit/vendor-salon-edit.component';
+import { VendorOverviewComponent } from './vendor-overview/vendor-overview.component';
+import { VendorBookingsComponent } from './vendor-bookings/vendor-bookings.component';
+import { VendorSalonOverviewComponent } from './vendor-salon-overview/vendor-salon-overview.component';
 
 const routes: Routes = [
   { path: 'map', component: MapBoxComponent },
@@ -33,6 +36,16 @@ const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
+        path: 'overview',
+        title: 'Vendor | Overview ',
+        component: VendorOverviewComponent,
+      },
+      {
+        path: 'bookings',
+        title: 'Vendor | Bookings ',
+        component: VendorBookingsComponent,
+      },
+      {
         path: 'add-salon',
         title: 'Vendor | Add Salon',
         component: VendorAddSalonComponent,
@@ -46,6 +59,11 @@ const routes: Routes = [
         path: 'salon-details/:id',
         title: 'Vendor | Salon Details',
         component: VendorSalonDetailsComponent,
+      },
+      {
+        path: 'salon-overview/:id',
+        title: 'Vendor | Salon Overview',
+        component: VendorSalonOverviewComponent,
       },
       {
         path: 'salon-edit/:id',
