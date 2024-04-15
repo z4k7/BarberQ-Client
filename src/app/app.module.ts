@@ -20,6 +20,13 @@ import { StoreModule, MetaReducer } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { hydrationMetaReducer } from './state/hydration.reducer';
 import { Reducers } from './state/app.state';
+import { environment } from 'src/environments/environment';
+import { initializeApp } from 'firebase/app';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { NgChartsModule } from 'ng2-charts';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+initializeApp(environment.firebase);
 
 export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
 
@@ -40,6 +47,12 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     NgxSpinnerModule,
     StoreModule.forRoot(Reducers, { metaReducers }),
     EffectsModule.forRoot([]),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
+    NgChartsModule,
+    FontAwesomeModule,
   ],
   providers: [
     {

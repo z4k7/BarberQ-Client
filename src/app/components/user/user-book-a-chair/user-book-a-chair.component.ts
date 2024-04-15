@@ -10,6 +10,7 @@ import { selectUserDetails } from 'src/app/state/user-store/user.selector';
 import { ToastrService } from 'ngx-toastr';
 import { PaymentService } from 'src/app/services/payment.service';
 import { initFlowbite } from 'flowbite';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-user-book-a-chair',
@@ -40,7 +41,8 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
     private salonService: SalonService,
     private store: Store,
     private toastr: ToastrService,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -94,18 +96,8 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
   }
 
   getAvailableSlots(selectedDate: string) {
-    const selectedDateObj = new Date(selectedDate);
-
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
-
-    if (selectedDateObj < currentDate) {
-      this.toastr.warning(
-        "Sorry! We can't go back in time, Please select a new date",
-        'Time Travel Unavailable!'
-      );
-      return;
-    }
 
     if (this.selectedServices.length === 0) {
       this.toastr.warning('Please select atleast one service.', 'Warning!');
@@ -113,8 +105,8 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
     }
 
     this.selectedDate = selectedDate;
-    console.log(`Selected date`, this.selectedDate);
 
+    this.spinner.show();
     this.salonService
       .getAvailableSlots(
         this.selectedSalonId!,
@@ -122,8 +114,8 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
         this.selectedDate
       )
       .subscribe((slots) => {
-        console.log(`Slots`, slots);
         this.availableSlots = slots;
+        this.spinner.hide();
       });
   }
 
@@ -182,14 +174,12 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
   }
 
   verifyPayment(response: any) {
+    this.spinner.show();
     console.log(`Response passed into Verify Payment:`, response);
     const paymentId = response.razorpay_payment_id;
     this.salonService.verifyPayment(response).subscribe({
       next: (response) => {
-        this.toastr.success(
-          'Payment Verified Successfully',
-          'Verification Success!'
-        );
+        
         console.log(`Response from verify payment:`, response);
         this.bookSlotInBackend(paymentId);
       },
@@ -200,6 +190,7 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
   }
 
   bookSlotInBackend(paymentId: string) {
+    this.spinner.show();
     this.salonService
       .bookSlot(
         this.selectedSalonId!,
@@ -211,6 +202,8 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (booking) => {
+    this.spinner.hide();
+
           this.toastr.success(
             'Slot Booked Successfully',
             'Booking Successfull!'
@@ -224,56 +217,4 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
         },
       });
   }
-
-  // bookSlot() {
-  //   if (this.selectedSlot) {
-  //           const totalAmount = this.calculateTotalAmount();
-
-  //     const paymentOptions = {
-  //       key: 'rzp_test_EJWa8kbghrVZQl',
-  //       amount: totalAmount * 100,
-  //       currency: 'INR',
-  //       name: 'Your Salon Name',
-  //       description: 'Service Booking',
-  //       image: '../../../assets/final logo.jpg',
-  //       prefill: {
-  //         name: this.userData.name,
-  //         email: this.userData.email,
-  //         contact: this.userData.mobile,
-  //       },
-  //       notes: {
-  //         address: this.salon?.locality,
-  //       },
-  //       theme: {
-  //         color: '#123456',
-  //       },
-  //     };
-
-  //     this.paymentService.paymentSuccess.subscribe((response) => {
-  //       this.salonService
-  //         .bookSlot(
-  //           this.selectedSalonId!,
-  //           this.userData._id,
-  //           this.selectedServices,
-  //           this.selectedDate,
-  //           this.selectedSlot
-  //         )
-  //         .subscribe({
-  //           next: (booking) => {
-  //             this.toastr.success(
-  //               'Slot Booked Successfully',
-  //               'Booking Successfull!'
-  //             );
-  //             console.log(`Booking Successfull`, booking);
-  //             this.availableSlots = [];
-  //           },
-  //           error: (error) => {
-  //             this.toastr.error(error, 'Error!');
-  //           },
-  //         });
-  //     });
-
-  //     this.paymentService.openPaymentModal(paymentOptions);
-  //   }
-  // }
 }

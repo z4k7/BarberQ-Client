@@ -6,7 +6,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { SidebarComponent } from './adminCommon/sidebar/sidebar.component';
@@ -21,6 +21,8 @@ import { AdminOverviewComponent } from './admin-overview/admin-overview.componen
 import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
 import { AdminSalonDetailsComponent } from './admin-salon-details/admin-salon-details.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AdminChatComponent } from './admin-chat/admin-chat.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     AdminOverviewComponent,
     AdminSalonsComponent,
     AdminSalonDetailsComponent,
+    AdminChatComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +48,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatSlideToggleModule,
     MatIconModule,
     SharedModule,
+    FormsModule,
+    NgChartsModule,
   ],
 })
 export class AdminModule {}

@@ -11,6 +11,7 @@ import { AdminSalonsComponent } from './admin-salons/admin-salons.component';
 import { authGuard } from 'src/app/guards/auth.guard';
 import { loginGuard } from 'src/app/guards/login.guard';
 import { AdminSalonDetailsComponent } from './admin-salon-details/admin-salon-details.component';
+import { AdminChatComponent } from './admin-chat/admin-chat.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,11 @@ const routes: Routes = [
         path: 'salon-details/:id',
         title: 'Admin | Salon Details',
         component: AdminSalonDetailsComponent,
+      },
+      {
+        path: 'adminChat',
+        title: 'Admin | Chat',
+        component: AdminChatComponent,
       },
       {
         path: '',

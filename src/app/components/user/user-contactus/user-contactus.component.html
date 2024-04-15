@@ -2,30 +2,32 @@
     aria-labelledby="settings-tab">
 
     <div class="flex flex-col h-full  ">
-        <div class="flex-grow h-5/6 overflow-y-auto p-4">
+        <div class="flex-grow h-5/6 overflow-y-auto p-4 " #userMessagesContainer>
             <div class="flex flex-col gap-4">
-                <ng-container *ngFor="let message of messages">
-                    <div class="flex items-start gap-2.5">
-                        <img class="w-8 h-8 rounded-full" src="../../../../assets/final logo.jpg" alt="Jese image" />
-                        <div class="flex flex-col gap-1 w-full max-w-[320px]">
-                            <div class="flex items-center space-x-2 rtl:space-x-reverse">
-                                <span class="text-sm font-semibold text-black dark:text-white">{{
-                                    userData.name
-                                    }}</span>
-                                <span class="text-sm font-normal text-gray-400 dark:text-gray-400">{{ date | date:
-                                    "hh:mm"
-                                    }}
-                                </span>
+                <ng-container *ngFor="let msg of messages">
+                    <div class="chat {{ msg.senderId === userData._id ? 'chat-end' : 'chat-start' }}">
+                        <div class="chat-image avatar">
+                            <div class="w-10 rounded-full">
+                                <img alt="Tailwind CSS chat bubble component"
+                                    src="{{ msg.senderId === userData._id ? '../../../../assets/final logo.jpg' : '../../../../assets/admin.jpg'}}  " />
                             </div>
-                            <div
-                                class="flex flex-col leading-1.5 p-4 border-gray-200 bg-sky-900 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-                                <p class="text-sm font-normal text-gray-300 dark:text-white">
-                                    {{ message }}
-                                </p>
-                            </div>
-                            <span class="text-sm font-normal text-sky-400 dark:text-gray-400">Delivered</span>
+                        </div>
+                        <div class="chat-header text-black">
+                            {{ msg.senderId === userData._id ? userData.name : 'Admin' }}
+
+                        </div>
+                        <div class="chat-bubble chat-bubble-info text-white ">{{msg.text}}</div>
+                        <div class="chat-footer opacity-50">
+                            <time class="text-xs text-gray-700">{{ msg.createdAt | date:"hh:mm a"}}</time>
+                            {{ msg.senderId === userData._id ? '✔' : '' }}
+
                         </div>
                     </div>
+
+
+
+
+
                 </ng-container>
             </div>
         </div>

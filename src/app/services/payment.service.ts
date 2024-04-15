@@ -25,11 +25,6 @@ export class PaymentService {
   ) {}
 
   openPaymentModal(options: any) {
-    // options.handler = (response: any) => {
-    //   console.log(`Response Inside payment response handler`, response);
-
-    //   this.paymentSuccess.emit(response);
-    // };
     this.rzp = new Razorpay(options);
     this.rzp.open();
   }

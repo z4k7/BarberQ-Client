@@ -1,0 +1,91 @@
+<main class="p-4 bg-white md:ml-64 h-screen pt-20">
+
+    <nav class="bg-cyan-600  border-gray-200 dark:bg-gray-900 sm:rounded-lg">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span
+                    class="self-center text-2xl font-semibold font-serif whitespace-nowrap text-white dark:text-white">Messages</span>
+            </a>
+        </div>
+    </nav>
+
+
+    <div class="flex flex-row h-5/6 w-full  border-2 ">
+
+        <div class="flex flex-col w-1/4 border border-r-2 " id="conversatioon">
+
+            <ng-container *ngFor="let convo of conversations">
+                <div class="p-3 border border-b-2 bg-white rounded"
+                    (click)="selectConversation(convo.conversationId,convo.userName,convo.userId)">
+                    <div class="flex flex-row  w-full">
+                        <div class="rounded-full w-10">
+
+                            <img src="../../../../assets/final logo.jpg" alt="img">
+                        </div>
+                        <div class="text-black">
+                            <p>{{convo.userName}}</p>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+
+        <div class="flex flex-col h-zk w-3/4  mt-0 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel"
+            aria-labelledby="settings-tab">
+
+
+            <div class="flex flex-col h-full  ">
+
+
+
+
+
+                <div class="flex-grow h-5/6 overflow-y-auto p-4 " #adminMessagesContainer>
+                    <div class=" flex justify-center items-center  h-full w-full"
+                        *ngIf="selectedConversationId == null">
+                        <img src="../../../../assets/final logo.jpg" alt="img">
+                    </div>
+                    <div class="flex flex-col gap-4" *ngIf="selectedConversationId != null">
+                        <ng-container *ngFor="let msg of messages">
+                            <div class="chat {{ msg.senderId === adminId ? 'chat-end' : 'chat-start' }}">
+                                <div class="chat-image avatar">
+                                    <div class="w-10 rounded-full">
+                                        <img alt="Tailwind CSS chat bubble component"
+                                            src="{{ msg.senderId === adminId ? '../../../../assets/admin.jpg' : '../../../../assets/final logo.jpg'}}" />
+                                    </div>
+                                </div>
+                                <div class="chat-header text-black">
+                                    {{ msg.senderId === adminId ? 'Admin' : selectedUserName}}
+
+                                </div>
+                                <div class="chat-bubble chat-bubble-info text-white ">{{msg.text}} </div>
+                                <div class="chat-footer opacity-50">
+                                    <time class="text-xs text-gray-700">{{ msg.createdAt | date:"hh:mm a"}}</time>
+                                    {{ msg.sender === adminId ? '✔' : '' }}
+
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="p-4  h-1/6 rounded-lg bg-gray-100 dark:bg-gray-800" *ngIf="selectedConversationId !== null">
+                    <form (ngSubmit)="sendMessage()" class="flex gap-2">
+                        <input type="text" [(ngModel)]="newMessage" name="newMessage" placeholder="Type your message..."
+                            class="flex-grow px-4 py-2 rounded-lg bg-white dark:bg-gray-700 dark:text-white" />
+                        <button class="btn bg-blue-600 text-white px-4 py-2 rounded-lg" type="submit">
+                            Send
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+</main>

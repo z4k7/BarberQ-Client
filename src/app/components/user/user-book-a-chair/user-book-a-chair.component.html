@@ -53,19 +53,25 @@
             </div>
             <!-- Services End-->
 
-            <div class="datepicker flex gap-4 py-10 transition-transform hover:scale-105">
+            <div class="datepicker flex flex-col gap-4 py-10 transition-transform hover:scale-105">
 
                 <app-date-picker (dateSelected)="getAvailableSlots($event)" class="flex-1"></app-date-picker>
 
-                <div class="card w-96 bg-white text-primary-content flex-1">
+                <div class="card  w-full flex-row bg-white text-primary-content flex-1">
                     <div class="card-body">
                         <h2 class="card-title">Available Slots</h2>
+                        <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="medium" color="#fff" type="timer"
+                            [fullScreen]="false">
 
+                        </ngx-spinner>
                         <ng-container *ngIf="!availableSlots.length">
                             <h3>Please Choose your service and date!</h3>
+
                         </ng-container>
 
                         <div *ngIf="availableSlots.length > 0" class="badge-container">
+
+
                             <ng-container *ngFor="let slot of availableSlots">
 
                                 <div class="badge badge-neutral p-4 badge-lg">

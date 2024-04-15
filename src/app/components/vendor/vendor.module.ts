@@ -20,6 +20,11 @@ import { VendorSalonsComponent } from './vendor-salons/vendor-salons.component';
 import { VendorSalonDetailsComponent } from './vendor-salon-details/vendor-salon-details.component';
 import { VendorSalonEditComponent } from './vendor-salon-edit/vendor-salon-edit.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { VendorOverviewComponent } from './vendor-overview/vendor-overview.component';
+import { VendorBookingsComponent } from './vendor-bookings/vendor-bookings.component';
+import { NgChartsModule } from 'ng2-charts';
+import { VendorSalonOverviewComponent } from './vendor-salon-overview/vendor-salon-overview.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -32,6 +37,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     VendorSalonsComponent,
     VendorSalonDetailsComponent,
     VendorSalonEditComponent,
+    VendorOverviewComponent,
+    VendorBookingsComponent,
+    VendorSalonOverviewComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +52,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     StoreModule.forFeature('vendor', vendorReducer),
     MapBoxComponent,
     SharedModule,
+    NgChartsModule,
+    FontAwesomeModule,
   ],
 })
 export class VendorModule {}

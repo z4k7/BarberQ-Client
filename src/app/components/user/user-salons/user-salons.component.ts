@@ -26,6 +26,7 @@ export class UserSalonsComponent implements OnInit {
   itemsPerPage = 6;
   salonCount = 0;
   showFilter: boolean = false;
+  isLoading = true;
 
   filters: IFilters = {
     facilities: [],
@@ -44,13 +45,7 @@ export class UserSalonsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.spinner.show();
     initFlowbite();
-
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 3000);
-
     this.searchForm = this.fb.group({
       searchQuery: [''],
     });
@@ -83,6 +78,7 @@ export class UserSalonsComponent implements OnInit {
   }
 
   getSalons(): void {
+    this.isLoading = true;
     this.userService
       .getSalons(this.currentPage, this.itemsPerPage, this.searchQuery)
       .subscribe({
@@ -90,9 +86,12 @@ export class UserSalonsComponent implements OnInit {
           if (res.data !== null) {
             this.Salons = res.data?.salonData.salons;
             this.allSalons = res.data?.salonData.salons;
-            console.log(`Salons inside getSalons`, this.Salons);
             this.salonCount = res.data?.salonData.salonCount;
+            this.isLoading = false;
           }
+        },
+        error: (error) => {
+          console.error(error);
         },
       });
   }

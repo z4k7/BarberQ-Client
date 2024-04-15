@@ -20,11 +20,11 @@ export class SpinnerInterceptor implements HttpInterceptor {
     if (request.headers.has('Bypass-spinner')) {
       return next.handle(request);
     }
-    this.spinner.show();
+    // this.spinner.show();
 
     return next.handle(request).pipe(
       finalize(() => {
-        this.spinner.hide();
+        // this.spinner.hide();
       })
     );
   }

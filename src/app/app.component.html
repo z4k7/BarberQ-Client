@@ -1,6 +1,17 @@
-<ngx-spinner bdColor="rgba(0,0,0,1)" template="<img src='..\assets\spinner.gif' />">
-</ngx-spinner>
+<!-- <ngx-spinner bdColor="rgba(0,0,0,1)" template="<img src='..\assets\spinner.gif' />">
+</ngx-spinner> -->
 
 <div>
     <router-outlet></router-outlet>
 </div>
+
+<!-- <div *ngIf="message?.notification">
+    <h1>{{ message.notification.title }}</h1>
+    <h2>{{ message.notification.body }}</h2>
+</div>
+<div *ngIf="!message?.notification">
+    No Message Arrived
+</div>
+<div *ngIf="message === null">
+    Loading...
+</div> -->
