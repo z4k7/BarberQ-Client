@@ -95,4 +95,8 @@ export class AdminService {
     console.log(id, 'id');
     return this.http.patch(`/admin/vendors/block/${id}`, httpOptions);
   }
+
+  getDashboardData(): Observable<any> {
+    return this.http.get(`/admin/dashboard`, httpOptions);
+  }
 }

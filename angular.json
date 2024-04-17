@@ -34,7 +34,8 @@
             "styles": [
               "src/styles.css",
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "node_modules/ngx-spinner/animations/timer.css"
+              "node_modules/ngx-spinner/animations/timer.css",
+              "node_modules/ngx-spinner/animations/ball-spin.css"
             ],
             "scripts": [],
             "ngxEnv": {

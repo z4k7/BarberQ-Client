@@ -25,6 +25,8 @@ import { initializeApp } from 'firebase/app';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgChartsModule } from 'ng2-charts';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HttpCacheInterceptor } from './interceptors/http-cache.interceptor';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 initializeApp(environment.firebase);
 
@@ -53,6 +55,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
     }),
     NgChartsModule,
     FontAwesomeModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     {
@@ -70,6 +73,7 @@ export const metaReducers: MetaReducer[] = [hydrationMetaReducer];
       useClass: ErrorHandlerInterceptor,
       multi: true,
     },
+    // { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,

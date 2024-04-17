@@ -70,6 +70,11 @@ const routes: Routes = [
         title: 'Vendor | Salon Edit',
         component: VendorSalonEditComponent,
       },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'overview',
+      },
     ],
   },
 ];

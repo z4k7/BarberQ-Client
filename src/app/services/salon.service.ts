@@ -65,4 +65,8 @@ export class SalonService {
     };
     return this.http.post(`/user/salons/verify-payment`, body, httpOptions);
   }
+
+  getDashboardData(salonId: string): Observable<any> {
+    return this.http.get(`/vendor/dashboard/salon/${salonId}`, httpOptions);
+  }
 }

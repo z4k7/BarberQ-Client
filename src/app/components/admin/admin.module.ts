@@ -23,6 +23,7 @@ import { AdminSalonDetailsComponent } from './admin-salon-details/admin-salon-de
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminChatComponent } from './admin-chat/admin-chat.component';
 import { NgChartsModule } from 'ng2-charts';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { NgChartsModule } from 'ng2-charts';
     SharedModule,
     FormsModule,
     NgChartsModule,
+    NgxSpinnerModule,
   ],
 })
 export class AdminModule {}
