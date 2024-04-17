@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { IVendor } from 'src/app/models/vendor';
-import { deleteVendor } from 'src/app/state/vendor-store/vendor.actions';
 import { selectVendorDetails } from 'src/app/state/vendor-store/vendor.selector';
+import { deleteVendor } from 'src/app/state/vendor-store/vendor.actions';
 
 @Component({
   selector: 'app-vendor-navbar',

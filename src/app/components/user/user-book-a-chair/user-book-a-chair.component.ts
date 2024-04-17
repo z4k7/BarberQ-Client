@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 import { PaymentService } from 'src/app/services/payment.service';
 import { initFlowbite } from 'flowbite';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-user-book-a-chair',
@@ -42,7 +44,8 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
     private store: Store,
     private toastr: ToastrService,
     private paymentService: PaymentService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -179,7 +182,6 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
     const paymentId = response.razorpay_payment_id;
     this.salonService.verifyPayment(response).subscribe({
       next: (response) => {
-        
         console.log(`Response from verify payment:`, response);
         this.bookSlotInBackend(paymentId);
       },
@@ -202,12 +204,27 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (booking) => {
-    this.spinner.hide();
-
-          this.toastr.success(
-            'Slot Booked Successfully',
-            'Booking Successfull!'
-          );
+          this.spinner.hide();
+          this.ngZone.run(() => {
+            this.toastr.success(
+              'Slot Booked Successfully',
+              'Booking Successfull!'
+            );
+            Swal.fire({
+              title: 'Booking Success!',
+              icon: 'success',
+              showDenyButton: true,
+              showCancelButton: false,
+              confirmButtonText: 'Show Bookings',
+              denyButtonText: `Home`,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.router.navigate(['/user/profile/bookings']);
+              } else if (result.isDenied) {
+                this.router.navigate(['/user/salons']);
+              }
+            });
+          });
           console.log(`Booking Successfull:`, booking);
           this.availableSlots = [];
         },

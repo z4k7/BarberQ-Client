@@ -70,9 +70,9 @@ export class UserBookingsComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (res) => {
-          console.log(`Response`, res);
           if (res.data !== null) {
             this.Bookings = res.data.bookingData.bookings;
+            console.log(`Bookings `, this.Bookings);
             this.bookingsCount = res.data.bookingData.bookingsCount;
           }
         },
@@ -113,7 +113,7 @@ export class UserBookingsComponent implements OnInit, OnDestroy {
   openDetailsModal(booking: any): void {
     this.selectedBooking = booking;
     const modal = document.getElementById('detailsModal') as HTMLDivElement;
-    const backdrop = document.getElementById('modal-backdrop');
+    const backdrop = document.getElementById('backdrop');
 
     if (modal) {
       modal.classList.remove('hidden');
@@ -124,7 +124,7 @@ export class UserBookingsComponent implements OnInit, OnDestroy {
 
   closeDetailsModal(): void {
     const modal = document.getElementById('detailsModal') as HTMLDivElement;
-    const backdrop = document.getElementById('modal-backdrop');
+    const backdrop = document.getElementById('backdrop');
 
     if (modal) {
       modal.classList.add('hidden');
@@ -134,12 +134,11 @@ export class UserBookingsComponent implements OnInit, OnDestroy {
   }
 
   cancelBooking(bookingId: string): void {
-    console.log(`Booking Id`, bookingId);
-
     this.salonService.cancelBooking(bookingId).subscribe({
       next: (response) => {
         this.toastr.success('Booking cancelled successfully!', 'Cancelled');
         console.log('Refund Success', response);
+        this.selectedBooking.orderStatus = 'cancelled';
         this.getUserBookings();
       },
     });

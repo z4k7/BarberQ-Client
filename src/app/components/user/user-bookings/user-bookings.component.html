@@ -130,9 +130,9 @@
                                 <th scope="col" class="px-6 py-3">
                                     Action
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <!-- <th scope="col" class="px-6 py-3">
                                     Cancel
-                                </th>
+                                </th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -171,26 +171,15 @@
 
                                 </td>
                                 <td class="px-6 py-4">
-                                    <!-- [routerLink]="['/admin/salon-details', booking._id]" -->
+
                                     <button (click)="openDetailsModal(booking)"
                                         class="block text-white bg-sky-600 hover:bg-sky-500 focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                         type="button">
                                         View Details
                                     </button>
+
                                 </td>
-                                <td class="px-6 py-4">
-                                    <button type="button" *ngIf="booking.orderStatus !== 'cancelled'  "
-                                        (click)="openConfirmationModal(booking)"
-                                        class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
-                                        <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor"
-                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        Cancel
-                                    </button>
-                                </td>
+
                             </tr>
 
                         </tbody>
@@ -254,11 +243,11 @@
         </div>
 
         <!-- Backdrop -->
-        <div id="modal-backdrop" class="fixed top-0 right-0 left-0 bottom-0 bg-black opacity-50 z-40 hidden"></div>
+        <div id="backdrop" class="fixed top-0 right-0 left-0 bottom-0 bg-black opacity-50 z-40 hidden"></div>
 
 
         <!-- Details Modal Start -->
-        <div id="detailsModal" tabindex="-1" aria-hidden="true"
+        <div *ngIf="selectedBooking" id="detailsModal" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-modal md:h-full">
             <div class="relative p-4 w-full max-w-xl h-full md:h-auto">
                 <!-- Modal content -->
@@ -290,20 +279,20 @@
                                 class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400"> ◆ {{service}} </dd>
 
                         </dl>
-                        <dl>
+                        <dl *ngIf="selectedBooking.orderStatus != 'cancelled'  ">
 
                             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Date</dt>
                             <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">{{selectedBooking.date}}
                             </dd>
 
                         </dl>
-                        <dl>
+                        <dl *ngIf="selectedBooking.orderStatus != 'cancelled'  ">
                             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Time</dt>
                             <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
                                 {{selectedBooking.time|time }}
                             </dd>
                         </dl>
-                        <dl>
+                        <dl *ngIf="selectedBooking.orderStatus != 'cancelled'  ">
                             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Chair No.</dt>
                             <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
                                 {{selectedBooking.chairNumber}}
@@ -315,6 +304,24 @@
                                 {{selectedBooking.orderStatus | capitalize}}
                             </dd>
                         </dl>
+                        <dl *ngIf="selectedBooking.orderStatus == 'cancelled'  ">
+                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Refund Status</dt>
+                            <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
+                                Processed
+                            </dd>
+                        </dl>
+                        <dl *ngIf="selectedBooking.orderStatus == 'cancelled'  ">
+                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Reference Id</dt>
+                            <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
+                                {{selectedBooking.refundId }}
+                            </dd>
+                        </dl>
+                        <dl *ngIf="selectedBooking.orderStatus == 'cancelled'  ">
+                            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Refund Amount</dt>
+                            <dd class="mb-4 font-light text-black sm:mb-5 dark:text-gray-400">
+                                {{selectedBooking.totalAmount }}
+                            </dd>
+                        </dl>
                     </div>
 
                     <div class="flex justify-between items-center">
@@ -324,6 +331,18 @@
 
 
                             Close
+                        </button>
+
+                        <button type="button" *ngIf="selectedBooking.orderStatus == 'booked'  "
+                            (click)="openConfirmationModal(selectedBooking)"
+                            class="inline-flex items-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">
+                            <svg aria-hidden="true" class="w-5 h-5 mr-1.5 -ml-1" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Cancel
                         </button>
                     </div>
                 </div>

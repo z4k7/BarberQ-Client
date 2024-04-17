@@ -95,4 +95,8 @@ export class VendorService {
     };
     return this.http.post(`/vendor/salons/verify-payment`, body);
   }
+
+  getDashboardData(vendorId: string): Observable<any> {
+    return this.http.get(`/vendor/dashboard/${vendorId}`, httpOptions);
+  }
 }
