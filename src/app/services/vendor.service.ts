@@ -74,6 +74,14 @@ export class VendorService {
     );
   }
 
+  upgradeToPremium(salonId: string): Observable<any> {
+    return this.http.patch(
+      `/vendor/salons/${salonId}/premium`,
+
+      httpOptions
+    );
+  }
+
   updateSalonStatus(salonId: string, status: string): Observable<any> {
     return this.http.patch(
       `/vendor/salons/${salonId}/status`,
