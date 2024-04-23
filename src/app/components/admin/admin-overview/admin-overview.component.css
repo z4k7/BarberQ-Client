@@ -1,11 +1,4 @@
-.chart-container { 
-    .chart-wrapper {
-      padding: 30px;
-      background-color: #fff;
-      border-radius: 5px;
-      margin: 50px auto;
-    }
-  }
+
   
 
   @media (max-width: 767px) {
@@ -55,49 +48,52 @@
     }
   }
 
-  @media (max-width: 767px) {
-    .bottomgrid {
-      grid-template-columns: 1fr;
-    }
   
-    .flex {
-      flex-direction: column;
-      align-items: center;
-    }
   
-    .flex .w-1/3,
-    .flex .w-2/3,
-    .flex .w-3/5,
-    .flex .w-2/5 {
-      width: 100%;
-    }
   
-    .text-center {
-      text-align: center;
-    }
-  }
   
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .bottomgrid {
-      grid-template-columns: repeat(1, 1fr);
-    }
-  
-    .flex .w-1/3,
-    .flex .w-2/3,
-    .flex .w-3/5,
-    .flex .w-2/5 {
-      width: 50%;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .bottomgrid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .flex .w-1/3,
-    .flex .w-2/3,
-    .flex .w-3/5,
-    .flex .w-2/5 {
-      width: 33.33%;
-    }
-  }
+ 
+
+  .sales-report-table {
+    width: 100%;
+    margin-top: 20px;
+   }
+   
+   .sales-report-table table {
+    width: 100%;
+    border-collapse: collapse;
+   }
+   
+   .sales-report-table th, .sales-report-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+   }
+   
+   .sales-report-table th {
+    background-color: #f2f2f2;
+    color: black;
+   }
+
+   .table-container {
+    max-height: 80vh; /* Adjust based on your needs */
+    overflow-y: auto;
+    margin: 10px; /* Add some margin around the table */
+   }
+   
+   /* Optional: Style the scrollbar */
+   .table-container::-webkit-scrollbar {
+    width: 8px;
+   }
+   
+   .table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+   }
+   
+   .table-container::-webkit-scrollbar-thumb {
+    background: #888;
+   }
+   
+   .table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+   }

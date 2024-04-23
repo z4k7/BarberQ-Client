@@ -74,48 +74,53 @@
 
 
       <div class="flex p-3 items-center justify-center border h-96 mb-4 rounded">
-        <canvas baseChart width="1100" height="400" type="line" [data]="lineChartData"></canvas>
+        <canvas baseChart width="1100" height="400" type="bar" [data]="data"></canvas>
+      </div>
+
+      <div class="flex items-center justify-center rounded  h-full">
+        <div *ngIf="!isLoading" class="sales-report-table h-full overflow-y-auto">
+          <div class="table-container ">
+            <table>
+              <thead>
+                <tr>
+                  <th>Sl.no</th>
+                  <th>Salon Name</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Total Amount</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let booking of totalBookings, let i = index">
+                  <td class="text-black ">{{i+1}}</td>
+                  <td class="text-black ">{{ booking.salonName }}</td>
+                  <td class="text-black ">{{ booking.date }}</td>
+                  <td class="text-black ">{{ booking.time | time }}</td>
+                  <td class="text-black ">₹ {{ booking.totalAmount }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button class="btn btn-info" (click)="downloadSalesReport()">Download Sales Report</button>
+
+        </div>
       </div>
 
 
-      <div class="grid bottomgrid grid-cols-2 gap-4 mb-4">
-        <div class="flex items-center justify-center rounded bg-violet-500 h-96 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
-        </div>
+
+      <!-- <div class="grid bottomgrid grid-cols-2 gap-4 mb-4">
+       
         <div class="flex items-center justify-center rounded bg-pink-500 h-96 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
+          
         </div>
         <div class="flex items-center justify-center rounded bg-orange-500 h-96 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
+          
         </div>
         <div class="flex items-center justify-center rounded bg-cyan-500 h-96 dark:bg-gray-800">
-          <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 18 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 1v16M1 9h16" />
-            </svg>
-          </p>
+          
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 

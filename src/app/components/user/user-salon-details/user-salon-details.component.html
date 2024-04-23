@@ -8,7 +8,7 @@
         <div class="max-w-5xl">
             <!-- Card start -->
             <div
-                class="card card-side bg-base-100  transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black">
+                class="card card-side bg-white  transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black">
                 <figure>
                     <div *ngIf="salon && salon.banners && salon.banners.length > 0">
                         <img [src]="salon.banners[0]" class="card-image" alt="Salon" />
@@ -16,11 +16,17 @@
 
                 </figure>
                 <div class="card-body p-16">
-                    <h1 class="card-title text-white">{{ salon.salonName }}</h1>
-                    <span class="text-base text-white">
+                    <h1 class="card-title text-black">{{ salon.salonName }}</h1>
+                    <span class="text-base text-black">
                         Nr. {{ salon.landmark }}<br />
                         {{ salon.locality }}<br />
                         {{ salon.district }}
+                    </span>
+                    <span class="text-base text-black">
+                        Opening Time: {{salon.openingTime | time}}
+                    </span>
+                    <span class="text-base text-black">
+                        Closing Time: {{salon.closingTime | time}}
                     </span>
                     <div class="card-actions">
                         <button (click)="bookChair(salon)"
@@ -36,67 +42,224 @@
             <!-- Accordion Start -->
 
             <div class="accordion gap-4 py-10 transition-transform hover:scale-105">
-                <div (click)="openAccord($event, 'serviceAccord')"
-                    class="collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black ">
-                    <input type="radio" id="serviceAccord" name="serviceAccordion" value="serviceAccord" />
-                    <div class="collapse-title text-xl text-white font-medium" for="serviceAccord">
+                <div (click)="toggleAccordion(0)" class="collapse collapse-plus bg-white shadow-xl hover:shadow-black ">
+                    <input type="radio" name="my-accordion-3" checked="checked" id="my-accordion-0" />
+                    <div class="collapse-title text-xl text-black font-medium" for="serviceAccord">
                         Services
                     </div>
                     <div class="collapse-content">
                         <ng-container *ngFor="let service of salon.services">
                             <div class="badge badge-info me-4 mb-4 badge-lg">{{service?.serviceName}} </div>
                         </ng-container>
-
-
-
-
                     </div>
                 </div>
 
-                <div (click)="openAccord($event, 'aboutAccord')"
-                    class=" collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black">
-                    <input type="radio" id="aboutAccord" name="aboutAccordion" value="aboutAccord" />
-                    <div class="collapse-title text-white text-xl font-medium" for="aboutAccord">
+                <div (click)="toggleAccordion(1)" class=" collapse collapse-plus bg-white shadow-xl hover:shadow-black">
+                    <input type="radio" name="my-accordion-3" id="my-accordion-1" />
+                    <div class="collapse-title text-black text-xl font-medium" for="aboutAccord">
                         About
                     </div>
                     <div class="collapse-content">
-                        <h4 class="text-white" style="text-decoration: underline;">Facilities</h4>
+                        <h4 class="text-black" style="text-decoration: underline;">Facilities</h4>
                         <ng-container *ngFor="let facility of salon.facilities ">
                             <div class="badge badge-info me-4 mb-4 badge-lg">{{facility}} </div>
                         </ng-container>
 
-                        <h4 class="text-white mt-4" style="text-decoration: underline;">No. of Chairs</h4>
+                        <h4 class="text-black mt-4" style="text-decoration: underline;">No. of Chairs</h4>
 
                         <div class="badge badge-info me-4 badge-lg">{{salon.chairCount}} </div>
 
+                        <h4 class="text-black mt-4" style="text-decoration: underline;">Category</h4>
+                        <div *ngIf="salon.isPremium==0" class="badge badge-info me-4 badge-lg">Ordinary </div>
+                        <div *ngIf="salon.isPremium==1" class="badge badge-warning me-4 badge-lg">Premium </div>
+
 
                     </div>
                 </div>
 
-                <div (click)="openAccord($event, 'ratingAccord')"
-                    class="collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black ">
-                    <input type="radio" id="ratingAccord" name="ratingAccordion" value="ratingAccord" />
-                    <div class="collapse-title text-xl text-white font-medium" for="ratingAccord">
+                <div (click)="toggleAccordion(2)" class="collapse collapse-plus bg-white shadow-xl hover:shadow-black ">
+                    <input type="radio" name="my-accordion-3" id="my-accordion-2" />
+                    <div class="collapse-title text-xl text-black font-medium" for="ratingAccord">
                         Reviews & Ratings
                     </div>
                     <div class="collapse-content">
-                        <div class="rating rating-md">
-                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
-                            <input type="radio" name="rating-8" class="mask  mask-star-2 bg-yellow-400" />
+
+
+
+
+
+                        <div class="flex items-center">
+                            <svg *ngFor="let star of generateStarArray(flooredAverageRating); let i = index"
+                                class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path
+                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+
+
+
+                            <svg *ngFor="let star of generateStarArray(5-flooredAverageRating); let i = index"
+                                class="w-4 h-4 text-gray-400 me-1 dark:text-gray-500" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path
+                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                            </svg>
+                            <p class="ps-1 pt-3 text-sm font-medium text-gray-500 dark:text-gray-400">{{
+                                averageRating.toFixed(1) }}</p>
+                            <p class="ps-1 pt-3 text-sm font-medium text-gray-500 dark:text-gray-400">out of</p>
+                            <p class="ps-1 pt-3 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
                         </div>
+
+
+
+
+
+
+                        <div>
+                            <div class="w-full flex p-3 justify-end">
+                                <button *ngIf="!showReviewForm" (click)="toggleReviewform()"
+                                    class="btn bg-black  text-white skeleton transition-transform hover:scale-105 hover:border-white">
+                                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd"
+                                            d="M14 4.182A4.136 4.136 0 0 1 16.9 3c1.087 0 2.13.425 2.899 1.182A4.01 4.01 0 0 1 21 7.037c0 1.068-.43 2.092-1.194 2.849L18.5 11.214l-5.8-5.71 1.287-1.31.012-.012Zm-2.717 2.763L6.186 12.13l2.175 2.141 5.063-5.218-2.141-2.108Zm-6.25 6.886-1.98 5.849a.992.992 0 0 0 .245 1.026 1.03 1.03 0 0 0 1.043.242L10.282 19l-5.25-5.168Zm6.954 4.01 5.096-5.186-2.218-2.183-5.063 5.218 2.185 2.15Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+
+                                    Write a review
+                                </button>
+
+                                <button *ngIf="showReviewForm" (click)="toggleReviewform()"
+                                    class="btn bg-black  text-white skeleton transition-transform hover:scale-105 hover:border-white">
+                                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6" />
+                                    </svg>
+
+
+                                    Cancel
+                                </button>
+                            </div>
+
+                        </div>
+                        <section class=" py-8 lg:py-16 antialiased">
+                            <div class=" mx-auto px-4">
+
+                                <form *ngIf="showReviewForm" (ngSubmit)="onSubmitReview()" class="mb-6">
+
+
+                                    <div
+                                        class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border bg-white border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                                        <label for="rating"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rating</label>
+                                        <div class="rating">
+                                            <input type="radio" id="star1" [(ngModel)]="review.rating" name="rating"
+                                                value="1" class="mask mask-star-2 bg-yellow-300" />
+                                            <label for="star1"></label>
+                                            <input type="radio" id="2" [(ngModel)]="review.rating" name="rating"
+                                                value="2" class="mask mask-star-2 bg-yellow-300" />
+                                            <label for="star2"></label>
+                                            <input type="radio" id="star3" [(ngModel)]="review.rating" name="rating"
+                                                value="3" class="mask mask-star-2 bg-yellow-300" />
+                                            <label for="star3"></label>
+                                            <input type="radio" id="star4" [(ngModel)]="review.rating" name="rating"
+                                                value="4" class="mask mask-star-2 bg-yellow-300" />
+                                            <label for="star4"></label>
+                                            <input type="radio" id="star5" [(ngModel)]="review.rating" name="rating"
+                                                value="5" class="mask mask-star-2 bg-yellow-300" />
+                                            <label for="star5"></label>
+                                        </div>
+                                        <label for="comment" class="sr-only">Your review</label>
+                                        <textarea id="comment" [(ngModel)]="review.review" name="review" rows="6"
+                                            class="px-0 w-full text-sm text-black border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                                            placeholder="Write a review..." required></textarea>
+                                    </div>
+
+                                    <button
+                                        class="btn bg-black  text-white skeleton transition-transform hover:scale-105 hover:border-white">
+                                        <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" viewBox="0 0 24 24">
+                                            <path fill-rule="evenodd"
+                                                d="M9 2a1 1 0 0 0-1 1H6a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2a1 1 0 0 0-1-1H9Zm1 2h4v2h1a1 1 0 1 1 0 2H9a1 1 0 0 1 0-2h1V4Zm5.707 8.707a1 1 0 0 0-1.414-1.414L11 14.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+
+
+                                        Submit Review
+                                    </button>
+                                </form>
+
+                                <div class="flex justify-between items-center mb-4">
+                                    <h2 class="text-lg lg:text-2xl font-bold text-black dark:text-white">Reviews
+                                        ({{ reviews.length }}) </h2>
+                                </div>
+                                <article *ngIf="reviews.length === 0"
+                                    class="p-6 mb-3 text-base bg-white rounded-lg dark:bg-gray-900">
+                                    <p class="text-gray-500 dark:text-gray-400">No reviews yet. Be the first to leave a
+                                        review!</p>
+                                </article>
+                                <article *ngFor="let review of reviews"
+                                    class="p-6 mb-3 text-base bg-white border border-gray-400 rounded-lg dark:bg-gray-900">
+                                    <footer class=" flex justify-between items-center mb-2  ">
+                                        <div class="flex flex-col justify-start   mb-2 ">
+                                            <div class="flex  items-center">
+                                                <p
+                                                    class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
+                                                    <img class="mr-2 w-6 h-6 rounded-full"
+                                                        src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                                                        alt="Michael Gough">{{ review.userId.name }}
+                                                </p>
+                                                <p class="text-sm ps-3 text-gray-600 dark:text-gray-400"><time pubdate
+                                                        datetime="2022-02-08" title="February 8th, 2022">{{review.date |
+                                                        date }} </time>
+                                                </p>
+                                            </div>
+                                            <div class="flex items-center mb-4 ">
+
+
+                                                <svg *ngFor="let star of generateStarArray(review.rating); let i = index"
+                                                    class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    viewBox="0 0 22 20">
+                                                    <path
+                                                        d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                                </svg>
+
+
+
+                                                <svg *ngFor="let star of generateStarArray(5-review.rating); let i = index"
+                                                    class="w-4 h-4 text-gray-400 me-1 dark:text-gray-500"
+                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                    fill="currentColor" viewBox="0 0 22 20">
+                                                    <path
+                                                        d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </footer>
+                                    <p class="text-gray-500 dark:text-gray-400">{{ review.review }}</p>
+
+                                </article>
+                            </div>
+                        </section>
+                        <div class="w-full flex justify-end">
+                            <a class="text-sm font-medium text-gray-500 underline hover:no-underline dark:text-white">Show
+                                more...</a>
+                        </div>
+
                     </div>
                 </div>
-                <div (click)="openAccord($event, 'contactAccord')"
-                    class="collapse collapse-plus bg-base-200 shadow-xl hover:shadow-black ">
-                    <input type="radio" id="contactAccord" name="contactAccordion" value="contactAccord" />
-                    <div class="collapse-title text-white text-xl font-medium" for="contactAccord">
+                <div (click)="toggleAccordion(3)" class="collapse collapse-plus bg-white shadow-xl hover:shadow-black ">
+                    <input type="radio" name="my-accordion-3" id="my-accordion-3" />
+                    <div class="collapse-title text-black text-xl font-medium" for="contactAccord">
                         Contact
                     </div>
                     <div class="collapse-content">
-                        <span class="icon text-lg "><mat-icon>phone</mat-icon>{{salon.contactNumber}} </span>
+                        <span class="icon text-black text-lg "><mat-icon>phone</mat-icon>{{salon.contactNumber}} </span>
                     </div>
                 </div>
             </div>
@@ -107,7 +270,6 @@
         </div>
     </div>
 </div>
-
 
 
 

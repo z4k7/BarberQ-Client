@@ -6,7 +6,6 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { initFlowbite } from 'flowbite';
 import { ISalon } from 'src/app/models/salon';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 interface IFilters {
@@ -27,6 +26,7 @@ export class UserSalonsComponent implements OnInit {
   salonCount = 0;
   showFilter: boolean = false;
   isLoading = true;
+  loadingNearbySalons: boolean = false;
 
   filters: IFilters = {
     facilities: [],
@@ -40,7 +40,6 @@ export class UserSalonsComponent implements OnInit {
     private toastr: ToastrService,
     private userService: UserService,
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService,
     private breakpointObserver: BreakpointObserver
   ) {}
 
@@ -69,6 +68,38 @@ export class UserSalonsComponent implements OnInit {
         }
       });
     this.getSalons();
+    this.getUserAndNearbySalons();
+  }
+  showLoader() {
+    this.loadingNearbySalons = true;
+  }
+
+  getUserAndNearbySalons() {
+    const showNearbySalonsButton = document.getElementById('nearby');
+    showNearbySalonsButton?.addEventListener('click', async () => {
+      try {
+        const position = await this.getCurrentPosition();
+        const nearbySalons = await this.fetchNearbySalons(
+          position.coords.latitude,
+          position.coords.longitude
+        ).toPromise();
+        this.Salons = nearbySalons.data;
+        this.loadingNearbySalons = false;
+        console.log('Nearby salons:', nearbySalons);
+      } catch (error) {
+        console.error('Error getting nearby salons:');
+      }
+    });
+  }
+
+  getCurrentPosition(): Promise<GeolocationPosition> {
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(resolve);
+    });
+  }
+
+  fetchNearbySalons(latitude: number, longitude: number) {
+    return this.userService.getNearbySalons(latitude, longitude, 2);
   }
 
   checkbox(event: Event): void {
@@ -84,8 +115,21 @@ export class UserSalonsComponent implements OnInit {
       .subscribe({
         next: (res) => {
           if (res.data !== null) {
-            this.Salons = res.data?.salonData.salons;
-            this.allSalons = res.data?.salonData.salons;
+            console.log(`Salons from backend`, res.data.salonData.salons);
+
+            const allSalons = res.data?.salonData.salons;
+
+            // Separate premium salons from non-premium salons
+            const premiumSalons = allSalons.filter(
+              (salon: { isPremium: number }) => salon.isPremium === 1
+            );
+            const nonPremiumSalons = allSalons.filter(
+              (salon: { isPremium: number }) => salon.isPremium !== 1
+            );
+
+            this.Salons = premiumSalons.concat(nonPremiumSalons);
+
+            this.allSalons = allSalons;
             this.salonCount = res.data?.salonData.salonCount;
             this.isLoading = false;
           }

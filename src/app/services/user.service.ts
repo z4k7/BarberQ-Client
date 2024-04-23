@@ -17,6 +17,16 @@ const httpOptions = {
 export class UserService {
   constructor(private http: HttpClient) {}
 
+  getNearbySalons(
+    latitude: number,
+    longitude: number,
+    radius: number
+  ): Observable<any> {
+    return this.http.get(
+      `/user/salons/nearby?latitude=${latitude}&longitude=${longitude}&radius=${radius}`
+    );
+  }
+
   getSalons(page: number, limit: number, searchQuery: string): Observable<any> {
     return this.http.get(
       `/user/salon?page=${page}&limit=${limit}&searchQuery=${searchQuery}`,

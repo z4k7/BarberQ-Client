@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { IVendor } from 'src/app/models/vendor';
 import { selectVendorDetails } from 'src/app/state/vendor-store/vendor.selector';
 import { VendorService } from 'src/app/services/vendor.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-vendor-overview',
@@ -107,5 +109,25 @@ export class VendorOverviewComponent implements OnInit, OnDestroy {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  downloadSalesReport() {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Sales Report', 20, 20);
+
+    const tableBody = this.totalBookings.map((booking, index) => [
+      index + 1,
+      booking.salonName,
+      booking.date,
+      booking.time,
+      booking.totalAmount,
+    ]);
+    autoTable(doc, {
+      head: [['Sl.no', 'Salon Name', 'Date', 'Time', 'Total Amount']],
+      body: tableBody,
+      startY: 30,
+    });
+    doc.save('sales_report.pdf');
   }
 }

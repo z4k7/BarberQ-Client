@@ -8,19 +8,19 @@
         <div class="max-w-5xl">
             <!-- Card start -->
             <div
-                class="card card-side bg-base-100 shadow-xl transition-transform hover:scale-105 cursor-pointer  hover:shadow-black">
+                class="card card-side bg-white shadow-xl transition-transform hover:scale-105 cursor-pointer  hover:shadow-black">
                 <figure><img src={{salon.banners[0]}} class="card-image" alt="Salon Image" /></figure>
                 <div class="card-body">
-                    <h1 class="card-title text-white ">{{salon.salonName}}</h1>
-                    <span class="text-base text-white">
+                    <h1 class="card-title text-black ">{{salon.salonName}}</h1>
+                    <span class="text-base text-black">
                         Nr. {{salon.landmark}}<br>
                         {{salon.locality}}<br>
                         {{salon.district}}
                     </span>
-                    <span class="text-base text-white">
+                    <span class="text-base text-black">
                         Opening Time: {{salon.openingTime | time}}
                     </span>
-                    <span class="text-base text-white">
+                    <span class="text-base text-black">
                         Closing Time: {{salon.closingTime | time}}
                     </span>
 

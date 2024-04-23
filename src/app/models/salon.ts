@@ -22,6 +22,7 @@ export interface ISalon {
   services: any;
   status: string;
   updatedAt: string;
+  isPremium: number;
 }
 
 export interface ISalonApiResponse {
