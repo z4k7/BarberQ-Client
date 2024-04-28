@@ -68,7 +68,7 @@ export class UserSalonDetailsComponent implements OnInit, OnDestroy {
         };
         this.fetchReviews();
         this.fetchAverageRating();
-        // this.checkIfUserCanReview();
+        this.checkIfUserCanReview();
       }
     });
   }
@@ -135,10 +135,12 @@ export class UserSalonDetailsComponent implements OnInit, OnDestroy {
     this.reviewService.getReviews(salonId).subscribe(
       (response) => {
         console.log(`Response in fetch Reviews`, response);
-        this.reviews = response.data.reviews.filter(
-          (review: any) =>
-            typeof review.rating === 'number' && isFinite(review.rating)
-        );
+        if (response.data) {
+          this.reviews = response.data.reviews.filter(
+            (review: any) =>
+              typeof review.rating === 'number' && isFinite(review.rating)
+          );
+        }
       },
       (error) => {
         console.error('Error fetching reviews:', error);
@@ -154,16 +156,18 @@ export class UserSalonDetailsComponent implements OnInit, OnDestroy {
       (response) => {
         console.log(`Response in fetch avg rating`, response);
 
-        const averageRating = response.data[0].averageRating;
-        console.log(`Average Rating`, averageRating);
-        if (!isNaN(averageRating) && isFinite(averageRating)) {
-          this.flooredAverageRating = Math.floor(averageRating) 
+        if (response.data.length) {
+          const averageRating = response.data[0].averageRating;
+          console.log(`Average Rating`, averageRating);
+          if (!isNaN(averageRating) && isFinite(averageRating)) {
+            this.flooredAverageRating = Math.floor(averageRating);
 
-          this.averageRating = averageRating;
-        } else {
-          console.error('Invalid average rating value:', response);
-          this.averageRating = 0;
-          this.flooredAverageRating = 0;
+            this.averageRating = averageRating;
+          } else {
+            console.error('Invalid average rating value:', response);
+            this.averageRating = 0;
+            this.flooredAverageRating = 0;
+          }
         }
       },
       (error) => {
@@ -179,6 +183,7 @@ export class UserSalonDetailsComponent implements OnInit, OnDestroy {
     const userId = this.userData._id;
     this.reviewService.userInBooking(salonId, userId).subscribe(
       (response) => {
+        console.log(`Response in can review`, response);
         this.canReview = response;
       },
       (error) => {
