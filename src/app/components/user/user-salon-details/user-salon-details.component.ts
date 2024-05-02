@@ -68,7 +68,7 @@ export class UserSalonDetailsComponent implements OnInit, OnDestroy {
         };
         this.fetchReviews();
         this.fetchAverageRating();
-        this.checkIfUserCanReview();
+        // this.checkIfUserCanReview();
       }
     });
   }
@@ -178,19 +178,19 @@ export class UserSalonDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  checkIfUserCanReview(): void {
-    const salonId = this.salonId;
-    const userId = this.userData._id;
-    this.reviewService.userInBooking(salonId, userId).subscribe(
-      (response) => {
-        console.log(`Response in can review`, response);
-        this.canReview = response;
-      },
-      (error) => {
-        console.error('Error checking if user can review:', error);
-      }
-    );
-  }
+  // checkIfUserCanReview(): void {
+  //   const salonId = this.salonId;
+  //   const userId = this.userData._id;
+  //   this.reviewService.userInBooking(salonId, userId).subscribe(
+  //     (response) => {
+  //       console.log(`Response in can review`, response);
+  //       this.canReview = response;
+  //     },
+  //     (error) => {
+  //       console.error('Error checking if user can review:', error);
+  //     }
+  //   );
+  // }
 
   generateStarArray(length: number): number[] {
     return Array.from({ length }, (_, i) => i);
