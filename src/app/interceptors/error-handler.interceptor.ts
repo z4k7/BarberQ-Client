@@ -26,7 +26,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           errorMessage = err.error.data.message;
         }
-        this.toastr.error(err.error.message, 'Error!');
+        this.toastr.error(errorMessage, 'Error!');
 
         return throwError(() => err);
       })
