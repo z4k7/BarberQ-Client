@@ -28,11 +28,90 @@
             </div>
             <!-- Card end -->
 
+
             <!-- Services Start -->
-            <div class=" py-10">
-                <h1 class="text-white">Choose Service</h1>
-                <button class="btn bg-black" (click)="filterServices('Face Treatment')">Face Treatment</button>
-                <button class="btn bg-black" (click)="filterServices('Hair Treatment')">Hair Treatment</button>
+            <div class="py-10">
+                <h1 class="text-white text-center mb-4">Choose Service</h1>
+                <div class="flex justify-center mb-4">
+                    <button class="btn bg-black mr-2" (click)="filterServices('Face Treatment')">Face Treatment</button>
+                    <button class="btn bg-black" (click)="filterServices('Hair Treatment')">Hair Treatment</button>
+                </div>
+
+                <!-- Show service cards on medium screens and above -->
+                <div class="hidden md:block">
+                    <div class="scroll-x overflow-auto px-4">
+                        <div class="flex flex-nowrap">
+                            <ng-container *ngFor="let service of filteredServices">
+                                <div class="card service-card w-full sm:w-96 bg-white shadow-xl mr-4">
+                                    <div class="card-body">
+                                        <h2 class="card-title text-black">
+                                            <input type="checkbox" [checked]="selectedServices.includes(service._id)"
+                                                (change)="toggleService(service._id)" class="checkbox checkbox-info" />
+                                            {{service.serviceName}}
+                                        </h2>
+                                        <p class="text-black">Category: {{ service.category}}</p>
+                                        <p class="text-black">Price: ₹{{service.price}}</p>
+                                        <p class="text-black">Duration: {{service.duration }} minutes</p>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown menu -->
+                <div class="md:hidden z-20">
+                    <div class="dropdown relative inline-block">
+                        <button
+                            class="dropdown-toggle text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            type="button" (click)="toggleDropdown()">
+                            Select Service
+                            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div *ngIf="isDropdownOpen"
+                            class="dropdown-menu z-10 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-60 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200">
+                                <ng-container *ngFor="let service of filteredServices">
+                                    <li>
+                                        <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                                            <div class="flex items-center h-5">
+                                                <input id="helper-checkbox-{{service._id}}" type="checkbox"
+                                                    [checked]="selectedServices.includes(service._id)"
+                                                    (change)="toggleService(service._id)"
+                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" />
+                                            </div>
+                                            <div class="ms-2 text-sm">
+                                                <label for="helper-checkbox-{{service._id}}"
+                                                    class="font-medium text-gray-900 dark:text-gray-300">
+                                                    <div>{{service.serviceName}}</div>
+                                                    <p class="text-xs font-normal text-gray-500 dark:text-gray-300">
+                                                        Price: {{ service.price }}</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Services End -->
+
+            <!-- Services Start -->
+            <!-- <div class=" py-10">
+                <h1 class="text-white text-center mb-4 ">Choose Service</h1>
+                <div class="flex justify-center mb-4">
+                    <button class="btn bg-black mr-2" (click)="filterServices('Face Treatment')">Face Treatment</button>
+                    <button class="btn bg-black" (click)="filterServices('Hair Treatment')">Hair Treatment</button>
+                </div>
                 <div class="scroll-x  ">
                     <ng-container *ngFor="let service of filteredServices ">
                         <div class="card service-card w-96  bg-white shadow-xl">
@@ -50,12 +129,14 @@
                         </div>
                     </ng-container>
                 </div>
-            </div>
+            </div> -->
             <!-- Services End-->
 
             <div class="datepicker flex flex-col gap-4 py-10 transition-transform hover:scale-105">
 
-                <app-date-picker (dateSelected)="getAvailableSlots($event)" class="flex-1"></app-date-picker>
+                <div class="flex justify-center">
+                    <app-date-picker (dateSelected)="getAvailableSlots($event)"></app-date-picker>
+                </div>
 
                 <div class="card  w-full flex-row bg-white text-primary-content flex-1">
                     <div class="card-body">
