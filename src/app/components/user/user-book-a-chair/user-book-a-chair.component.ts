@@ -32,6 +32,7 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
   selectedDate: string = '';
   availableSlots: string[] = [];
   selectedSlot!: string;
+  isDropdownOpen: boolean = false;
 
   currentFilter: 'Face Treatment' | 'Hair Treatment' | 'all' = 'all';
   filteredServices: any[] = [];
@@ -90,6 +91,10 @@ export class UserBookAChairComponent implements OnInit, OnDestroy {
     } else {
       this.selectedServices.push(serviceId);
     }
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
   }
 
   ngOnDestroy(): void {
