@@ -5,17 +5,17 @@
 <!-- Content Start -->
 <div *ngIf="salon" class="container mx-auto">
     <div class="mt-8 flex flex-wrap justify-center gap-4 py-5 content-start">
-        <div class="max-w-5xl">
+        <div class="max-w-5xl w-full">
             <!-- Card start -->
             <div
-                class="card card-side bg-white  transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black">
+                class="card md:card-side bg-white  transition-transform hover:scale-105 cursor-pointer shadow-xl  hover:shadow-black flex flex-col md:flex-row">
                 <figure>
-                    <div *ngIf="salon && salon.banners && salon.banners.length > 0">
-                        <img [src]="salon.banners[0]" class="card-image" alt="Salon" />
-                    </div>
+
+                    <img src={{salon.banners[0]}} class="card-image h-96 md:h-auto" alt="Salon" />
+
 
                 </figure>
-                <div class="card-body ">
+                <div class="card-body md:ms-4 ">
                     <h1 class="card-title text-black">{{ salon.salonName }}</h1>
                     <span class="text-base text-black">
                         Nr. {{ salon.landmark }}<br />
