@@ -197,13 +197,13 @@ export class UserSalonsComponent implements OnInit {
   }
 
   bookChair(salon: ISalon): void {
-    this.router.navigate(['/user/salons/book-a-chair'], {
+    this.router.navigate(['/user/book-a-chair'], {
       queryParams: { salonId: salon._id },
     });
   }
 
   viewSalonDetails(salon: ISalon): void {
-    this.router.navigate(['/user/salons/salon-details'], {
+    this.router.navigate(['/user/salon-details'], {
       queryParams: { salonId: salon._id },
     });
   }

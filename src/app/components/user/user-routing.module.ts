@@ -35,24 +35,18 @@ const routes: Routes = [
   {
     path: 'salons',
     title: 'BarberQ | Salon',
-    // component: UserSalonsComponent,
-    children: [
-      {
-        path: '',
-        title: 'BarberQ | Salon',
-        component: UserSalonsComponent,
-      },
-      {
-        path: 'salon-details',
-        title: 'BarberQ | Salon Details',
-        component: UserSalonDetailsComponent,
-      },
-      {
-        path: 'book-a-chair',
-        title: 'BarberQ | Book A Chair',
-        component: UserBookAChairComponent,
-      },
-    ],
+    component: UserSalonsComponent,
+  },
+  {
+    path: 'book-a-chair',
+    title: 'BarberQ | Book A Chair',
+    canActivate: [authGuard],
+    component: UserBookAChairComponent,
+  },
+  {
+    path: 'salon-details',
+    title: 'BarberQ | Salon Details',
+    component: UserSalonDetailsComponent,
   },
   {
     path: 'profile',

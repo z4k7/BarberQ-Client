@@ -171,7 +171,8 @@ export class UserRegisterComponent implements OnInit {
 
       if (!this.showOtpField) {
         this.http.post(`/user/register`, user).subscribe({
-          next: () => {
+          next: (res) => {
+            console.log(`Response from register`, res);
             this.showOtpField = true;
             this.form.get('otp')?.enable();
             this.toastr.success(

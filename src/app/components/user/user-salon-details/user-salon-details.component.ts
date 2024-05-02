@@ -85,7 +85,7 @@ export class UserSalonDetailsComponent implements OnInit, OnDestroy {
   }
 
   bookChair(salon: ISalon): void {
-    this.router.navigate(['/user/salons/book-a-chair'], {
+    this.router.navigate(['/user/book-a-chair'], {
       queryParams: { salonId: salon._id },
     });
   }
