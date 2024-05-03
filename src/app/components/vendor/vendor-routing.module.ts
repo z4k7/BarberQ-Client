@@ -14,6 +14,7 @@ import { VendorSalonEditComponent } from './vendor-salon-edit/vendor-salon-edit.
 import { VendorOverviewComponent } from './vendor-overview/vendor-overview.component';
 import { VendorBookingsComponent } from './vendor-bookings/vendor-bookings.component';
 import { VendorSalonOverviewComponent } from './vendor-salon-overview/vendor-salon-overview.component';
+import { VendorSalonBookingsComponent } from './vendor-salon-bookings/vendor-salon-bookings.component';
 
 const routes: Routes = [
   { path: 'map', component: MapBoxComponent },
@@ -69,6 +70,11 @@ const routes: Routes = [
         path: 'salon-edit/:id',
         title: 'Vendor | Salon Edit',
         component: VendorSalonEditComponent,
+      },
+      {
+        path: 'salon-bookings/:id',
+        title: 'Vendor | Salon Bookings',
+        component: VendorSalonBookingsComponent,
       },
       {
         path: '',
