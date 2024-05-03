@@ -26,6 +26,18 @@ export class SalonService {
     );
   }
 
+  getSalonBookings(
+    page: number,
+    limit: number,
+    salonId: string,
+    searchQuery?: string
+  ): Observable<any> {
+    return this.http.get(
+      `/vendor/salons/bookings?page=${page}&limit=${limit}&salonId=${salonId}&searchQuery=${searchQuery}`,
+      httpOptions
+    );
+  }
+
   cancelBooking(bookingId: string): Observable<any> {
     const body = { bookingId };
     return this.http.post(`/user/salons/cancel-booking`, body, httpOptions);

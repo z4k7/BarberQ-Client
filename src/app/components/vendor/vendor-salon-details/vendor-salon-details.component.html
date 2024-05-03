@@ -135,7 +135,21 @@
                         <div class="collapse-title text-black text-xl font-medium" (click)="toggleAccordion(1)">
                             About
                         </div>
-                        <div class="collapse-content text-black">
+                        <div class="collapse-content  text-black">
+                            <ng-container>
+                                <button [routerLink]="['/vendor/salon-bookings', salon._id]"
+                                    class="btn mb-4 bg-black text-sky-600 skeleton transition-transform hover:scale-105 hover:border-sky-500">
+                                    <svg class="w-6 h-6 text-sky-600 dark:text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
+                                    </svg>
+
+                                    Bookings
+                                </button>
+                            </ng-container>
                             <h4 class="text-black" style="text-decoration: underline;">Facilities</h4>
                             <ng-container *ngFor="let facility of salon.facilities ">
                                 <div class="badge badge-warning me-4 mb-4 badge-lg">{{facility}} </div>
@@ -148,7 +162,11 @@
                             <h4 class="text-black mt-4" style="text-decoration: underline;">Category</h4>
                             <div *ngIf="salon.isPremium==0" class="badge badge-warning me-4 badge-lg">Ordinary </div>
                             <div *ngIf="salon.isPremium==1" class="badge badge-warning me-4 badge-lg">Premium </div>
+
                         </div>
+
+
+
                     </div>
                     <div class="collapse collapse-plus border bg-white shadow-xl hover:shadow-black ">
                         <input type="radio" name="my-accordion-3" id="my-accordion-2" />

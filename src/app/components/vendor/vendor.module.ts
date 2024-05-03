@@ -26,6 +26,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { VendorSalonOverviewComponent } from './vendor-salon-overview/vendor-salon-overview.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { VendorSalonBookingsComponent } from './vendor-salon-bookings/vendor-salon-bookings.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     VendorOverviewComponent,
     VendorBookingsComponent,
     VendorSalonOverviewComponent,
+    VendorSalonBookingsComponent,
   ],
   imports: [
     CommonModule,

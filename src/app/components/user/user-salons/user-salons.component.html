@@ -142,13 +142,13 @@
             <ng-container *ngFor="let salon of Salons; trackBy: trackBySalonId">
                 <div class="transition-transform hover:scale-105 cursor-pointer" (click)="viewSalonDetails(salon)">
                     <div
-                        class=" card card-compact relative  mb-5 w-96 text-black bg-white  shadow-lg hover:shadow-black hover:border  hover:border-white ">
+                        class=" card card-compact relative  mb-5 w-96 text-black bg-white  shadow-lg hover:shadow-black  ">
                         <div *ngIf="salon.isPremium==1"
                             class="badge absolute top-0 left-0 badge-warning ms-1 mt-1 me-4 badge-lg">
                             Premium </div>
                         <figure>
                             <!-- Lazy loading image -->
-                            <img loading="lazy" [src]="salon.banners[0]" alt="Salon Image" class="card-image" />
+                            <img loading="lazy" [src]="salon.banners[0]" class="card-image rounded-lg" />
                         </figure>
                         <div class="card-body">
                             <h2 class="card-title">{{ salon.salonName }}</h2>
